@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 
 DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'db', 'quotes.db')
-OUTPUT_PATH = os.path.join(os.path.dirname(__file__), '..', 'scripts_viewer.html')
+OUTPUT_PATH = os.path.join(os.path.dirname(__file__), '..', 'index.html')
 
 
 def get_data():
