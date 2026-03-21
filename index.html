@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Period Shorts — 스크립트 뷰어</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; background: #f5f5f0; color: #1a1a1a; }
+
+  /* 레이아웃 */
+  .layout { display: flex; min-height: 100vh; }
+  .sidebar { width: 220px; min-width: 220px; background: #1a1a1a; color: #eee; padding: 24px 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .main { flex: 1; padding: 40px; max-width: 860px; }
+
+  /* 사이드바 */
+  .sidebar h1 { font-size: 14px; color: #888; padding: 0 20px 16px; border-bottom: 1px solid #333; margin-bottom: 12px; letter-spacing: 1px; }
+  .sidebar ul { list-style: none; }
+  .sidebar li a { display: flex; justify-content: space-between; padding: 8px 20px; color: #ccc; text-decoration: none; font-size: 14px; transition: background 0.15s; }
+  .sidebar li a:hover { background: #2a2a2a; color: #fff; }
+  .count { background: #333; border-radius: 10px; padding: 1px 7px; font-size: 11px; color: #999; }
+  .sidebar-footer { padding: 20px; font-size: 11px; color: #555; margin-top: 20px; border-top: 1px solid #2a2a2a; }
+
+  /* 검색 */
+  .search-box { margin-bottom: 32px; }
+  .search-box input { width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; font-size: 15px; background: white; }
+  .search-box input:focus { outline: none; border-color: #999; }
+
+  /* 감독 섹션 */
+  .director-section { margin-bottom: 48px; }
+  .director-header { margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid #1a1a1a; }
+  .director-header h2 { font-size: 22px; font-weight: 700; }
+  .name-en { font-size: 14px; font-weight: 400; color: #888; margin-left: 8px; }
+  .director-meta { font-size: 13px; color: #888; margin-top: 4px; }
+
+  /* 스크립트 카드 */
+  .script-card { background: white; border-radius: 12px; padding: 28px; margin-bottom: 20px; border: 1px solid #e8e8e8; }
+  .script-title { font-size: 18px; font-weight: 700; color: #1a1a1a; margin-bottom: 16px; line-height: 1.4; }
+
+  /* 명언 박스 */
+  .quote-box { background: #f9f9f7; border-left: 3px solid #1a1a1a; padding: 16px 20px; margin-bottom: 16px; border-radius: 0 8px 8px 0; }
+  .quote-original { font-size: 13px; color: #555; font-style: italic; margin-bottom: 6px; line-height: 1.6; }
+  .quote-kr { font-size: 14px; color: #333; line-height: 1.6; }
+  .quote-source { font-size: 11px; color: #aaa; margin-top: 6px; }
+
+  /* 맥락 박스 */
+  .context-box { background: #f0f4ff; border-radius: 8px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px; color: #444; line-height: 1.7; }
+  .context-box strong { display: block; font-size: 11px; color: #88a; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+
+  /* 스크립트 본문 */
+  .script-body { font-size: 15px; line-height: 1.9; color: #222; border-top: 1px solid #eee; padding-top: 16px; }
+  .script-body p { margin-bottom: 10px; }
+
+  .script-meta { font-size: 11px; color: #bbb; margin-top: 16px; padding-top: 12px; border-top: 1px solid #f0f0f0; }
+
+  /* 검색 하이라이트 */
+  .highlight { background: #fff3a3; }
+
+  /* 숨김 */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+  <nav class="sidebar">
+    <h1>PERIOD SHORTS</h1>
+    <ul><li><a href="#구로사와_아키라">구로사와 아키라 <span class="count">5</span></a></li>
+<li><a href="#미하엘_하네케">미하엘 하네케 <span class="count">5</span></a></li>
+<li><a href="#봉준호">봉준호 <span class="count">5</span></a></li>
+<li><a href="#스탠리_큐브릭">스탠리 큐브릭 <span class="count">5</span></a></li>
+<li><a href="#안드레이_타르코프스키">안드레이 타르코프스키 <span class="count">5</span></a></li>
+<li><a href="#알프레드_히치콕">알프레드 히치콕 <span class="count">5</span></a></li>
+<li><a href="#이창동">이창동 <span class="count">5</span></a></li>
+<li><a href="#잉마르_베리만">잉마르 베리만 <span class="count">5</span></a></li>
+<li><a href="#장뤼크_고다르">장뤼크 고다르 <span class="count">5</span></a></li>
+<li><a href="#켄_로치">켄 로치 <span class="count">5</span></a></li>
+<li><a href="#크리스토퍼_놀란">크리스토퍼 놀란 <span class="count">4</span></a></li>
+<li><a href="#페데리코_펠리니">페데리코 펠리니 <span class="count">6</span></a></li>
+</ul>
+    <div class="sidebar-footer">총 12명 · 60개 스크립트<br>생성: 2026-03-22 00:46</div>
+  </nav>
+
+  <main class="main">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="감독 이름, 키워드로 검색..." oninput="search(this.value)">
+    </div>
+    
+        <section id="구로사와_아키라" class="director-section">
+            <div class="director-header">
+                <h2>구로사와 아키라 <span class="name-en">Akira Kurosawa</span></h2>
+                <div class="director-meta">일본 · 라쇼몽, 7인의 사무라이, 란</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">구로사와 아키라가 자기 영화를 설명하지 않은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Human beings are unable to be honest with themselves about themselves. They cannot talk about themselves without embellishing. Egoism is a sin the human being carries with him from birth; it is the most difficult to redeem."</div>
+                    <div class="quote-kr">인간은 자기 자신에 대해 스스로에게 솔직할 수 없다. 자신을 꾸미지 않고는 자기 이야기를 할 수 없는 존재다. 이기심은 인간이 태어날 때부터 지니고 나오는 죄이며, 가장 구원하기 어려운 것이다.</div>
+                    <div class="quote-source">Wikiquote - Akira Kurosawa</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 구로사와 아키라가 자신의 자서전 『갈마처럼(蝦蟇の油, Something Like an Autobiography)』(1982)에서 《라쇼몬》(1950) 제작 과정을 회고하며 남긴 말로, 촬영에 들어가기 전 세 명의 조감독이 시나리오를 읽고도 무슨 이야기인지 모르겠다며 설명을 요청했을 때, 구로사와가 이 영화의 핵심은 바로 인간이 자기 자신에 대해 솔직해질 수 없다는 본성 그 자체라고 답한 데서 비롯되었습니다. 그는 동일한 살인 사건을 도적, 사무라이의 아내, 사무라이의 영혼, 목격자인 나무꾼이 각각 자신에게 유리하게 혹은 자기 체면을 세우는 방향으로 전혀 다르게 증언하는 구조야말로 시나리오의 의도이며, 인간은 태어날 때부터 에고이즘이라는 죄를 지니고 있어 자기 자신을 꾸미지 않고는 말할 수 없다고 설명했습니다. 이 시기는 전후 일본 사회가 혼란 속에서 진실과 도덕의 기준을 재정립하던 때였고, 구로사와는 아쿠타가와 류노스케의 단편 「덤불 속(藪の中)」과 「라쇼몬」을</p>
+                </div>
+                <div class="script-body"><p>1950년, 라쇼몽 촬영을 앞두고 세 명의 조감독이 구로사와에게 찾아왔습니다. 시나리오를 다 읽었는데 무슨 이야기인지 모르겠다는 거였습니다. 같은 살인 사건인데 증언이 네 개고, 전부 다르고, 누구 말이 진짜인지 알 수가 없다고요.</p><br><p>구로사와는 이렇게 답했습니다. "인간은 자기 자신에 대해 스스로에게 솔직할 수 없다. 자신을 꾸미지 않고는 자기 이야기를 할 수 없는 존재다. 이기심은 인간이 태어날 때부터 지니고 나오는 죄이며, 가장 구원하기 어려운 것이다."</p><br><p>그러니까 이 영화에서 진짜 범인을 찾으려 하지 말라는 겁니다. 도적도, 사무라이의 아내도, 죽은 사무라이의 영혼도, 목격자인 나무꾼도 전부 자기 체면을 세우는 방향으로 기억을 고쳐 말하고 있으니까요. 누가 거짓말을 하는 게 아니라, 네 명 모두가 자기 버전의 진실을 믿고 있는 겁니다.</p><br><p>구로사와는 시나리오가 어려운 게 아니라 인간이 원래 그런 거라고 말한 셈이었습니다. 진실이 하나라는 전제 자체를 의심하는 것, 그게 라쇼몽이었습니다.</p></div>
+                <div class="script-meta">Script #41 · Quote #16 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">구로사와 아키라가 자서전을 반만 쓴 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Although human beings are incapable of talking about themselves with total honesty, it is much harder to avoid the truth while pretending to be other people. They often reveal much about themselves in a very straightforward way. I am certain that I did. There is nothing that says more about its creator than the work itself."</div>
+                    <div class="quote-kr">인간은 자기 자신에 대해 완전히 솔직하게 말할 수 없지만, 다른 사람인 척할 때 진실을 피하기는 훨씬 더 어렵다. 사람들은 다른 이를 연기하면서 오히려 매우 솔직한 방식으로 자신을 드러낸다. 나 역시 분명 그러했다. 작품 자체보다 그 창작자에 대해 더 많은 것을 말해주는 것은 없다.</div>
+                    <div class="quote-source">Wikiquote - Akira Kurosawa</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 말은 구로사와 아키라가 1982년에 출간한 자서전 《가마노요우나 지조덴(蝦蟇の油)》, 영어 번역판 제목 《Something Like an Autobiography》의 서문 부분에 등장하는데, 이 자서전은 특이하게도 그의 인생 전체가 아니라 1950년 《라쇼몽》으로 베네치아 국제영화제 황금사자상을 수상하기까지의 전반기만을 다루고 있으며, 구로사와는 책의 서두에서 자서전이라는 형식 자체의 한계를 고백하면서—즉 사람은 자기 자신에 대해 완전히 정직하게 말하는 것이 불가능하지만, 다른 사람인 척 연기할 때는 오히려 진실을 피하기가 더 어렵기 때문에 결국 자신의 영화들이야말로 어떤 자서전보다도 자신을 솔직하게 드러내는 자화상이라는 논리를 펼칩니다. 이 발언은 특정 질문에 대한 답이 아니라, 72세의 노감독이 왜 자서전을 쓰면서도 후반생을 생략했는지를 스스로 해명하는 맥락에서 나온 것으로, 그는 《라쇼몽》 이후의 자신은 이미 영화 속에 다 담겨 있으니 굳이 글로 반복할 필요가 없다고 본 것입니다. 당시</p>
+                </div>
+                <div class="script-body"><p>1982년, 일흔두 살의 구로사와 아키라가 자서전을 냅니다. 그런데 이 책, 이상합니다. 라쇼몽, 7인의 사무라이, 란. 세계 영화사를 바꾼 작품들이 빠져 있어요. 자서전이 라쇼몽으로 베네치아 황금사자상을 받는 순간, 딱 거기서 끝나거든요. 후반생이 통째로 없는 겁니다.</p><br><p>구로사와는 책의 첫머리에서 이렇게 씁니다. "인간은 자기 자신에 대해 완전히 솔직하게 말할 수 없다. 하지만 다른 사람인 척할 때, 진실을 피하기는 훨씬 더 어렵다. 사람들은 다른 이를 연기하면서 오히려 매우 솔직한 방식으로 자신을 드러낸다. 나 역시 분명 그러했다. 작품 자체보다 그 창작자에 대해 더 많은 것을 말해주는 것은 없다."</p><br><p>그러니까 이 사람의 논리는 이렇습니다. 자서전이라는 형식으로는 어차피 자기 자신에게 정직해질 수 없다. 그런데 영화를 만들 때, 캐릭터 뒤에 숨어서 다른 인생을 연기할 때, 오히려 자신의 진짜 모습이 새어 나온다. 라쇼몽 이후의 자신은 이미 영화 속에 전부 담겨 있으니, 글로 다시 쓰는 건 의미가 없다는 거예요.</p><br><p>자서전을 반만 쓴 게 아니었습니다. 나머지 반은 이미 스크린 위에 있었던 겁니다.</p></div>
+                <div class="script-meta">Script #42 · Quote #17 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">구로사와 아키라가 조감독들에게 각본을 두 번 읽게 한 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"The human heart itself is impossible to understand. If you focus on the impossibility of truly understanding human psychology and read the script one more time, I think you will grasp the point of it."</div>
+                    <div class="quote-kr">인간의 마음 자체가 이해 불가능한 것이다. 인간 심리를 진정으로 이해하는 것이 불가능하다는 점에 초점을 맞추고 시나리오를 다시 한번 읽어보라. 그러면 요점을 파악할 수 있을 것이다.</div>
+                    <div class="quote-source">Wikiquote - Akira Kurosawa</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 구로사와 아키라가 자서전 『가마처럼(蝦蟇の油, Something Like an Autobiography)』(1982)에서 회고한 일화로, 1950년 《라쇼몬》 촬영에 들어가기 전 조감독 세 명이 각본을 읽고도 도대체 무슨 이야기인지 모르겠다며 설명을 요청했을 때 구로사와가 한 답변입니다. 그는 이 각본이 아쿠타가와 류노스케의 단편 「덤불 속(藪の中)」을 원작으로 하고 있으며, 같은 사건을 목격하거나 경험한 네 사람이 각자 모순된 증언을 하는 구조 자체가 핵심이므로 인간의 마음이란 본래 이해할 수 없다는 사실에 초점을 맞추고 다시 읽으면 요점을 파악할 수 있을 것이라고 말했습니다. 당시 일본 영화계는 전후 혼란기를 지나 새로운 표현을 모색하던 시기였고, 구로사와는 인간 본성의 이기심과 불투명성이라는 보편적 주제를 파격적인 다시점 서술 기법으로 풀어내어 1951년 베네치아 영화제 황금사자상을 수상하며 일본 영화를 세계에 알리는 계기를 만들었습니다. 이 발언은 단순히 한 편의 영화를 설명하는 것을</p>
+                </div>
+                <div class="script-body"><p>1950년, 라쇼몽 촬영을 앞둔 어느 날이었습니다. 조감독 세 명이 구로사와 아키라를 찾아왔습니다. 각본을 다 읽었는데 도대체 무슨 이야기인지 모르겠다는 거였습니다. 같은 사건인데 네 사람의 증언이 전부 다르고, 누가 진실을 말하는 건지 알 수가 없다고요.</p><br><p>구로사와는 이렇게 답합니다. "인간의 마음 자체가 이해 불가능한 것이다. 인간 심리를 진정으로 이해하는 것이 불가능하다는 점에 초점을 맞추고 시나리오를 다시 한번 읽어보라. 그러면 요점을 파악할 수 있을 것이다."</p><br><p>각본이 혼란스러운 게 아니라, 혼란 자체가 각본의 핵심이었던 겁니다. 사람은 자기가 본 것조차 자기 욕망대로 기억하고, 자기 이익대로 말합니다. 구로사와는 그걸 설명하지 않았습니다. 모순된 네 개의 시점을 그냥 나란히 놓았습니다. 관객이 직접 그 불투명함 앞에 서도록 한 거죠.</p><br><p>이 영화는 이듬해 베네치아에서 황금사자상을 받았고, 세계는 처음으로 일본 영화를 주목하기 시작했습니다.</p><br><p>이해할 수 없다는 걸 인정하는 것. 그게 인간을 가장 정직하게 그리는 방법일지도 모릅니다.</p></div>
+                <div class="script-meta">Script #43 · Quote #18 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">구로사와가 소리를 버린 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I like silent pictures and I always have. They are often so much more beautiful than sound pictures are. Perhaps they had to be. At any rate I wanted to restore some of this beauty. I thought of it, I remember in this way: one of techniques of modern art is simplification, and that I must therefore simplify this film."</div>
+                    <div class="quote-kr">나는 무성영화를 좋아하며, 항상 그래왔다. 무성영화는 유성영화보다 훨씬 아름다운 경우가 많다. 아마 그래야만 했을 것이다. 어쨌든 나는 그 아름다움의 일부를 복원하고 싶었다. 이렇게 생각한 것을 기억한다: 현대 예술의 기법 중 하나는 단순화이며, 따라서 나는 이 영화를 단순화해야 한다고.</div>
+                    <div class="quote-source">Wikiquote - Akira Kurosawa</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 구로사와 아키라가 1950년작 《라쇼몬》의 연출 의도를 설명하는 과정에서 나온 것으로, 미국의 영화학자 도널드 리치(Donald Richie)가 구로사와와 직접 나눈 인터뷰 및 대화를 바탕으로 저서 《The Films of Akira Kurosawa》(1965년 초판)에 수록한 내용입니다. 리치는 1950년대부터 도쿄에 거주하며 구로사와와 오랜 기간 교류했고, 이 책에서 작품별로 감독의 발언을 직접 인용하는 방식을 취했는데, 해당 발언이 어떤 특정 날짜의 단일 인터뷰에서 나왔는지 아니면 여러 차례 대화를 재구성한 것인지의 정확한 경위는 알려져 있지 않습니다. 당시 구로사와는 《라쇼몬》을 준비하면서 다이에이(大映) 스튜디오 측으로부터 시나리오가 난해하다는 반대에 부딪혔고, 이에 대해 그는 무성영화 시대의 순수한 시각적 아름다움으로 돌아가 대사나 음향 설명에 의존하지 않고 영상 자체의 힘으로 이야기를 전달하겠다는 구상을 밝혔으며, 현대 예술의 핵심 기법인 '단순화(simplification)'를 영화에 적</p>
+                </div>
+                <div class="script-body"><p>1950년, 구로사와 아키라는 라쇼몬 시나리오를 들고 스튜디오를 찾아갑니다. 돌아온 건 퇴짜였습니다. 너무 난해하다는 거였죠. 스튜디오 간부들조차 이해 못 하는 시나리오를 관객이 이해하겠느냐는 겁니다.</p><br><p>그런데 구로사와는 오히려 여기서 더 과감한 선택을 합니다. 대사를 줄이고, 설명을 덜어내고, 영상 그 자체의 힘만으로 이야기를 전달하겠다고 결심한 거죠. 그가 떠올린 건 무성영화 시대였습니다.</p><br><p>"나는 무성영화를 좋아하며, 항상 그래왔다. 무성영화는 유성영화보다 훨씬 아름다운 경우가 많다. 아마 그래야만 했을 것이다. 어쨌든 나는 그 아름다움의 일부를 복원하고 싶었다."</p><br><p>소리가 없던 시대, 영화는 오직 눈에 보이는 것만으로 모든 걸 전해야 했습니다. 그래서 더 아름다울 수밖에 없었다는 겁니다. 구로사와는 거기서 한 걸음 더 나아갑니다.</p><br><p>"현대 예술의 기법 중 하나는 단순화이며, 따라서 나는 이 영화를 단순화해야 한다."</p><br><p>난해하다는 비판에 그는 더 많이 설명하는 대신 더 많이 덜어냈습니다. 그 결과 라쇼몬은 베네치아 영화제 황금사자상을 받으며 일본 영화를 세계에 알립니다.</p><br><p>복잡한 이야기일수록 단순하게 보여줘야 한다. 구로사와가 소리 대신 선택한 건 침묵의 아름다움이었습니다.</p></div>
+                <div class="script-meta">Script #44 · Quote #19 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">구로사와 아키라가 "쉬운 영화"를 고집한 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"A film should appeal to sophisticated, profound-thinking people while at the same time entertaining simplistic people. A truly good movie is really enjoyable too. There's nothing complicated about it. A truly good movie is interesting and easy to understand."</div>
+                    <div class="quote-kr">영화는 깊이 사고하는 세련된 사람들에게 호소하면서 동시에 단순한 사람들도 즐겁게 해야 한다. 진정으로 좋은 영화는 정말로 재미있기도 하다. 거기에 복잡한 것은 아무것도 없다. 진정으로 좋은 영화는 흥미롭고 이해하기 쉽다.</div>
+                    <div class="quote-source">Wikiquote - Akira Kurosawa</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언의 정확한 출처—어떤 인터뷰, 강연, 저서에서 나왔는지, 어떤 질문에 대한 답이었는지—는 확인할 수 없었으며, 널리 알려진 1차 자료에서 원문 그대로의 인용 맥락을 특정하기 어려워 솔직히 "구체적인 발화 상황은 알려지지 않았다"고 밝힙니다. 다만 이 발언은 마이클 카민스키(Michael Kaminski)의 저서 《스타워즈 비밀의 역사(The Secret History of Star Wars)》에 인용되어 영어권에 널리 퍼졌으며, 조지 루커스가 구로사와로부터 받은 영향을 논하는 맥락에서 "위대한 영화는 깊이 사유하는 관객과 단순히 즐기려는 관객 모두를 만족시켜야 한다"는 구로사와의 철학을 요약하는 대표적 문구로 소개되었습니다. 구로사와는 실제로 경력 전반에 걸쳐 이와 일치하는 신념을 반복적으로 표명했는데, 그의 자서전 《蝦蟇の油(두꺼비의 기름, Something Like an Autobiography)》(1982)에서도 관객이 쉽게 이해하고 즐길 수 있어야 진정한 영화라는 생각을 피력했으며, 이는 《7인의 사무라이》(1954)가 계급과 희생이</p>
+                </div>
+                <div class="script-body"><p>일본 영화의 황제라 불리는 남자가 있습니다. 구로사와 아키라. 라쇼몽으로 서양에 일본 영화의 존재를 각인시켰고, 7인의 사무라이로 액션 영화의 문법 자체를 다시 썼습니다. 조지 루커스가 스타워즈를 구상할 때 가장 먼저 연구한 감독이 바로 이 사람이었죠.</p><br><p>그런데 이 거장이 평생에 걸쳐 반복한 말이 하나 있습니다. "영화는 깊이 사고하는 세련된 사람들에게 호소하면서 동시에 단순한 사람들도 즐겁게 해야 한다. 진정으로 좋은 영화는 정말로 재미있기도 하다. 거기에 복잡한 것은 아무것도 없다. 진정으로 좋은 영화는 흥미롭고 이해하기 쉽다."</p><br><p>보통 감독이 대가의 반열에 오르면 난해해집니다. 관객보다 자기 세계가 앞서가기 시작하죠. 구로사와는 정반대였습니다. 7인의 사무라이를 보세요. 표면은 명쾌한 활극입니다. 누구나 손에 땀을 쥡니다. 그런데 한 겹을 벗기면 계급의 모순이 있고, 또 한 겹을 벗기면 승리한 자가 아니라 살아남은 자의 허무가 있습니다. 쉬운 문 하나를 열면 깊은 방이 계속 이어지는 구조.</p><br><p>구로사와는 알고 있었던 겁니다. 난해함은 깊이의 증거가 아니라, 때로는 정리되지 않은 생각의 증거라는 걸. 진짜 깊이는 누구나 들어올 수 있는 문 뒤에 숨겨놓는 거라는 걸.</p></div>
+                <div class="script-meta">Script #45 · Quote #20 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="미하엘_하네케" class="director-section">
+            <div class="director-header">
+                <h2>미하엘 하네케 <span class="name-en">Michael Haneke</span></h2>
+                <div class="director-meta">오스트리아 · 피아니스트, 캐시, 아무르</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">하네케가 관객을 불쾌하게 만든 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Film is an artificial construct. It pretends to reconstruct reality. But it doesn't do that—it's a manipulative form. It's a lie that can reveal the truth. But if a film isn't a work of art, it's just complicit with the process of manipulation."</div>
+                    <div class="quote-kr">영화는 인위적인 구조물이다. 현실을 재구성하는 척하지만 실제로는 그렇지 않다—영화는 조작적인 형식이다. 진실을 드러낼 수 있는 거짓말인 셈이다. 그러나 영화가 예술 작품이 아니라면, 그것은 단지 조작 과정에 공모하는 것일 뿐이다.</div>
+                    <div class="quote-source">Wikiquote - Michael Haneke</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 미국의 영화 전문지 **Cineaste**와의 인터뷰에서 나온 것으로 알려져 있으나, 해당 인터뷰의 정확한 게재 시점(호수 및 연도)과 구체적으로 어떤 질문에 대한 응답이었는지는 제가 확인할 수 있는 범위 내에서 특정하기 어렵습니다. 다만 하네케는 1990년대 후반부터 2000년대에 걸쳐 《퍼니 게임》(1997), 《캐시》(2005) 등을 통해 영화가 관객에게 폭력과 서사를 제시하는 방식 자체를 문제 삼으며 국제적 주목을 받았고, 이 시기 여러 영어권 매체 인터뷰에서 영화 매체의 조작적 본질에 대해 반복적으로 유사한 입장을 밝혀왔습니다. 특히 《퍼니 게임》은 스릴러 장르의 관습을 따르는 척하면서 관객이 폭력을 '즐기고' 있다는 사실을 정면으로 들이밀어 불편하게 만드는 작품으로, "영화는 현실을 재구성하는 척하지만 실은 조작"이라는 이 발언의 철학을 가장 직접적으로 구현한 사례입니다. 하네케에게 예술영화와 주류 오락영화의 차이는 조작 자체의 유무가 아니라,</p>
+                </div>
+                <div class="script-body"><p>1997년, 칸 영화제에서 한 영화가 상영됐습니다. 상영 도중 관객이 자리를 박차고 나갔고, 남은 사람들 사이에선 격렬한 논쟁이 벌어졌습니다. 영화 제목은 퍼니 게임. 감독은 미하엘 하네케. 두 명의 청년이 한 가족을 인질로 잡고 잔혹한 게임을 벌이는 이야기인데, 문제는 이 영화가 스릴러처럼 시작해놓고 관객이 손에 땀을 쥘 때쯤, 갑자기 카메라를 돌려 관객을 똑바로 쳐다본다는 겁니다. 당신, 지금 이걸 즐기고 있었죠?</p><br><p>하네케는 이렇게 말합니다. "영화는 인위적인 구조물이다. 현실을 재구성하는 척하지만 실제로는 그렇지 않다. 영화는 조작적인 형식이다. 진실을 드러낼 수 있는 거짓말인 셈이다. 그러나 영화가 예술 작품이 아니라면, 그것은 단지 조작 과정에 공모하는 것일 뿐이다."</p><br><p>그에게 모든 영화는 거짓말입니다. 주류 영화든 예술 영화든 관객을 조작한다는 본질은 같습니다. 차이는 하나. 그 조작을 숨기느냐, 드러내느냐. 하네케는 숨기길 거부한 감독이었습니다. 관객이 불편해하는 걸 알면서도 조작의 구조 자체를 들춰 보여주는 것, 그게 그가 생각한 정직한 영화였습니다.</p><br><p>거짓말인 걸 인정하는 영화만이 진실에 닿을 수 있다. 하네케의 영화는 그 믿음 위에 서 있습니다.</p></div>
+                <div class="script-meta">Script #6 · Quote #51 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">하네케가 할리우드에 선전포고한 날</div>
+                <div class="quote-box">
+                    <div class="quote-original">"My films are intended as polemical statements against the American 'barrel down' cinema and its dis-empowerment of the spectator. They are an appeal for a cinema of insistent questions instead of false (because too quick) answers, for clarifying distance in place of violating closeness, for provocation and dialogue instead of consumption and consensus."</div>
+                    <div class="quote-kr">나의 영화들은 미국식 '밀어붙이기' 영화와 그것이 관객의 힘을 빼앗는 것에 대한 논쟁적 선언이다. 이것은 성급하기에 거짓된 답 대신 끈질긴 질문을 던지는 영화, 침범하는 가까움 대신 명료하게 하는 거리를, 소비와 합의 대신 도발과 대화를 추구하는 영화에 대한 호소이다.</div>
+                    <div class="quote-source">Wikiquote - Michael Haneke</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1992년 출간된 오스트리아 영화 연구서 *Der siebente Kontinent: Michael Haneke und seine Filme*(또는 관련 맥락에서 자주 인용되는 "Film als Katharsis" 논의)에 수록된 하네케 자신의 글에서 나온 것으로 알려져 있으나, 정확한 출처 문헌과 기고 경위에 대해서는 여러 학술 인용마다 세부 사항이 조금씩 달라 완전히 확정적으로 단정하기는 어렵습니다. 다만 분명한 것은, 이 글이 쓰인 1992년은 하네케가 장편 데뷔작 《제7대륙》(1989)과 《베니의 비디오》(1992)를 막 발표한 직후로, 아직 국제적 명성을 얻기 전 오스트리아 내에서 자신의 영화적 입장을 체계적으로 정리해야 할 필요를 느끼던 시기였으며, 특정 질문에 대한 답변이라기보다는 스스로 자신의 창작 원칙을 선언문 형식으로 밝힌 일종의 매니페스토에 해당합니다. 당시는 할리우드 블록버스터가 전 세계 극장을 지배하던 시대였고, 하네케는 이에 맞서 관객이 수동적으로 소비하는 영화가 아니라 불편한 질문을 던지고 스스로 사유하게 만드는 영화를</p>
+                </div>
+                <div class="script-body"><p>1992년, 미하엘 하네케는 아직 아무도 아니었습니다. 장편 두 편을 만들었고, 칸 황금종려상은 십 년도 더 남은 얘기였죠. 그런데 이 무명의 오스트리아 감독이, 자기 영화가 뭔지 스스로 선언문을 씁니다. 거기 이런 문장이 있었습니다.</p><br><p>"나의 영화들은 미국식 밀어붙이기 영화와, 그것이 관객의 힘을 빼앗는 것에 대한 논쟁적 선언이다. 성급하기에 거짓된 답 대신 끈질긴 질문을, 침범하는 가까움 대신 명료하게 하는 거리를, 소비와 합의 대신 도발과 대화를 추구하는 영화에 대한 호소이다."</p><br><p>당시 할리우드 블록버스터는 전 세계 극장을 점령하고 있었습니다. 관객은 앉아서 감정을 주입받고, 정해진 결말에 안도하고, 극장을 나서면 아무것도 남지 않는. 하네케는 그게 싫었던 겁니다. 영화가 답을 주는 순간, 관객은 생각을 멈춘다. 그래서 그는 답 대신 질문을 남기는 쪽을 택합니다.</p><br><p>이후 그가 만든 영화들, 피아니스트, 히든, 아무르. 전부 보고 나면 쉽게 말이 안 나오는 영화들이죠. 불친절하다고 느낄 수도 있습니다. 하지만 그건 관객을 무시해서가 아니라, 관객이 스스로 생각할 수 있다고 믿었기 때문입니다.</p></div>
+                <div class="script-meta">Script #7 · Quote #52 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">하네케가 고다르의 명언을 뒤집은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Film is 24 lies per second at the service of truth, or at the service of the attempt to find the truth."</div>
+                    <div class="quote-kr">영화는 진실에 봉사하는, 혹은 진실을 찾으려는 시도에 봉사하는 초당 24개의 거짓말이다.</div>
+                    <div class="quote-source">Wikiquote - Michael Haneke</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2004년 오스트리아 감독 닌 하이덴펠스(Nina Kusturica)와 에바 뮐러(Eva Müller)가 하네케의 작업 세계를 조명하며 만든 다큐멘터리 **《24 Realities per Second》**(원제: *Michael Haneke: 24 Wirklichkeiten in der Sekunde*)의 제작 과정에서 하네케 본인이 카메라 앞에서 한 말로, 이 다큐멘터리 자체가 그의 영화관을 탐구하는 작품이었기에 "영화란 무엇인가"라는 근본적 질문에 답하는 맥락에서 자연스럽게 나온 것으로 알려져 있습니다. 하네케는 장뤼크 고다르의 유명한 경구 "영화는 초당 24프레임의 진실이다(Cinema is truth 24 frames per second)"를 의식적으로 뒤집어, 필름의 매 프레임이 현실의 기록이 아니라 편집과 연출을 거친 '거짓'임을 솔직히 인정하되, 바로 그 조작된 거짓들을 정직하게 활용할 때 비로소 진실에 봉사할 수 있다는 자신의 핵심 철학을 한 문장에 압축한 것입니다. 이 시기 하네케는 이미 《피아니스트》(2001)로 칸 영화제 그랑프리를 수상하고 《캐시》(2005) 작업을 앞두고 있</p>
+                </div>
+                <div class="script-body"><p>2004년, 다큐멘터리 한 편이 하네케의 작업 세계를 카메라에 담고 있었습니다. 제목부터 도발적이었죠. 초당 24개의 현실. 그 촬영 중에 하네케가 카메라 앞에 앉아 이렇게 말합니다.</p><br><p>"영화는 진실에 봉사하는, 혹은 진실을 찾으려는 시도에 봉사하는 초당 24개의 거짓말이다."</p><br><p>영화를 좀 아는 사람이라면 바로 알아챕니다. 고다르의 그 유명한 문장을 정확히 뒤집은 겁니다. 고다르는 영화를 초당 24프레임의 진실이라고 했죠. 카메라가 현실을 있는 그대로 포착한다는 믿음. 하네케는 그걸 정면으로 부정합니다.</p><br><p>매 프레임은 누군가가 선택한 앵글이고, 누군가가 자른 편집이고, 누군가가 설계한 연출입니다. 전부 거짓이에요. 하네케는 그걸 숨기지 말자고 한 겁니다. 이미 피아니스트로 칸을 뒤흔든 뒤였고, 곧 캐시에서 관객의 시선 자체를 의심하게 만들 감독이었으니까요.</p><br><p>거짓임을 인정하는 순간, 비로소 정직해진다. 그게 하네케가 영화를 대하는 방식이었습니다.</p></div>
+                <div class="script-meta">Script #8 · Quote #53 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">하네케가 포르노보다 뉴스를 더 외설적이라 부른 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Pornography, it seems to me, is no different from war films or propaganda films in that it tries to make the visceral, horrific, or transgressive elements of life consumable. Propaganda is far more pornographic than a home video of two people fucking."</div>
+                    <div class="quote-kr">내가 보기에 포르노그래피는 전쟁 영화나 선전 영화와 다르지 않다. 삶의 내장을 뒤흔드는, 끔찍한, 혹은 금기를 넘는 요소들을 소비 가능하게 만든다는 점에서 말이다. 선전물은 두 사람이 성관계하는 홈비디오보다 훨씬 더 포르노그래피적이다.</div>
+                    <div class="quote-source">Wikiquote - Michael Haneke</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2000년대 초반 영화 웹진 Kinoeye와의 인터뷰에서 나온 것으로, 하네케가 자신의 영화에서 폭력을 다루는 방식과 주류 미디어의 폭력 재현 사이의 차이를 설명하는 맥락에서 등장한 것으로 알려져 있으나, 해당 인터뷰의 정확한 게재 시점과 인터뷰어가 던진 구체적 질문의 원문은 현재로서 명확히 확인하기 어렵습니다. 다만 시기적으로 보면, 하네케가 1997년 오스트리아 원작 《퍼니 게임》으로 관객의 폭력 소비 욕구를 정면으로 해부해 국제적 논쟁을 일으킨 이후, 2001년 《피아니스트》로 칸 영화제 그랑프리를 수상하며 유럽 예술영화계의 중심에 서 있던 시기로 추정되며, 당시 9·11 이후 전쟁 이미지와 미디어 선전이 범람하던 시대 분위기 속에서 영상 매체의 윤리에 대한 질문이 활발했던 배경과 맞닿아 있습니다. 하네케는 이 발언을 통해 '포르노그래피'라는 단어를 성적 의미에 한정하지 않고, 고통·공포·충격을 안전한 거리에서 쾌락적으로 소비하도록</p>
+                </div>
+                <div class="script-body"><p>1997년, 미하엘 하네케는 퍼니 게임이라는 영화를 만듭니다. 평범한 가족이 이유 없이 고문당하는 이야기인데, 중간에 범인이 카메라를 보며 관객에게 묻습니다. 당신, 이거 보고 싶었던 거 맞죠? 관객석은 분열됐고, 어떤 사람은 극장을 나갔고, 어떤 사람은 걸작이라 했습니다. 그리고 몇 년 뒤, 9·11이 터지고 전쟁 영상이 뉴스를 뒤덮던 시기에, 하네케는 한 인터뷰에서 이렇게 말합니다.</p><br><p>"내가 보기에 포르노그래피는 전쟁 영화나 선전 영화와 다르지 않다. 삶의 내장을 뒤흔드는, 끔찍한, 혹은 금기를 넘는 요소들을 소비 가능하게 만든다는 점에서 말이다. 선전물은 두 사람이 성관계하는 홈비디오보다 훨씬 더 포르노그래피적이다."</p><br><p>하네케가 말하는 포르노그래피는 성적인 게 아닙니다. 고통을 안전한 거리에서 쾌락으로 바꾸는 모든 구조를 가리킵니다. 폭격 장면에 웅장한 음악을 깔고, 시신 위로 자막이 흐르고, 그걸 보면서 우리는 분노하지만 동시에 편안합니다. 그게 하네케에겐 진짜 외설이었던 겁니다.</p><br><p>그래서 그는 관객이 편안해지는 순간을 끊임없이 부숩니다. 보는 행위 자체를 불편하게 만드는 것, 그것이 하네케가 선택한 영화의 윤리였습니다.</p></div>
+                <div class="script-meta">Script #9 · Quote #54 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">하네케가 관객에게 답을 주지 않는 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"All of my films constitute a reaction against mainstream cinema. Every serious form of art sees the receiver as a partner in the undertaking. In fact, that's one of the preconditions of humanistic thought. In cinema, this fact, which should be self-evident, has been overlooked and replaced by an emphasis on the commercial aspects of the medium."</div>
+                    <div class="quote-kr">나의 모든 영화는 주류 영화에 대한 반작용이다. 모든 진지한 예술 형식은 수용자를 그 작업의 파트너로 본다. 사실 그것은 인본주의적 사고의 전제 조건 중 하나다. 영화에서는 자명해야 할 이 사실이 간과되었고, 매체의 상업적 측면에 대한 강조로 대체되어 버렸다.</div>
+                    <div class="quote-source">Wikiquote - Michael Haneke</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2010년 영화 전문지 *Cineaste*와의 인터뷰에서 나온 것으로, 당시 하네케는 《하얀 리본》(2009)으로 칸 영화제 황금종려상을 막 수상한 직후 세계적 주목을 받고 있던 시기였으며, 인터뷰어가 그의 영화들이 왜 관객에게 명확한 답을 주지 않고 열린 해석의 여지를 남기는지를 물었을 때, 하네케는 자신의 모든 영화가 할리우드로 대표되는 주류 상업 영화에 대한 반작용이라고 답하면서, 진지한 예술이라면 관객을 소비자가 아닌 동등한 파트너로 대우해야 하며 이것이 인본주의적 사고의 전제 조건이라고 강조했다. 이 철학은 《히든》(Caché, 2005)에서 감시 테이프의 발신자를 끝까지 밝히지 않는 구조, 《퍼니 게임》(1997)에서 폭력의 쾌락적 소비를 관객 스스로에게 되묻는 장치, 그리고 이후 《아무르》(2012)에서 죽음 앞에 놓인 부부의 이야기를 감상적 결론 없이 마무리하는 방식 등 그의 전 필모그래피를 관통하는 핵심 원칙으로, 관객이 스스로 의미를 구성하도록</p>
+                </div>
+                <div class="script-body"><p>2009년, 미하엘 하네케는 하얀 리본으로 칸 황금종려상을 받습니다. 전 세계가 그에게 주목하던 그 시기, 한 인터뷰어가 묻습니다. 당신의 영화는 왜 관객에게 명확한 답을 주지 않느냐고.</p><br><p>하네케는 이렇게 답합니다. "나의 모든 영화는 주류 영화에 대한 반작용이다. 모든 진지한 예술 형식은 수용자를 그 작업의 파트너로 본다. 그것은 인본주의적 사고의 전제 조건이다. 영화에서는 자명해야 할 이 사실이 간과되었고, 매체의 상업적 측면에 대한 강조로 대체되어 버렸다."</p><br><p>파트너. 소비자가 아니라 파트너. 그래서 캐시에서 감시 테이프를 누가 보냈는지 끝까지 밝히지 않습니다. 퍼니 게임에서 폭력을 즐기던 관객에게 거울을 들이밉니다. 아무르에서 죽음 앞에 선 부부의 이야기를 감상적 결론 없이 끝냅니다.</p><br><p>답을 주지 않는 게 아니라, 답을 만드는 자리를 관객에게 돌려주는 겁니다. 하네케에게 영화란 관객이 생각을 시작하는 곳이지, 생각이 끝나는 곳이 아닙니다.</p></div>
+                <div class="script-meta">Script #10 · Quote #55 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="봉준호" class="director-section">
+            <div class="director-header">
+                <h2>봉준호 <span class="name-en">Bong Joon-ho</span></h2>
+                <div class="director-meta">한국 · 기생충, 살인의 추억, 옥자</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">봉준호가 기생충에서 메시지를 숨긴 방식</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Sci-fi gives you the advantage of being able to say what you want pretty directly. Like, in Snowpiercer, that scene where Ed Harris has a long monologue in the engine car. Parasite has the landscape stone. The movie has symbols, but I wanted to focus more on the mundane atmosphere, on the stories of our neighbors."</div>
+                    <div class="quote-kr">SF는 하고 싶은 말을 꽤 직접적으로 할 수 있다는 장점이 있습니다. 설국열차에서 에드 해리스가 기관실에서 긴 독백을 하는 장면처럼요. 기생충에는 수석(문석)이 있죠. 영화에는 상징들이 있지만, 저는 일상의 분위기, 우리 이웃들의 이야기에 더 집중하고 싶었습니다.</div>
+                    <div class="quote-source">Wikiquote - Bong Joon-ho</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2019년 10월 The Atlantic과의 인터뷰에서 나온 것으로, 당시 《기생충》이 칸영화제 황금종려상을 수상한 직후 북미 개봉을 앞두고 있던 시기에 진행된 대화였으며, 인터뷰어 K. Austin Collins가 봉준호 감독에게 《설국열차》같은 SF 영화와 《기생충》같은 현실 기반 영화에서 사회적 메시지를 전달하는 방식이 어떻게 다른지 물었을 때 나온 답변이다. 봉준호는 SF라는 장르는 에드 해리스가 엔진칸에서 긴 독백을 통해 체제의 논리를 직접 설명할 수 있는 이점이 있지만, 《기생충》에서는 수석(landscape stone) 같은 상징물이 등장하긴 해도 거창한 은유보다는 우리 이웃의 평범한 일상 분위기 자체에 집중하고 싶었다고 설명하면서, 장르에 따라 메시지의 포장 방식을 의식적으로 달리하는 자신의 연출 철학을 구체적으로 밝혔다. 이 발언은 봉준호가 《살인의 추억》에서부터 일관되게 추구해 온 접근법, 즉 사회 구조적 문제를 거대 담론이 아닌 밥상머리나 반지하 생활 같은 일상의 질감 속에 녹여내는</p>
+                </div>
+                <div class="script-body"><p>2019년, 기생충이 칸에서 황금종려상을 받고 전 세계가 이 영화를 분석하기 시작했습니다. 계단의 의미, 반지하의 상징, 수석의 은유. 그런데 정작 봉준호 감독은 그 시기에 좀 다른 이야기를 하고 있었습니다.</p><br><p>한 인터뷰어가 물었습니다. 설국열차 같은 SF에서는 사회적 메시지를 직접적으로 던지는데, 기생충에서는 왜 그렇게 하지 않았느냐고. 봉준호는 이렇게 답합니다. "SF는 하고 싶은 말을 꽤 직접적으로 할 수 있다는 장점이 있습니다. 설국열차에서 에드 해리스가 기관실에서 긴 독백을 하는 장면처럼요. 기생충에는 수석이 있죠. 영화에는 상징들이 있지만, 저는 일상의 분위기, 우리 이웃들의 이야기에 더 집중하고 싶었습니다."</p><br><p>설국열차에서는 악당이 직접 세상의 논리를 설명해줍니다. 장르가 그걸 허락하니까요. 그런데 기생충의 무대는 우리 옆집입니다. 거기서 누군가 카메라를 보고 세상의 부조리를 연설하면 거짓말이 되죠. 그래서 봉준호는 메시지를 대사가 아니라 냄새에, 계단에, 반찬 위에 올려놓았습니다.</p><br><p>거창한 은유가 아니라 밥상머리의 질감으로 진실을 말하는 것. 그게 봉준호가 장르마다 포장을 바꾸는 이유입니다.</p></div>
+                <div class="script-meta">Script #51 · Quote #6 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">봉준호가 빈부격차만으론 부족하다고 말한 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"A lot of people say it's a universal story because it's about the gap between rich and poor, but I don't think that's all the answer. I think this film has done so well because it appeals in a very cinematic way, as a film in itself. I really want to take time to look back at what that cinematic appeal was."</div>
+                    <div class="quote-kr">많은 사람들이 빈부격차를 다뤄서 보편적인 이야기라고 말하지만, 저는 그것이 전부라고 생각하지 않습니다. 이 영화가 성공한 건 매우 영화적인 방식으로, 영화 그 자체로서 호소력이 있었기 때문이라고 생각합니다. 그 영화적 매력이 무엇이었는지 시간을 들여 돌아보고 싶습니다.</div>
+                    <div class="quote-source">Wikiquote - Bong Joon-ho</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2020년 1월, 영화 《기생충》이 칸 영화제 황금종려상에 이어 골든글로브 외국어영화상까지 수상하며 아카데미 시상식을 목전에 둔 시점에 영국 《The Guardian》과 진행한 인터뷰에서 나온 것으로, 기자가 한국어 영화인 《기생충》이 어떻게 언어와 문화의 장벽을 넘어 전 세계적으로 흥행할 수 있었는지를 물었을 때 봉준호 감독이 내놓은 답변이다. 당시 많은 평론가와 언론이 《기생충》의 성공 요인을 빈부격차라는 보편적 주제의식에서 찾았지만, 봉준호는 그것만으로는 충분한 설명이 되지 않는다며, 장르를 자유롭게 넘나드는 서사 구조, 공간 설계를 통한 시각적 은유, 긴장과 유머의 리듬 같은 '영화 자체의 힘'이 관객을 사로잡은 핵심이라는 견해를 밝혔다. 이 발언은 그가 《살인의 추억》에서 실화 기반의 사회적 소재를 스릴러의 형식적 완성도로 승화시키고, 《옥자》에서 다국적 자본과 동물권이라는 무거운 주제를 모험 영화의 문법으로 풀어냈던 것처럼, 메시지와</p>
+                </div>
+                <div class="script-body"><p>2020년 1월, 기생충이 칸 황금종려상에 이어 골든글로브까지 휩쓸고 아카데미를 눈앞에 둔 시점이었습니다. 전 세계 언론이 같은 질문을 던졌죠. 한국어 영화가 어떻게 언어의 장벽을 넘었느냐고.</p><br><p>가디언 인터뷰에서 봉준호는 이렇게 답합니다. "많은 사람들이 빈부격차를 다뤄서 보편적인 이야기라고 말하지만, 저는 그것이 전부라고 생각하지 않습니다. 이 영화가 성공한 건 매우 영화적인 방식으로, 영화 그 자체로서 호소력이 있었기 때문이라고 생각합니다."</p><br><p>당시 평론가들은 기생충의 힘을 주제의식에서 찾았습니다. 양극화라는 누구나 아는 현실. 하지만 봉준호는 고개를 저었어요. 그가 가리킨 건 따로 있었습니다. 반지하에서 대저택으로 올라가는 계단이 만들어내는 시각적 은유, 코미디인 줄 알았는데 어느 순간 스릴러로 바뀌어버리는 장르의 배신, 웃음과 공포가 한 장면 안에 공존하는 리듬. 그러니까 관객이 자막을 읽으면서도 눈을 뗄 수 없었던 건 메시지 때문이 아니라 영화라는 형식 자체가 몸으로 느끼게 만들었기 때문이라는 거죠.</p><br><p>살인의 추억에서 실화를 스릴러의 완성도로 끌어올렸고 옥자에서 동물권이라는 무거운 주제를 모험 영화의 문법으로 풀어냈던 것처럼, 봉준호에게 주제는 언제나 출발점이지 도착점이 아니었습니다.</p><br><p>그래서 그는 인터뷰 끝에 이 말을 덧붙입니다. "그 영화적 매력이 무엇이었는지 시간을 들여 돌아보고 싶습니다." 세계를 설득한 감독이 스스로에게 던진 질문이, 아직 끝나지 않았던 겁니다.</p></div>
+                <div class="script-meta">Script #52 · Quote #7 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">봉준호가 희망을 그리지 않는 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I don't think I'm pessimistic at every point, but I want to be honest in the face of the reality that stands in front of us. With Parasite, my thinking was that mankind's achieved such great development — like the mobile devices we see in front of us — but if we think about the past 30 years, has the gap between rich and poor dissipated? Not really. I have a son myself, do I think things are going to improve in his generation? I don't really think that either. That is the source of a lot of fear, actually. So I wanted to be honest with that fear and sadness and really deliver that."</div>
+                    <div class="quote-kr">매 순간 비관적이라고 생각하지는 않지만, 우리 앞에 놓인 현실 앞에서 정직하고 싶습니다. 기생충을 만들 때 제 생각은 이랬습니다. 인류는 눈앞의 모바일 기기처럼 대단한 발전을 이뤘지만, 지난 30년을 돌아보면 빈부격차가 줄었나요? 그렇지 않죠. 저도 아들이 있는데, 아들 세대에 나아질 거라고 생각하느냐면, 그것도 아닙니다. 사실 그것이 큰 두려움의 원천입니다. 그래서 그 두려움과 슬픔에 솔직하고 싶었고, 그것을 제대로 전달하고 싶었습니다.</div>
+                    <div class="quote-source">Wikiquote - Bong Joon-ho</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 독일 베를린에 기반을 둔 온라인 인터뷰 매거진 **The Talks**와의 인터뷰에서 나온 것으로, 《기생충》이 2019년 칸영화제 황금종려상을 수상한 뒤 전 세계적 주목을 받던 시기에 진행된 대화입니다. 인터뷰어가 봉준호 감독의 영화들이 전반적으로 비관적인 세계관을 담고 있는 것 아니냐는 취지의 질문을 던지자, 그는 스스로를 단순한 비관주의자로 규정하는 것을 거부하면서도 지난 30년간 빈부격차가 전혀 줄어들지 않았다는 현실, 그리고 자신의 아들 세대에도 나아질 것이라는 확신이 없다는 솔직한 두려움을 아버지의 시선으로 고백했습니다. 이 시기는 전 세계적으로 소득 불평등과 주거 양극화 문제가 심화되며 《기생충》이 그린 반지하와 대저택의 대비가 단순한 한국의 이야기가 아닌 보편적 현실로 받아들여지던 때였고, 봉준호 감독은 《살인의 추억》에서 해결되지 않는 사건의 무력감을, 《옥자》에서 자본에 의해 생명마저 상품화되는 구조적 폭력을 다뤄온 자신의 일관된 창</p>
+                </div>
+                <div class="script-body"><p>기생충이 칸에서 황금종려상을 받고 전 세계가 이 영화 이야기를 하던 때, 한 인터뷰어가 봉준호에게 물었습니다. 당신의 영화들은 전반적으로 비관적인 거 아니냐고.</p><br><p>봉준호는 비관주의자라는 꼬리표를 거부했습니다. 대신 이렇게 말했죠. "매 순간 비관적이라고 생각하지는 않지만, 우리 앞에 놓인 현실 앞에서 정직하고 싶습니다." 그리고 한 가지 질문을 던졌습니다. "인류는 대단한 발전을 이뤘지만, 지난 30년을 돌아보면 빈부격차가 줄었나요? 그렇지 않죠."</p><br><p>거기서 멈추지 않았습니다. "저도 아들이 있는데, 아들 세대에 나아질 거라고 생각하느냐면, 그것도 아닙니다. 사실 그것이 큰 두려움의 원천입니다."</p><br><p>감독이 아니라 아버지의 목소리였습니다. 살인의 추억에서 해결되지 않는 사건의 무력감을, 옥자에서 생명마저 상품이 되는 구조를 그려온 사람이 결국 말하고 싶었던 건 절망이 아니었습니다. 정직함이었습니다.</p><br><p>"그 두려움과 슬픔에 솔직하고 싶었고, 그것을 제대로 전달하고 싶었습니다."</p><br><p>희망을 억지로 그리지 않는 것, 그게 봉준호가 관객을 존중하는 방식입니다.</p></div>
+                <div class="script-meta">Script #53 · Quote #8 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">봉준호가 장르의 규칙을 지키면서 부수는 법</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I am a huge fan of genre films and although I like to destroy or twist genre conventions, generally I operate within the boundaries of genre. There is a very specific kind of cinematic excitement that genre films can bring. And that is what I love about it as well, so I am glad to see it."</div>
+                    <div class="quote-kr">저는 장르 영화의 열렬한 팬이고, 장르의 관습을 파괴하거나 비트는 것을 좋아하지만, 기본적으로는 장르의 경계 안에서 작업합니다. 장르 영화만이 줄 수 있는 매우 특별한 종류의 영화적 흥분이 있습니다. 그것이 제가 장르를 사랑하는 이유이기도 합니다.</div>
+                    <div class="quote-source">Wikiquote - Bong Joon-ho</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 독일 베를린 기반의 온라인 인터뷰 매거진 **The Talks**와의 인터뷰에서 나온 것으로, 해당 인터뷰의 정확한 게재 시점은 명확히 확인되지 않으나 내용상 《설국열차》(2013) 전후 시기의 대화로 추정되며, 장르 영화가 전 세계적으로 다시 주목받고 있는 현상에 대해 어떻게 생각하느냐는 질문에 봉준호가 답한 것이다. 그는 이 답변에서 자신을 장르 영화의 흥행이나 유행을 분석하는 비평가가 아니라 장르 영화를 직접 만드는 사람, 즉 현장의 창작자로 위치시키면서, 장르의 관습을 존중하고 그 틀 안에서 작업하되 동시에 그 관습을 비틀고 파괴하는 것이 자신의 방법론이라고 설명했다. 이 철학은 괴수영화의 형식을 빌려 한강변 가족 드라마를 만든 《괴물》(2006), SF 디스토피아 안에 계급 우화를 담은 《설국열차》, 그리고 블랙코미디·스릴러·가족극·사회극의 장르를 한 편 안에서 자유롭게 넘나들며 칸 황금종려상과 아카데미 작품상을 동시에 거머쥔 《기생충》(2019)에</p>
+                </div>
+                <div class="script-body"><p>봉준호에게 누군가 물었습니다. 장르 영화가 다시 전 세계적으로 주목받고 있는데 어떻게 보느냐고. 그는 분석하지 않았습니다. 대신 자기가 서 있는 자리를 먼저 말했습니다.</p><br><p>"저는 장르 영화의 열렬한 팬입니다. 장르의 관습을 파괴하거나 비트는 것을 좋아하지만, 기본적으로는 장르의 경계 안에서 작업합니다. 장르 영화만이 줄 수 있는 매우 특별한 종류의 영화적 흥분이 있습니다. 그것이 제가 장르를 사랑하는 이유이기도 합니다."</p><br><p>경계 안에서 작업한다는 말, 이게 핵심입니다. 그는 장르를 무시하지 않습니다. 괴수영화를 만들 때 괴수영화의 문법을 따르고, 스릴러를 만들 때 스릴러의 호흡을 탑니다. 관객이 기대하는 그 흥분의 구조를 먼저 존중합니다. 그런 다음에 비틉니다. 괴물 안에 한강변 가족 이야기를 넣고, 설국열차라는 SF 안에 계급 우화를 심고, 기생충에서는 블랙코미디와 스릴러와 가족극의 경계를 한 편 안에서 통째로 허뭅니다.</p><br><p>규칙을 모르는 사람은 부술 수가 없습니다. 봉준호가 장르를 사랑한다고 말한 건, 그 규칙을 누구보다 잘 알고 있다는 뜻이기도 합니다.</p></div>
+                <div class="script-meta">Script #54 · Quote #9 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">봉준호가 오스카 무대에서 자기 얘기를 하지 않은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Compared to Japanese or Hong Kong film, the history of Korean cinema is relatively lesser known to American and European audiences. I hope, due to the opportunities that have arisen from Parasite, people will realize that Korean cinema has also had a lot of masters."</div>
+                    <div class="quote-kr">일본이나 홍콩 영화에 비해 한국 영화의 역사는 미국과 유럽 관객에게 상대적으로 덜 알려져 있습니다. 기생충으로 생긴 기회 덕분에 사람들이 한국 영화에도 많은 거장들이 있었다는 것을 알게 되기를 바랍니다.</div>
+                    <div class="quote-source">Wikiquote - Bong Joon-ho</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2019년 가을, 《기생충(Parasite)》이 칸 영화제 황금종려상을 수상한 직후 북미 개봉을 앞두고 진행된 NPR(미국 공영라디오) 인터뷰에서 나온 것으로, 한국 영화가 일본이나 홍콩 영화에 비해 서구에서 상대적으로 덜 알려져 있다는 현실에 대한 질문 혹은 대화 흐름 속에서 봉준호 감독이 자연스럽게 꺼낸 말입니다. 당시는 구로사와 아키라, 왕가위 등 일본·홍콩 감독들은 이미 서구 영화 팬들 사이에서 오랫동안 거장으로 인정받고 있었지만, 임권택, 이창동, 박찬욱 같은 한국 감독들의 작품 세계는 영화제 관객 외에는 폭넓게 알려지지 않은 상황이었고, 봉준호는 《기생충》이 만들어낸 전례 없는 국제적 관심을 자신 개인의 영광이 아니라 한국 영화사 전체를 세계에 소개하는 통로로 삼고자 했습니다. 이러한 태도는 그가 《살인의 추억》부터 《옥자》에 이르기까지 일관되게 보여준 철학, 즉 한국 사회의 구조적 모순과 보통 사람들의 이야기를 한국적 문</p>
+                </div>
+                <div class="script-body"><p>2019년 가을, 기생충이 칸에서 황금종려상을 받고 북미 개봉을 앞두고 있었습니다. 전 세계 언론이 봉준호라는 이름에 열광하던 시기, NPR 인터뷰에서 한 기자가 한국 영화의 위상에 대해 물었습니다.</p><br><p>봉준호는 이렇게 답합니다. "일본이나 홍콩 영화에 비해 한국 영화의 역사는 미국과 유럽 관객에게 상대적으로 덜 알려져 있습니다. 기생충으로 생긴 기회 덕분에 사람들이 한국 영화에도 많은 거장들이 있었다는 것을 알게 되기를 바랍니다."</p><br><p>구로사와 아키라, 왕가위는 이미 서구 영화 팬들 사이에서 전설이었습니다. 하지만 임권택, 이창동, 박찬욱, 이 이름들은 영화제 밖에서는 거의 알려지지 않았습니다. 봉준호는 그걸 알고 있었습니다.</p><br><p>자기 영화가 만들어낸 전례 없는 관심을 자기 개인의 영광으로 쓰지 않았습니다. 그는 그 관심을 문으로 바꿨습니다. 한국 영화 전체가 걸어 들어갈 수 있는 문으로.</p><br><p>살인의 추억부터 옥자까지, 봉준호는 늘 한국 사회의 이야기를 세계의 언어로 옮겨왔습니다. 그리고 마침내 세계가 들을 준비가 되었을 때, 그는 자기 이름이 아니라 자기가 온 곳의 이름을 먼저 말한 겁니다.</p></div>
+                <div class="script-meta">Script #55 · Quote #10 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="스탠리_큐브릭" class="director-section">
+            <div class="director-header">
+                <h2>스탠리 큐브릭 <span class="name-en">Stanley Kubrick</span></h2>
+                <div class="director-meta">미국 · 2001 스페이스 오디세이, 샤이닝, 풀 메탈 재킷</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">큐브릭이 우주를 두려워한 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"The most terrifying fact about the universe is not that it is hostile but that it is indifferent; but if we can come to terms with this indifference and accept the challenges of life within the boundaries of death — however mutable man may be able to make them — our existence as a species can have genuine meaning and fulfillment. However vast the darkness, we must supply our own light."</div>
+                    <div class="quote-kr">우주에 대한 가장 무서운 사실은 그것이 적대적이라는 게 아니라 무관심하다는 것이다. 하지만 우리가 이 무관심과 화해하고, 죽음의 경계 안에서 삶의 도전을 받아들일 수 있다면 — 인간이 그 경계를 아무리 변형시킬 수 있다 하더라도 — 종으로서의 우리 존재는 진정한 의미와 충만함을 가질 수 있다. 어둠이 아무리 광대하더라도, 우리는 스스로 빛을 만들어내야 한다.</div>
+                    <div class="quote-source">Wikiquote - Stanley Kubrick</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1968년 《플레이보이》 잡지 인터뷰에서 저널리스트 에릭 노든(Eric Norden)이 큐브릭에게 신의 존재와 사후세계를 믿는지, 그리고 《2001: 스페이스 오디세이》가 본질적으로 비관적인 영화가 아니냐는 질문을 던졌을 때 나온 답변으로, 당시 큐브릭은 《2001》 개봉 직후 일부 비평가들의 혹평과 관객들의 열광적 반응이 엇갈리는 가운데 자신의 영화가 담고 있는 철학적 메시지를 직접 해명할 필요를 느끼고 있었다. 1960년대 후반은 냉전과 핵전쟁의 공포, 우주 개발 경쟁, 그리고 기존 종교적·도덕적 질서에 대한 회의가 팽배하던 시기였고, 큐브릭은 이러한 시대적 불안 속에서 우주가 인간에게 적대적인 것이 아니라 철저히 무관심하다는 사실이야말로 가장 두려운 진실이며, 그럼에도 인간이 스스로 빛을 만들어내야 한다는 실존주의적 결론에 도달했음을 밝혔다. 이 철학은 핵전쟁의 부조리를 블랙코미디로 그린 《닥터 스트레인지러브》(1964)에서부터, 인</p>
+                </div>
+                <div class="script-body"><p>1968년, 2001 스페이스 오디세이가 개봉하고 나서 비평은 완전히 갈렸습니다. 혹평하는 쪽도 있었고, 걸작이라고 열광하는 관객도 있었죠. 그 한가운데서 플레이보이 잡지가 큐브릭에게 물었습니다. 당신은 신을 믿느냐, 이 영화는 결국 비관적인 영화 아니냐고.</p><br><p>큐브릭은 이렇게 답합니다. "우주에 대한 가장 무서운 사실은 그것이 적대적이라는 게 아니라 무관심하다는 것이다. 하지만 우리가 이 무관심과 화해하고, 죽음의 경계 안에서 삶의 도전을 받아들일 수 있다면, 종으로서의 우리 존재는 진정한 의미와 충만함을 가질 수 있다. 어둠이 아무리 광대하더라도, 우리는 스스로 빛을 만들어내야 한다."</p><br><p>우주가 우리를 미워한다면 차라리 쉽습니다. 싸울 대상이라도 있으니까요. 그런데 무관심이라면, 거기엔 아무런 답이 없습니다. 냉전과 핵전쟁의 그림자 속에서 큐브릭이 도달한 결론은 희망도 절망도 아니었습니다. 아무도 빛을 켜주지 않는다는 사실을 받아들이는 것, 그리고 그걸 알면서도 스스로 빛을 만드는 것. 큐브릭의 영화가 차갑고도 아름다운 이유는, 아마 거기에 있습니다.</p></div>
+                <div class="script-meta">Script #46 · Quote #11 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">큐브릭이 삶은 무의미하다고 말한 순간</div>
+                <div class="quote-box">
+                    <div class="quote-original">"The very meaninglessness of life forces man to create his own meaning. If it can be written or thought, it can be filmed."</div>
+                    <div class="quote-kr">삶의 바로 그 무의미함이 인간으로 하여금 스스로 의미를 창조하도록 강제한다. 쓰거나 생각할 수 있는 것이라면, 영화로 만들 수 있다.</div>
+                    <div class="quote-source">Wikiquote - Stanley Kubrick</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1968년 《2001: 스페이스 오디세이》 개봉 직후 진행된 플레이보이(Playboy) 잡지와의 심층 인터뷰에서 나온 것으로, 당시 인터뷰어 에릭 노든(Eric Norden)이 영화의 난해함과 삶의 의미에 대해 질문하자 큐브릭이 "삶 자체가 무의미하기에 인간은 스스로 의미를 창조할 수밖에 없다"고 답한 것인데, 이는 1960년대 냉전과 우주 경쟁이 한창이던 시대에 인류의 존재론적 위치를 묻는 분위기 속에서 나온 실존주의적 선언이었습니다. 뒷문장인 "쓰이거나 생각될 수 있는 것이라면 영화로 만들 수 있다"는 부분은 같은 인터뷰에서 영화 매체의 가능성에 대해 논하며 덧붙인 말로, 《2001: 스페이스 오디세이》에서 언어적 서사 대신 순수한 시각과 음악만으로 인류 진화의 서사시를 구현해 보인 직후였기에 단순한 수사가 아니라 자신이 방금 증명해 보인 확신의 표현이었습니다. 이 두 문장은 이후 1988년 레슬리 할리웰(Leslie Halliwell)의 《할리웰의 영화 편람(Halliwell's Filmgo</p>
+                </div>
+                <div class="script-body"><p>1968년, 2001 스페이스 오디세이가 개봉합니다. 대사는 거의 없고, 설명은 더 없고, 관객은 극장을 나서며 묻습니다. 이게 대체 무슨 의미냐고. 플레이보이 잡지가 큐브릭에게 똑같은 질문을 던집니다. 당신의 영화는 뭘 말하려는 거냐고.</p><br><p>큐브릭이 답합니다. "삶의 바로 그 무의미함이 인간으로 하여금 스스로 의미를 창조하도록 강제한다."</p><br><p>냉전 한복판, 인류는 달에 가겠다고 로켓을 쏘아 올리고 있었고, 큐브릭은 그 시대 한가운데서 인류 진화의 서사시를 찍었습니다. 그런데 그 서사시를 만든 사람이 하는 말이, 삶엔 원래 의미가 없다는 겁니다. 모순처럼 들리지만 큐브릭한테는 아니었어요. 의미가 없으니까 만들어야 하고, 만들 수 있으니까 영화가 존재하는 거라고 생각한 겁니다.</p><br><p>그래서 이 말을 덧붙입니다. "쓰거나 생각할 수 있는 것이라면, 영화로 만들 수 있다."</p><br><p>방금 대사 없이 음악과 이미지만으로 그걸 증명해 본 사람의 말이었기에, 이건 수사가 아니라 확신이었습니다. 큐브릭에게 영화란, 무의미한 세계에서 인간이 의미를 만들어내는 가장 강력한 도구였던 겁니다.</p></div>
+                <div class="script-meta">Script #47 · Quote #12 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">큐브릭의 성적은 바닥이었다</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I think the big mistake in schools is trying to teach children anything, and by using fear as the basic motivation. Fear of getting failing grades, fear of not staying with your class, etc. Interest can produce learning on a scale compared to fear as a nuclear explosion to a firecracker."</div>
+                    <div class="quote-kr">학교의 가장 큰 실수는 아이들에게 무언가를 가르치려 하면서 공포를 기본 동기로 사용하는 것이라고 생각한다. 낙제에 대한 공포, 반에서 뒤처지는 것에 대한 공포 등. 흥미가 만들어내는 학습은 공포가 만들어내는 학습에 비하면, 핵폭발이 폭죽에 비하는 것과 같다.</div>
+                    <div class="quote-source">Wikiquote - Stanley Kubrick</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 큐브릭이 작가이자 평론가인 진 D. 필립스(Gene D. Phillips)와 나눈 인터뷰에서 나온 것으로, 필립스의 저서 *Stanley Kubrick: A Film Odyssey*(1975)에 수록되어 있으며, 교육과 창의성의 관계에 대한 대화 흐름 속에서 큐브릭이 자신의 학창 시절 경험을 바탕으로 전통적 학교 교육의 한계를 이야기하던 중 나온 말입니다. 큐브릭은 뉴욕 브롱크스의 공립학교 시절 학업 성적이 매우 저조했지만, 아버지에게 선물 받은 카메라를 계기로 사진에 빠져들어 17세에 *룩(Look)* 매거진의 사진작가가 되었고, 대학 진학 대신 독학으로 영화를 배워 감독이 된 자신의 이력 자체가 이 발언의 가장 강력한 증거였습니다. 1970년대 중반은 큐브릭이 *2001 스페이스 오디세이*(1968)와 *시계태엽 오렌지*(1971)로 이미 세계적 거장의 반열에 오른 시기였고, 매 작품마다 우주과학, 18세기 역사, 군사 전략 등 전혀 새로운 분야를 전문가 수준으로 독학해 작품에 녹여내는 그의 작업 방식은 "흥미가</p>
+                </div>
+                <div class="script-body"><p>스탠리 큐브릭은 학교에서 거의 낙제생이었습니다. 뉴욕 브롱크스의 공립학교 시절, 성적은 처참했고 수업에 흥미가 없었습니다. 그런데 열세 살 때, 아버지가 카메라 하나를 선물합니다. 그걸 손에 쥔 순간부터 모든 게 달라졌습니다. 아무도 시키지 않았는데 사진에 빠져들었고, 열일곱에 룩 매거진의 정식 사진작가가 됩니다. 대학은 가지 않았습니다. 대신 혼자서 영화를 배웠고, 2001 스페이스 오디세이와 샤이닝을 만든 감독이 됩니다.</p><br><p>훗날 큐브릭은 이렇게 말합니다. "학교의 가장 큰 실수는 아이들에게 무언가를 가르치려 하면서 공포를 기본 동기로 사용하는 것이다. 낙제에 대한 공포, 뒤처지는 것에 대한 공포. 흥미가 만들어내는 학습은 공포가 만들어내는 학습에 비하면, 핵폭발이 폭죽에 비하는 것과 같다."</p><br><p>이건 그냥 교육론이 아니었습니다. 큐브릭은 작품을 찍을 때마다 우주과학, 18세기 역사, 군사 전략까지 매번 전혀 다른 분야를 전문가 수준으로 독학했습니다. 누가 시켜서가 아니라, 알고 싶어서. 낙제생이 거장이 된 게 아닙니다. 흥미를 따라간 사람이, 끝까지 간 겁니다.</p></div>
+                <div class="script-meta">Script #48 · Quote #13 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">큐브릭이 체스에서 배운 연출의 비밀</div>
+                <div class="quote-box">
+                    <div class="quote-original">"You sit at the board and suddenly your heart leaps. Your hand trembles to pick up the piece and move it. But what chess teaches you is that you must sit there calmly and think about whether it's really a good idea and whether there are other, better ideas."</div>
+                    <div class="quote-kr">체스판 앞에 앉아 있으면 갑자기 심장이 뛴다. 말을 집어 움직이고 싶어 손이 떨린다. 하지만 체스가 가르쳐주는 것은, 거기 차분히 앉아서 그것이 정말 좋은 생각인지, 다른 더 나은 생각은 없는지 곰곰이 따져봐야 한다는 것이다.</div>
+                    <div class="quote-source">Wikiquote - Stanley Kubrick</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 큐브릭이 《샤이닝》(1980) 개봉을 전후한 시기에 한 것으로 알려져 있으며, 여러 출처에서 인용되지만 정확히 어떤 인터뷰어의 어떤 질문에 대한 응답이었는지는 명확히 확인되지 않습니다 — 다만 그가 체스와 영화 연출의 관계에 대해 이야기하는 맥락에서 반복적으로 등장하는 발언입니다. 큐브릭은 1940년대 후반 뉴욕 브롱크스의 십대 시절 워싱턴스퀘어 공원과 맨해튼의 체스 클럽에서 돈을 걸고 체스를 두며 용돈을 벌었고, 이 경험이 그에게 단순한 취미를 넘어 사고방식 자체를 형성해준 훈련이었다고 여러 차례 회고한 바 있습니다. 이 발언의 핵심은 직관적으로 '좋아 보이는' 수에 즉시 뛰어들고 싶은 충동을 억누르고 더 나은 대안이 있는지 냉정하게 탐색해야 한다는 것인데, 이는 그가 《2001 스페이스 오디세이》에서 수십 가지 특수효과 기법을 시험하고 폐기하기를 반복한 과정이나, 《샤이닝》에서 단일 장면을 70회 이상 재촬</p>
+                </div>
+                <div class="script-body"><p>1940년대 후반, 뉴욕 브롱크스의 한 십대가 워싱턴스퀘어 공원에서 돈을 걸고 체스를 둡니다. 학교 성적은 형편없었지만, 체스판 위에서만큼은 어른들 사이에서 돈을 딸 만큼 날카로운 아이였습니다. 훗날 스탠리 큐브릭이 될 그 소년이었죠.</p><br><p>큐브릭은 나중에 이렇게 말합니다. "체스판 앞에 앉아 있으면 갑자기 심장이 뛴다. 말을 집어 움직이고 싶어 손이 떨린다. 하지만 체스가 가르쳐주는 것은, 거기 차분히 앉아서 그것이 정말 좋은 생각인지, 다른 더 나은 생각은 없는지 곰곰이 따져봐야 한다는 것이다."</p><br><p>이건 단순히 체스 이야기가 아닙니다. 이 사람은 이걸 그대로 촬영 현장에 가져갔습니다. 2001 스페이스 오디세이에서 수십 가지 특수효과를 시험하고는 거의 다 버렸고, 샤이닝에서는 하나의 장면을 칠십 번 넘게 다시 찍었습니다. 배우들이 지쳐 나가떨어질 때까지요.</p><br><p>주변에서는 완벽주의라 불렀지만, 큐브릭 본인에게 그건 완벽주의가 아니었습니다. 공원 벤치에서 배운 습관이었죠. 좋아 보이는 첫 번째 수에 손이 갈 때, 그 손을 멈추는 것. 진짜 최선은 항상 그 다음에 있으니까요.</p></div>
+                <div class="script-meta">Script #49 · Quote #14 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">큐브릭이 우주를 찍고 나서 한 말이 무섭습니다</div>
+                <div class="quote-box">
+                    <div class="quote-original">"If man merely sat back and thought about his impending termination, and his terrifying insignificance and aloneness in the cosmos, he would surely go mad, or succumb to a numbing sense of futility. Why, he might ask himself, should he bother to write a great symphony, or strive to make a living, or even to love another, when he is no more than a momentary microbe on a dust mote whirling through the unimaginable immensity of space?"</div>
+                    <div class="quote-kr">만약 인간이 그저 가만히 앉아 자신에게 다가오는 종말과, 우주 속에서의 공포스러운 하찮음과 고독을 생각하기만 한다면, 틀림없이 미쳐버리거나 마비시키는 허무감에 굴복하고 말 것이다. 상상할 수 없는 광활한 우주를 떠도는 먼지 위의 찰나적 미생물에 불과한 자신이, 왜 위대한 교향곡을 쓰고, 생계를 위해 애쓰고, 심지어 누군가를 사랑해야 하는가 하고 스스로에게 물을 수도 있다.</div>
+                    <div class="quote-source">Wikiquote - Stanley Kubrick</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1968년 《플레이보이》 잡지에 실린 에릭 노든(Eric Norden)과의 심층 인터뷰에서 나온 것으로, 《2001: 스페이스 오디세이》 개봉 직후 영화의 철학적 의미에 대해 묻는 질문들에 답하는 과정에서 큐브릭이 신, 죽음, 우주 속 인간의 위치에 대한 자신의 생각을 풀어놓은 대목이다. 당시 노든이 죽음 이후의 문제와 신의 존재에 대한 큐브릭의 개인적 견해를 물었을 때, 큐브릭은 인간이 자신의 유한함과 우주적 무의미함을 정면으로 직시하면 미쳐버리거나 허무에 잠식될 수밖에 없다고 말하면서도, 바로 그렇기 때문에 종교가 수천 년간 위안의 역할을 해왔음을 인정했고, 동시에 그 위안 없이도 인간이 스스로 삶의 의미를 만들어가야 한다는 실존주의적 입장을 밝혔다. 1968년은 냉전과 핵전쟁의 공포가 여전하고, 우주 탐사가 현실이 되어가던 시대였기에 인류의 우주적 위치에 대한 질문이 그 어느 때보다 절실했으며, 큐브릭은 바로 그해 개봉한 《2001:</p>
+                </div>
+                <div class="script-body"><p>1968년, 2001 스페이스 오디세이가 개봉하고 나서 플레이보이 잡지가 큐브릭에게 물었습니다. 신을 믿느냐, 죽음 이후에 뭐가 있다고 생각하느냐. 냉전의 한가운데, 핵전쟁의 공포가 일상이던 시절이었고, 인류는 막 달을 향해 로켓을 쏘아 올리고 있었습니다. 우주가 얼마나 거대한지 처음으로 실감하기 시작한 시대였죠.</p><br><p>큐브릭은 이렇게 답합니다. "만약 인간이 그저 가만히 앉아 자신에게 다가오는 종말과, 우주 속에서의 공포스러운 하찮음과 고독을 생각하기만 한다면, 틀림없이 미쳐버리거나 마비시키는 허무감에 굴복하고 말 것이다. 상상할 수 없는 광활한 우주를 떠도는 먼지 위의 찰나적 미생물에 불과한 자신이, 왜 위대한 교향곡을 쓰고, 생계를 위해 애쓰고, 심지어 누군가를 사랑해야 하는가 하고 스스로에게 물을 수도 있다."</p><br><p>그런데 큐브릭은 여기서 멈추지 않았습니다. 그는 종교가 수천 년간 그 공포를 달래왔다는 걸 인정하면서도, 결국 인간은 스스로 의미를 만들어야 한다고 말했습니다. 우주가 답을 주지 않는다는 걸 알면서도 영화를 만든 사람. 큐브릭이 카메라를 든 이유가 어쩌면 거기에 있었습니다.</p></div>
+                <div class="script-meta">Script #50 · Quote #15 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="안드레이_타르코프스키" class="director-section">
+            <div class="director-header">
+                <h2>안드레이 타르코프스키 <span class="name-en">Andrei Tarkovsky</span></h2>
+                <div class="director-meta">러시아 · 솔라리스, 스토커, 희생</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">타르코프스키가 아는 것을 일부러 빼는 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"An artist needs knowledge and the power of observation only so that he can tell from what he is abstaining, and to be sure that his abstention will not appear artificial or false."</div>
+                    <div class="quote-kr">예술가에게 지식과 관찰력이 필요한 이유는 오직 자신이 무엇을 절제하고 있는지를 알기 위해서이며, 그 절제가 인위적이거나 거짓되어 보이지 않도록 하기 위해서다.</div>
+                    <div class="quote-source">Wikiquote - Andrei Tarkovsky</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 문장은 1980년 7월 7일 타르코프스키가 개인 일기에 적은 것으로, 특정 인터뷰나 질문에 대한 답이 아니라 자신의 창작 철학을 스스로 정리한 사적인 기록이며, 사후 1989년에 출간된 일기집 『시간 속의 시간(Time Within Time: The Diaries 1970–1986)』에 수록되어 세상에 알려졌습니다. 당시 그는 소련에서 《스토커》(1979)를 완성한 직후였고 차기작 《노스탤지어》를 구상하면서도 소련 당국의 지속적인 제작 방해와 검열에 시달리고 있던 시기로, 예술가로서 무엇을 보여줄 것인가보다 무엇을 걷어낼 것인가에 대한 고민이 깊어지던 때였습니다. 그는 예술가에게 지식과 관찰력이 필요한 이유는 그것을 과시하기 위해서가 아니라, 자신이 무엇을 의도적으로 빼고 있는지를 정확히 인식하고 그 절제가 억지스럽거나 거짓되어 보이지 않도록 하기 위해서라고 썼는데, 이는 《스토커》에서 서사적 설명을 극도로 배제하고 긴 롱테이크와 물, 안개, 폐허의 이미지만으로 관객에게 의미를 느끼게 한 연출 방</p>
+                </div>
+                <div class="script-body"><p>1980년 7월, 타르코프스키는 조용히 일기장을 펼칩니다. 스토커를 막 완성한 직후였고, 다음 영화 노스탤지어를 구상하던 시기였는데, 소련 당국의 검열과 제작 방해는 점점 심해지고 있었습니다. 그 와중에 그가 고민한 건, 다음 영화에 무엇을 담을까가 아니었습니다. 무엇을 뺄 것인가, 였습니다.</p><br><p>그날 일기에 그는 이렇게 적습니다. "예술가에게 지식과 관찰력이 필요한 이유는 오직 자신이 무엇을 절제하고 있는지를 알기 위해서이며, 그 절제가 인위적이거나 거짓되어 보이지 않도록 하기 위해서다."</p><br><p>보통 우리는 많이 알수록 많이 보여줄 수 있다고 생각합니다. 그런데 타르코프스키는 정반대였습니다. 많이 알아야 정확하게 뺄 수 있다고 본 거죠. 스토커를 떠올려 보면 이해가 됩니다. 그 영화엔 설명이 거의 없습니다. 대신 물, 안개, 폐허, 그리고 끝없이 이어지는 롱테이크만 남아 있죠. 서사를 걷어냈는데도 억지스럽지 않은 건, 그가 뺀 것들의 무게를 정확히 알고 있었기 때문입니다.</p><br><p>지식을 과시하는 게 아니라, 지식이 있으니까 비로소 침묵할 수 있었던 겁니다. 절제는 모르는 사람의 생략이 아니라, 아는 사람의 선택입니다.</p></div>
+                <div class="script-meta">Script #26 · Quote #31 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">타르코프스키가 현대 예술을 배신이라 부른 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Art is born and takes hold wherever there is a timeless and insatiable longing for the spiritual, for the ideal: that longing which draws people to art. Modern art has taken the wrong turn in abandoning the search for the meaning of existence in order to affirm the value of the individual for his own sake. The artist is always the servant, and is perpetually trying to pay for the gift that has been given to him as if by a miracle. Modern man, however, does not want to make any sacrifice, even though true affirmation of the self can only be expressed in sacrifice."</div>
+                    <div class="quote-kr">예술은 영적인 것, 이상적인 것에 대한 시대를 초월한 채울 수 없는 갈망이 있는 곳이면 어디서든 태어나고 뿌리를 내린다. 바로 그 갈망이 사람들을 예술로 이끈다. 현대 예술은 존재의 의미를 탐구하는 것을 포기하고 개인 그 자체의 가치를 내세우는 방향으로 잘못된 길을 걷고 있다. 예술가는 언제나 봉사자이며, 기적처럼 주어진 재능에 대한 빚을 끊임없이 갚으려 한다. 그러나 현대인은 어떤 희생도 하려 하지 않는다. 진정한 자아의 긍정은 오직 희생을 통해서만 표현될 수 있음에도 불구하고.</div>
+                    <div class="quote-source">Wikiquote - Andrei Tarkovsky</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 타르코프스키가 1967년부터 집필을 시작해 1986년 사후 출간된 저서 『봉인된 시간(Sculpting in Time)』에 수록된 것으로, 특정 인터뷰나 강연에 대한 답변이 아니라 예술의 본질과 예술가의 소명에 대한 그의 오랜 사유를 체계적으로 정리한 이론서의 핵심 구절이다. 이 책을 쓰던 시기 타르코프스키는 소련 당국의 검열과 제작 방해로 7편의 장편영화밖에 만들지 못하는 좌절을 겪으면서도, 서구의 상업화된 예술과 소련의 이념 종속적 예술 모두가 영적 탐구라는 본래의 사명을 저버렸다는 이중의 위기의식을 느끼고 있었으며, 특히 1982년 이탈리아로 망명한 뒤 서구 예술계의 개인주의적 자기표현 풍조를 직접 목격하면서 이러한 확신이 더욱 굳어졌다. 예술가는 자기 재능의 주인이 아니라 봉사자이며, 진정한 자아 실현은 자기희생을 통해서만 가능하다는 이 선언은 그의 마지막 영화 『희생(1986)』에서 핵전쟁을 막기 위해 자신의 모든 것을 내놓는 주인공 알렉산더의 행위로</p>
+                </div>
+                <div class="script-body"><p>평생 일곱 편의 영화밖에 만들지 못한 감독이 있습니다. 소련에서는 검열이 그를 막았고, 결국 이탈리아로 망명합니다. 그런데 자유로운 서구에 도착한 타르코프스키가 본 건, 해방이 아니라 또 다른 타락이었습니다.</p><br><p>그는 죽기 직전까지 쓴 책 『봉인된 시간』에 이렇게 적습니다. "예술은 영적인 것, 이상적인 것에 대한 시대를 초월한 채울 수 없는 갈망이 있는 곳이면 어디서든 태어나고 뿌리를 내린다." 그리고 곧바로 이렇게 말합니다. "현대 예술은 존재의 의미를 탐구하는 것을 포기하고 개인 그 자체의 가치를 내세우는 방향으로 잘못된 길을 걷고 있다."</p><br><p>소련에서는 예술이 이념에 복종했고, 서구에서는 예술이 자기 자신에게 복종하고 있었던 겁니다. 타르코프스키가 보기에 둘 다 본질을 잃은 건 마찬가지였습니다.</p><br><p>그래서 그는 이런 결론에 도달합니다. "예술가는 언제나 봉사자이며, 기적처럼 주어진 재능에 대한 빚을 끊임없이 갚으려 한다. 그러나 현대인은 어떤 희생도 하려 하지 않는다. 진정한 자아의 긍정은 오직 희생을 통해서만 표현될 수 있음에도 불구하고."</p><br><p>그의 마지막 영화 『희생』에서 주인공은 핵전쟁을 막기 위해 자신의 모든 것을 불태웁니다. 타르코프스키는 그 장면을 찍고 몇 달 뒤 세상을 떠났습니다. 재능은 내 것이 아니라 빌린 것이다. 그가 일곱 편의 영화로 평생 증명하려 한 건 바로 그 한 문장이었습니다.</p></div>
+                <div class="script-meta">Script #27 · Quote #32 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">타르코프스키가 예술에게 요구한 단 하나의 임무</div>
+                <div class="quote-box">
+                    <div class="quote-original">"The allotted function of art is not, as is often assumed, to put across ideas, to propagate thoughts, to serve as an example. The aim of art is to prepare a person for death, to plough and harrow his soul, rendering it capable of turning to good."</div>
+                    <div class="quote-kr">예술에 부여된 기능은 흔히 생각하듯 사상을 전달하거나, 생각을 전파하거나, 모범을 보이는 것이 아니다. 예술의 목적은 인간을 죽음에 대비시키는 것이며, 그의 영혼을 쟁기로 갈고 써레질하여 선을 향해 돌아설 수 있게 만드는 것이다.</div>
+                    <div class="quote-source">Wikiquote - Andrei Tarkovsky</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 타르코프스키가 자신의 예술관을 집대성한 저서 『봉인된 시간(Sculpting in Time)』(1967년부터 집필을 시작해 1986년 사후 출간)에서 예술의 기능과 목적을 논하는 대목에 나오는 것으로, 특정 질문에 대한 답변이 아니라 예술이 단순히 사상을 전파하거나 교훈을 주는 도구가 아님을 역설하며 자신의 신념을 선언적으로 서술한 문장입니다. 타르코프스키는 이 책을 소련 체제 아래에서 창작의 자유를 억압받고 검열과 싸우던 시기부터 써내려갔고, 말년에는 조국을 떠나 이탈리아와 스웨덴에서 망명 생활을 하며 자신의 죽음을 예감하듯 인간 존재의 유한성과 영적 정화의 문제에 점점 더 깊이 천착하고 있었습니다. 실제로 그는 이 책의 완성을 보지 못한 채 1986년 54세의 나이로 암으로 세상을 떠났으며, 이 발언에 담긴 '죽음을 준비시키고 영혼을 갈아엎어 선을 향하게 한다'는 사유는 마지막 두 작품인 『노스탤지어(1983)』에서 주인공이 촛불을 들고 온천을 건너는 자기희생의 의식과,</p>
+                </div>
+                <div class="script-body"><p>1986년, 타르코프스키는 암 투병 중에도 한 권의 책을 붙잡고 있었습니다. 제목은 봉인된 시간. 소련의 검열과 싸우던 시절부터 써내려온, 자신의 예술관을 집대성한 원고였습니다. 그는 이 책의 완성을 보지 못한 채 54세에 세상을 떠났습니다.</p><br><p>그 원고 안에 이런 문장이 있습니다. "예술에 부여된 기능은 흔히 생각하듯 사상을 전달하거나, 생각을 전파하거나, 모범을 보이는 것이 아니다. 예술의 목적은 인간을 죽음에 대비시키는 것이며, 그의 영혼을 쟁기로 갈고 써레질하여 선을 향해 돌아설 수 있게 만드는 것이다."</p><br><p>영혼을 쟁기로 갈아엎는다. 보통 감독이 쓸 수 있는 문장이 아닙니다. 그런데 그의 마지막 영화들을 보면 이 말이 단순한 비유가 아니었다는 걸 알게 됩니다. 노스탤지어에서 주인공은 꺼져가는 촛불을 들고 온천을 끝까지 건넙니다. 희생에서 아버지는 자기 집에 스스로 불을 놓습니다. 메시지를 전달하는 장면이 아니라, 보는 사람의 안쪽을 뒤집어놓는 장면입니다.</p><br><p>타르코프스키는 관객에게 무언가를 가르치려 하지 않았습니다. 대신 영화가 끝난 뒤에도 당신의 영혼이 예전과 같지 않기를 원했습니다.</p></div>
+                <div class="script-meta">Script #28 · Quote #33 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">타르코프스키가 절망을 그릴수록 희망을 놓지 않은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"The more hopeless the world in the artist's version, the more clearly perhaps must we see the ideal that stands in opposition — otherwise life becomes impossible! Art symbolises the meaning of our existence."</div>
+                    <div class="quote-kr">예술가가 그려내는 세계가 절망적일수록, 그에 맞서 서 있는 이상은 아마도 더욱 선명하게 보여야 한다 — 그렇지 않으면 삶은 불가능해진다! 예술은 우리 존재의 의미를 상징한다.</div>
+                    <div class="quote-source">Wikiquote - Andrei Tarkovsky</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 타르코프스키가 자신의 영화 미학과 예술관을 체계적으로 정리한 저서 『봉인된 시간(Sculpting in Time)』(1967년부터 집필을 시작해 1986년 사후 출간)에 수록된 것으로, 특정 인터뷰나 강연에서의 즉흥적 답변이 아니라 그가 오랜 세월에 걸쳐 다듬어온 예술 철학을 글로 풀어낸 대목이며, 이 책을 집필하던 시기에 그는 소련 당국의 검열과 제작 방해로 영화 한 편을 만들기 위해 수년씩 기다려야 하는 고통 속에 있었고 결국 1982년 이탈리아에서의 『노스탤지어』 촬영을 계기로 조국을 떠나 다시 돌아가지 못한 채 망명 생활을 하게 됩니다. 이 구절에서 그는 예술가가 세상의 절망을 깊이 그릴수록 그에 대비되는 이상(理想)을 더 선명하게 보여주어야 한다고 역설하는데, 이는 그의 영화 『스토커』에서 폐허가 된 금지구역 한가운데 소망을 이루어주는 '방'이 존재하고, 『솔라리스』에서 광활하고 불가해한 우주 속에서도 결국 아버지의 집 앞에 무릎 꿇는 인간적 회</p>
+                </div>
+                <div class="script-body"><p>소련에서 영화 한 편 만드는 데 수년씩 걸렸습니다. 검열이었죠. 당국은 그의 작품을 번번이 막았고, 그는 기다리고 또 기다렸습니다. 안드레이 타르코프스키, 결국 조국을 떠났고 다시 돌아가지 못했습니다.</p><br><p>그는 그 긴 기다림 속에서 책을 한 권 썼습니다. 봉인된 시간. 자신이 왜 영화를 만드는지, 예술이란 무엇인지를 정리한 책이었죠. 거기에 이런 문장이 있습니다.</p><br><p>"예술가가 그려내는 세계가 절망적일수록, 그에 맞서 서 있는 이상은 아마도 더욱 선명하게 보여야 한다. 그렇지 않으면 삶은 불가능해진다. 예술은 우리 존재의 의미를 상징한다."</p><br><p>그의 영화를 떠올려 보면 이 말이 그대로 보입니다. 스토커에서 세상은 폐허인데 그 한가운데 소망을 이루어주는 방이 있고, 솔라리스에서 이해할 수 없는 우주 끝에서 주인공은 결국 아버지의 집 앞에 무릎을 꿇습니다.</p><br><p>어둠을 깊이 그리되, 그 안에 빛 하나는 반드시 남겨둘 것. 타르코프스키에게 영화란 그런 거였습니다.</p></div>
+                <div class="script-meta">Script #29 · Quote #34 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">타르코프스키가 영화를 만든 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"My function is to make whoever sees my films aware of his need to love and to give his love, and aware that beauty is summoning him."</div>
+                    <div class="quote-kr">나의 역할은 내 영화를 보는 사람이 사랑해야 할 필요성과 사랑을 베풀어야 할 필요성을 자각하게 하고, 아름다움이 자신을 부르고 있음을 깨닫게 하는 것이다.</div>
+                    <div class="quote-source">Wikiquote - Andrei Tarkovsky</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 타르코프스키가 1986년 파리 망명 시절 암 투병 중에 집필을 마무리한 자전적 영화론 『봉인된 시간(Sculpting in Time)』에 수록된 것으로, 특정 인터뷰의 질문에 대한 답변이 아니라 예술의 목적과 영화감독으로서의 소명을 스스로 정리하는 과정에서 나온 선언적 문장이다. 당시 그는 소련 당국의 검열과 갈등 끝에 1984년 이탈리아에서 귀국 거부를 선언한 상태였고, 고국의 가족과 떨어져 유럽을 떠돌며 『노스탤지어』와 마지막 작품 『희생』을 완성하던, 말 그대로 예술가로서의 삶 전체를 돌아보는 시기였다. 그는 이 책 전반에 걸쳐 영화란 관객에게 정보를 전달하거나 즐거움을 주는 도구가 아니라 인간의 영혼을 정화하고 사랑과 아름다움에 대한 갈망을 깨우는 영적 행위라는 철학을 펼치는데, 이 문장은 그 핵심을 가장 응축된 형태로 담고 있다. 실제로 『거울』에서 어머니에 대한 사랑의 기억을 물과 빛의 이미지로 풀어낸 것, 『노스탤지어』에서 고향을 잃</p>
+                </div>
+                <div class="script-body"><p>1986년, 파리. 타르코프스키는 죽어가고 있었습니다. 폐암 말기. 소련을 떠난 지 2년, 고향에 두고 온 아들 얼굴도 못 본 채 병상에서 한 권의 책을 마무리하고 있었습니다. 봉인된 시간. 자신의 영화 인생 전부를 정리한 책이었죠.</p><br><p>소련 당국은 그의 영화를 검열했고, 그는 결국 귀국을 거부했습니다. 고국의 가족과 떨어져 유럽을 떠돌면서 노스탤지어를 찍고, 마지막 작품 희생을 완성했습니다. 남은 시간이 얼마 없다는 걸 알고 있었던 사람이, 자기 예술의 의미를 단 한 문장으로 이렇게 남깁니다.</p><br><p>"나의 역할은 내 영화를 보는 사람이 사랑해야 할 필요성과 사랑을 베풀어야 할 필요성을 자각하게 하고, 아름다움이 자신을 부르고 있음을 깨닫게 하는 것이다."</p><br><p>그는 영화가 정보를 전달하는 도구도, 즐거움을 주는 상품도 아니라고 믿었습니다. 영화는 인간의 영혼을 건드리는 일이라고, 관객 안에 이미 있는 사랑과 아름다움에 대한 갈망을 깨우는 행위라고 생각했습니다. 거울에서 어머니의 기억을 물과 빛으로 풀어낸 것도, 노스탤지어에서 고향의 상실을 촛불 하나에 담은 것도, 전부 그 믿음에서 나온 선택이었습니다.</p><br><p>모든 것을 잃어가던 사람이 끝까지 붙잡은 건, 영화는 사랑을 깨우는 일이라는 단 하나의 확신이었습니다.</p></div>
+                <div class="script-meta">Script #30 · Quote #35 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="알프레드_히치콕" class="director-section">
+            <div class="director-header">
+                <h2>알프레드 히치콕 <span class="name-en">Alfred Hitchcock</span></h2>
+                <div class="director-meta">영국 · 사이코, 현기증, 새</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">히치콕이 신데렐라를 절대 못 만드는 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I am a typed director. If I made Cinderella, the audience would immediately be looking for a body in the coach."</div>
+                    <div class="quote-kr">나는 유형화된 감독입니다. 내가 신데렐라를 만들면, 관객들은 즉시 마차 안에서 시체를 찾을 것입니다.</div>
+                    <div class="quote-source">Wikiquote - Alfred Hitchcock</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1956년경 Newsweek와의 인터뷰에서 나온 것으로 널리 알려져 있으나, 정확한 인터뷰 날짜와 구체적으로 어떤 질문에 대한 답변이었는지는 명확히 확인되지 않으며, 다만 히치콕이 자신의 장르적 정체성에 대해 이야기하는 맥락에서 등장한 것으로 전해집니다. 1956년은 히치콕이 이미 《이창》(1954), 《나는 고백한다》(1953) 등 연이은 스릴러 히트작으로 할리우드에서 "서스펜스의 거장"이라는 타이틀을 확고히 굳힌 시기이자, TV 시리즈 《알프레드 히치콕 프레젠트》(1955~)를 통해 매주 안방극장에서 자신의 얼굴과 특유의 블랙유머를 대중에게 각인시키던 때였기에, 그는 자신이 어떤 영화를 만들든 관객이 시체와 살인을 기대한다는 사실을 누구보다 잘 알고 있었습니다. "내가 신데렐라를 만들면 관객은 곧바로 마차 안에서 시체를 찾을 것이다"라는 이 한 문장은, 관객의 장르적 기대가 영화 경험 자체를 지배한다는 통찰을 유머로 압축한 것인 동시에, 훗날 《사이코</p>
+                </div>
+                <div class="script-body"><p>1956년, 히치콕은 이미 손댈 수 없는 사람이었습니다. 이창, 나는 고백한다, 연이은 스릴러가 전부 흥행했고, TV 시리즈로 매주 안방에 얼굴을 비추던 시기였죠. 미국 전체가 이 뚱뚱한 영국 신사를 서스펜스의 대명사로 알고 있었습니다.</p><br><p>그 무렵 한 인터뷰에서 누군가 그의 장르적 정체성을 물었고, 히치콕은 이렇게 답합니다. "나는 유형화된 감독입니다. 내가 신데렐라를 만들면, 관객들은 즉시 마차 안에서 시체를 찾을 것입니다."</p><br><p>웃기지만, 이건 정확한 말이었습니다. 관객은 스크린을 볼 때 백지 상태로 보지 않습니다. 감독의 이름을 보는 순간 이미 기대가 생기고, 그 기대가 영화 경험 자체를 지배합니다. 히치콕은 그걸 알았습니다. 그리고 거기에 저항하는 대신, 그 기대를 도구로 썼습니다.</p><br><p>관객이 시체를 찾을 거라는 걸 안다면, 일부러 시체를 늦게 보여주면 됩니다. 그게 서스펜스니까요. 사이코에서 그 유명한 샤워 장면이 영화 중반에야 터지는 건, 히치콕이 관객의 기대를 정확히 계산했기 때문입니다.</p><br><p>유형화는 한계가 아니었습니다. 히치콕에게 그건 관객과의 게임이었고, 그는 그 게임의 규칙을 자기가 썼습니다.</p></div>
+                <div class="script-meta">Script #11 · Quote #46 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">히치콕이 인생에서 잘라낸 것</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Drama is life with the dull bits cut out."</div>
+                    <div class="quote-kr">드라마란 인생에서 지루한 부분을 잘라낸 것이다.</div>
+                    <div class="quote-source">Wikiquote - Alfred Hitchcock</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 말은 히치콕이 1960년대 영국 BBC와의 인터뷰에서 한 것으로 널리 알려져 있으나, 정확한 프로그램명이 Picture Parade인지 혹은 다른 인터뷰였는지에 대해서는 여러 출처가 엇갈리며 확실하게 단정하기 어렵고, 다만 그가 영화와 현실의 차이를 묻는 질문에 답하면서 "드라마란 지루한 부분을 잘라낸 인생이다"라고 말한 것으로 전해집니다. 당시 히치콕은 이미 《현기증》(1958), 《북북서로 진로를 돌려라》(1959), 《사이코》(1960)를 연달아 발표하며 경력의 절정기에 있었고, 특히 《사이코》의 샤워 장면처럼 수십 개의 컷을 촘촘하게 이어 붙여 관객의 심장을 조이는 편집 기법으로 영화 편집이 단순한 기술이 아니라 감정을 설계하는 예술임을 직접 증명해 보인 직후였습니다. 이 발언은 그의 핵심 철학, 즉 영화는 현실을 있는 그대로 복제하는 것이 아니라 일상의 무의미한 순간들을 과감히 걷어내고 긴장·서스펜스·감정의 본질만 농축해야 한다는 믿음을 단 한 문장으로 압축한 것</p>
+                </div>
+                <div class="script-body"><p>1960년, 전 세계 관객이 샤워 장면 하나에 비명을 질렀습니다. 사이코. 그 장면은 고작 45초인데, 히치콕은 거기에 70개가 넘는 컷을 집어넣었습니다. 칼이 실제로 피부에 닿는 장면은 단 한 프레임도 없는데, 보는 사람은 온몸이 베이는 것 같았죠.</p><br><p>이 영화 직후, 한 인터뷰에서 누군가 물었습니다. 영화와 현실은 뭐가 다릅니까. 히치콕은 이렇게 답했습니다. "드라마란 인생에서 지루한 부분을 잘라낸 것이다."</p><br><p>그에게 편집은 기술이 아니었습니다. 감정을 설계하는 방법이었습니다. 현실을 있는 그대로 보여주는 건 카메라도 할 수 있지만, 관객의 심장이 언제 뛰고 언제 멈출지를 결정하는 건 감독의 가위라고 믿었던 겁니다. 뭘 찍느냐가 아니라 뭘 잘라내느냐. 사이코의 그 45초가 반세기가 넘도록 잊히지 않는 건, 히치콕이 보여주지 않기로 한 것들 때문입니다.</p><br><p>영화를 만든다는 건 결국 무엇을 남기고 무엇을 버릴지, 그 판단의 연속입니다.</p></div>
+                <div class="script-meta">Script #12 · Quote #47 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">히치콕이 배우의 대사를 소음 취급한 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Dialogue should simply be a sound among other sounds, just something that comes out of the mouths of people whose eyes tell the story in visual terms."</div>
+                    <div class="quote-kr">대사란 그저 여러 소리 중 하나의 소리일 뿐이며, 눈으로 이야기를 전달하는 사람들의 입에서 나오는 무언가에 불과하다.</div>
+                    <div class="quote-source">Wikiquote - Alfred Hitchcock</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언의 정확한 출처—어떤 특정 인터뷰, 강연, 또는 저서에서 나왔는지—는 명확히 확인되지 않으며, 히치콕의 수많은 인터뷰와 대담 속에서 반복적으로 변주된 그의 핵심 철학을 압축한 문장으로 널리 인용되고 있습니다. 다만 이 발언의 정신은 1962년 프랑수아 트뤼포와의 유명한 장시간 대담(후에 『히치콕과의 대화(Hitchcock/Truffaut)』로 출간)에서 그가 일관되게 강조한 "순수 영화(pure cinema)" 개념—즉 영화는 대사나 문학적 설명이 아니라 이미지의 연쇄로 이야기를 전달해야 한다는 신념—과 정확히 맞닿아 있습니다. 1920년대 영국에서 무성영화 시대에 경력을 시작한 히치콕은 대사 한 마디 없이 편집과 카메라 앵글만으로 관객의 감정을 조종하는 법을 체득했고, 이 경험이 유성영화 시대가 온 뒤에도 대사를 음악이나 효과음과 동등한 하나의 '소리 요소'로 격하시키는 독특한 연출관의 뿌리가 되었습니다. 실제로 《사이코(Psycho, 1960)》의 샤워 장면은 78개 컷과 버나드</p>
+                </div>
+                <div class="script-body"><p>1960년, 영화사에서 가장 유명한 살인 장면이 촬영됩니다. 사이코의 샤워 신. 45초 동안 78개의 컷이 쏟아지고, 칼이 피부에 닿는 장면은 단 한 번도 없는데 관객은 비명을 지릅니다. 대사는 없습니다. 오직 물소리, 바이올린의 비명, 그리고 공포에 질린 눈동자뿐입니다.</p><br><p>이 장면을 설계한 사람, 알프레드 히치콕. 그는 이렇게 말합니다. "대사란 그저 여러 소리 중 하나의 소리일 뿐이며, 눈으로 이야기를 전달하는 사람들의 입에서 나오는 무언가에 불과하다."</p><br><p>그가 이렇게 생각하게 된 건 우연이 아닙니다. 히치콕은 1920년대 무성영화 시대에 경력을 시작한 사람입니다. 대사라는 도구 자체가 존재하지 않던 시절, 편집의 리듬과 카메라의 각도만으로 관객의 심장을 쥐어짜는 법을 먼저 배운 겁니다. 그에게 유성영화의 등장은 도구가 하나 추가된 것이지, 영화의 본질이 바뀐 게 아니었습니다.</p><br><p>그래서 히치콕의 영화에서 대사는 음악이나 효과음과 같은 위치에 놓입니다. 말이 이야기를 이끄는 게 아니라, 눈이 이야기를 이끌고, 말은 그 위에 얹히는 소리일 뿐인 거죠.</p><br><p>지금 쓰고 있는 그 대사, 정말 카메라 없이는 전달 못 할 이야기인가요.</p></div>
+                <div class="script-meta">Script #13 · Quote #48 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">공포의 거장 히치콕이 가장 두려워한 것</div>
+                <div class="quote-box">
+                    <div class="quote-original">"A clear horizon — nothing to worry about on your plate, only things that are creative and not destructive and that's within yourself. Within me I can't bear quarreling, I can't bear feelings between people. I think hatred is wasted energy and it's all non-productive. I'm very sensitive. A sharp word, said by a person who has a temper, if they're close to me, hurts me for days. I know we're only human, we do go in for these various emotions, call them negative emotions but when all these are removed and you can look forward, and the road is clear ahead, and now you're going to create something. I think that's as happy as I would ever want to be."</div>
+                    <div class="quote-kr">맑은 지평선 — 눈앞에 걱정거리가 없고, 오직 창조적이고 파괴적이지 않은 것들만 있는 상태, 그것이 자기 안에 있는 것입니다. 나는 다툼을 견딜 수 없고, 사람들 사이의 감정 갈등을 견딜 수 없습니다. 증오는 에너지 낭비이고 전혀 생산적이지 않다고 생각합니다. 나는 매우 예민한 사람입니다. 가까운 사람이 화를 내며 던진 날카로운 말 한마디가 며칠이고 저를 아프게 합니다. 우리가 인간이기에 이런 감정들, 부정적 감정이라 불리는 것들에 빠지게 된다는 걸 압니다. 하지만 이 모든 것이 걷혀지고 앞을 바라볼 수 있을 때, 앞길이 확 트여 있을 때, 이제 무언가를 창조하려 할 때 — 그것이 내가 바랄 수 있는 가장 행복한 상태라고 생각합니다.</div>
+                    <div class="quote-source">Wikiquote - Alfred Hitchcock</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1964년 캐나다 CBC 방송의 텔레비전 인터뷰 프로그램 'Telescope'에서 진행자 플레처 마클(Fletcher Markle)이 히치콕에게 "당신에게 행복이란 무엇인가"라고 묻자 나온 대답으로, 당시 65세의 히치콕은 이미 《사이코》(1960)와 《새》(1963)를 연달아 완성하며 공포와 서스펜스의 거장이라는 명성의 정점에 있었지만, 정작 본인은 극도로 예민한 성격 탓에 현장에서의 감정적 충돌이나 대인 갈등을 극도로 힘들어했고, 이 때문에 촬영 전에 스토리보드를 통해 모든 장면을 미리 완벽하게 설계하는 것으로 유명했는데, 이는 현장의 예측 불가능한 마찰을 최소화하려는 그의 내면적 방어기제이기도 했다. 그가 말한 "부정적 감정이 모두 걷히고 앞길이 맑게 트인 상태에서 무언가를 창조하는 것"이야말로 가장 행복한 순간이라는 고백은, 그의 영화 속 인물들이 늘 통제 불가능한 공포와 혼란에 내던져지는 것과 정확히 대조되며, 스크린 위의 불안과 공포가 사실은 그 자신이 가장 두려워하고</p>
+                </div>
+                <div class="script-body"><p>1964년, 캐나다 CBC 방송 인터뷰. 진행자가 당시 예순다섯 살의 히치콕에게 묻습니다. 당신에게 행복이란 무엇입니까. 사이코, 새, 현기증. 인간이 느낄 수 있는 가장 극한의 공포를 스크린 위에 올려놓은 사람이 돌아온 대답은, 놀라울 만큼 조용한 것이었습니다.</p><br><p>"나는 다툼을 견딜 수 없습니다. 사람들 사이의 감정 갈등을 견딜 수 없습니다. 증오는 에너지 낭비이고 전혀 생산적이지 않다고 생각합니다. 나는 매우 예민한 사람입니다. 가까운 사람이 화를 내며 던진 날카로운 말 한마디가 며칠이고 저를 아프게 합니다."</p><br><p>히치콕은 촬영장에 들어가기 전, 모든 장면을 스토리보드로 완벽하게 설계하는 것으로 유명했습니다. 사람들은 그걸 천재의 통제력이라 불렀지만, 실은 현장에서 벌어질 충돌과 마찰을 미리 없애버리려는 그만의 방어기제이기도 했습니다.</p><br><p>그는 이렇게 말을 이었습니다. "이 모든 부정적 감정이 걷혀지고, 앞을 바라볼 수 있을 때, 앞길이 확 트여 있을 때, 이제 무언가를 창조하려 할 때. 그것이 내가 바랄 수 있는 가장 행복한 상태입니다."</p><br><p>스크린 위의 공포는, 그 자신이 가장 두려워한 것의 정반대였던 겁니다.</p></div>
+                <div class="script-meta">Script #14 · Quote #49 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">히치콕이 파티에서 입을 다문 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Deep inside, I am a shy man. And in the presence of colorful characters, I am a clam. I never try to out-eccentric the eccentrics!"</div>
+                    <div class="quote-kr">깊은 내면에서 나는 수줍은 사람입니다. 개성 강한 사람들 앞에서 나는 조개처럼 입을 다뭅니다. 별난 사람들보다 더 별나게 굴려고 하지 않습니다!</div>
+                    <div class="quote-source">Wikiquote - Alfred Hitchcock</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1950년 10월 22일자 뉴욕 헤럴드 트리뷴(New York Herald Tribune)의 'New York Close-Up'이라는 인물 탐방 칼럼에 실린 것으로, 당시 히치콕은 이미 《로프》(1948), 《열차 안의 낯선 자들》(1951 개봉 예정) 등으로 할리우드 최고의 서스펜스 감독으로 자리잡은 시점이었고, 텔레비전 진출 이전이라 아직 TV 쇼 호스트로서의 쇼맨 이미지가 만들어지기 전이었습니다. 칼럼의 정확한 질문 내용은 확인하기 어려우나, 뉴욕의 유명 인사들을 스케치하는 이 칼럼의 성격상 히치콕의 사교적 면모나 할리우드 인맥에 대한 이야기를 나누는 과정에서 자신의 내성적 기질을 고백한 것으로 보이며, "깊은 속내를 들여다보면 나는 수줍음을 타는 사람이고, 개성 넘치는 사람들 앞에서는 조개처럼 입을 다물며, 별난 사람들보다 더 별나게 굴려고 하지 않는다"는 이 말은 대중이 알던 유머러스하고 도발적인 히치콕의 이미지와 극명하게 대비됩니다. 이 내성적 관찰자로서의 기질은</p>
+                </div>
+                <div class="script-body"><p>1950년, 뉴욕 헤럴드 트리뷴의 인물 탐방 칼럼에 알프레드 히치콕이 등장합니다. 이미 할리우드 최고의 서스펜스 감독이었고, 사람들은 그가 평소에도 도발적이고 유머러스한 사람일 거라고 생각했습니다. 그런데 히치콕은 예상과 전혀 다른 말을 꺼냅니다.</p><br><p>"깊은 내면에서 나는 수줍은 사람입니다. 개성 강한 사람들 앞에서 나는 조개처럼 입을 다뭅니다. 별난 사람들보다 더 별나게 굴려고 하지 않습니다."</p><br><p>스크린 위에서 관객의 심리를 완벽하게 조종하던 사람이, 정작 사람들 앞에서는 조개가 된다고 고백한 겁니다. 그런데 생각해보면, 이게 오히려 자연스럽습니다. 히치콕의 영화를 보면 카메라는 항상 한 발 뒤에서 인물을 지켜봅니다. 끼어들지 않고, 관찰하고, 그 관찰 속에서 공포를 만들어내죠. 사이코의 샤워 장면도, 새의 놀이터 장면도, 전부 누군가를 조용히 바라보는 시선에서 시작됩니다.</p><br><p>말이 많은 사람은 그런 시선을 갖기 어렵습니다. 히치콕은 입을 다물었기 때문에 볼 수 있었고, 볼 수 있었기 때문에 보여줄 수 있었습니다.</p></div>
+                <div class="script-meta">Script #15 · Quote #50 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="이창동" class="director-section">
+            <div class="director-header">
+                <h2>이창동 <span class="name-en">Lee Chang-dong</span></h2>
+                <div class="director-meta">한국 · 버닝, 시, 밀양</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">이창동이 관객에게 답을 주지 않는 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"To me it seems that films these days are becoming more and more simple, and the audience seems to desire simpler stories. Of course, films sort of shape the desires and the demands the audience makes, so I kind of wanted to go against this trend and see if a film can sort of throw endless questions at the audience. Endless questions about a larger mysterious world."</div>
+                    <div class="quote-kr">요즘 영화들은 점점 더 단순해지고 있고, 관객들도 더 단순한 이야기를 원하는 것 같습니다. 물론 영화가 관객의 욕구와 요구를 형성하는 측면이 있죠. 그래서 저는 이 흐름에 거슬러, 영화가 관객에게 끝없는 질문을 던질 수 있는지 시도해보고 싶었습니다. 더 크고 신비로운 세계에 대한 끝없는 질문들을.</div>
+                    <div class="quote-source">Wikiquote - Lee Chang-dong</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2018년 영화 《버닝(Burning)》의 해외 프로모션 시기에 할리우드 리포터(The Hollywood Reporter)와의 인터뷰에서 나온 것으로, 《버닝》이 그해 칸 영화제 경쟁부문에 초청되어 국제비평가연맹(FIPRESCI) 상을 수상하며 큰 주목을 받던 무렵이었습니다. 정확히 어떤 질문에 대한 답변이었는지는 인터뷰 전문의 흐름상 《버닝》의 의도적 모호함과 열린 결말에 관한 질문에서 비롯된 것으로 보이며, 감독은 관객에게 명쾌한 해답 대신 끝없는 질문을 던지는 영화를 만들고 싶었다는 자신의 연출 철학을 설명하는 맥락에서 이 말을 했습니다. 당시는 마블 시네마틱 유니버스로 대표되는 프랜차이즈 블록버스터가 전 세계 극장을 지배하며 영화의 서사가 점점 단순명료해지던 시기였고, 이창동 감독은 8년 만의 신작으로 이러한 흐름에 정면으로 맞서는 작품을 내놓은 셈이었습니다. 이 발언은 무라카미 하루키의 단편 「헛간을 태우다」의 본래적 모호함을 영화적으로 극대화하여 관객 스스로</p>
+                </div>
+                <div class="script-body"><p>2018년, 이창동 감독이 8년 만에 신작을 들고 돌아옵니다. 영화 버닝. 칸 영화제 경쟁부문에 초청되고, 국제비평가연맹상까지 받죠. 그런데 영화를 본 사람들 반응이 갈립니다. 결말이 뭔지 모르겠다, 대체 뭘 말하려는 건지 모르겠다. 당시는 마블 유니버스가 전 세계 극장을 지배하던 시기였어요. 관객들은 명쾌한 서사에 익숙해져 있었고, 영화는 점점 더 친절해지고 있었습니다.</p><br><p>이창동 감독은 이렇게 말합니다. "요즘 영화들은 점점 더 단순해지고 있고, 관객들도 더 단순한 이야기를 원하는 것 같습니다. 그래서 저는 이 흐름에 거슬러, 영화가 관객에게 끝없는 질문을 던질 수 있는지 시도해보고 싶었습니다. 더 크고 신비로운 세계에 대한 끝없는 질문들을."</p><br><p>답을 주는 영화는 극장을 나서면 끝납니다. 하지만 질문을 남기는 영화는 관객의 머릿속에서 계속 상영되죠. 이창동이 일부러 모호하게 만든 게 아닙니다. 세상이 원래 그렇게 생겼다고 믿는 겁니다.</p></div>
+                <div class="script-meta">Script #36 · Quote #21 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">이창동이 8년 동안 영화를 안 만든 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Whether the story is fun or moving or might receive good reviews is honestly not that important to me. It's a very intuitive feeling that I have — mainly about whether the story is worth reaching out to the audience to communicate with them at this point in time. Is the story worth the effort of bringing it to the audience? It's sort of a very sensitive and intuitive decision-making process that happens within me."</div>
+                    <div class="quote-kr">그 이야기가 재미있는지, 감동적인지, 좋은 평가를 받을지는 솔직히 제게 그리 중요하지 않습니다. 제가 갖는 것은 매우 직관적인 느낌인데, 주로 이 시점에서 그 이야기가 관객에게 다가가 소통할 만한 가치가 있는가에 대한 것입니다. 이 이야기를 관객에게 가져가는 수고를 들일 만한 가치가 있는가? 그것은 제 안에서 일어나는 매우 예민하고 직관적인 의사결정 과정입니다.</div>
+                    <div class="quote-source">Wikiquote - Lee Chang-dong</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2018년 영화 《버닝》의 해외 프로모션 시기에 할리우드 리포터(The Hollywood Reporter)가 진행한 인터뷰에서 나온 것으로, 기자가 8년 만의 신작을 내놓기까지 어떤 기준으로 이야기를 선택하는지 물었을 때 이창동 감독이 답한 말이다. 당시 《버닝》은 칸 영화제 경쟁 부문에 초청되어 국제비평가연맹상(FIPRESCI)을 수상하며 큰 주목을 받았고, 전작 《시》(2010) 이후 무려 8년의 공백기를 거친 터라 왜 그토록 오래 걸렸느냐는 질문이 자연스레 따라붙던 시점이었다. 감독은 흥행 가능성이나 평단의 호평 같은 외적 기준이 아니라 '지금 이 시점에 이 이야기를 관객에게 전할 만한 가치가 있는가'라는 극히 직관적이고 예민한 내면의 판단이 창작의 출발점이라고 밝혔는데, 이는 사회적 무감각과 보이지 않는 폭력을 다뤄온 《밀양》(2007), 《시》, 《버닝》 모두를 관통하는 그의 핵심 철학—동시대의 절박한 문제의식 없이는 카메라를 들지 않겠다는 태도—을 압축적으로 보여준</p>
+                </div>
+                <div class="script-body"><p>2018년, 칸 영화제. 이창동 감독의 신작 버닝이 공개되자마자 기립박수가 쏟아졌습니다. 그런데 기자들이 가장 궁금해한 건 영화 자체가 아니었습니다. 전작 시 이후 무려 8년. 왜 그렇게 오래 걸렸느냐는 질문이 끊이지 않았습니다.</p><br><p>할리우드 리포터 인터뷰에서 감독은 이렇게 답합니다. "그 이야기가 재미있는지, 감동적인지, 좋은 평가를 받을지는 솔직히 제게 그리 중요하지 않습니다. 지금 이 시점에서 이 이야기가 관객에게 다가가 소통할 만한 가치가 있는가. 그것은 제 안에서 일어나는 매우 예민하고 직관적인 의사결정 과정입니다."</p><br><p>흥행 가능성도 아니고, 평단의 호평도 아닙니다. 지금, 이 시대에, 이 이야기를 꺼내야만 하는가. 그 질문에 확신이 서지 않으면 카메라를 들지 않는 겁니다. 밀양도, 시도, 버닝도 모두 그렇게 태어났습니다. 동시대가 외면하는 고통 앞에서 더 이상 침묵할 수 없을 때, 그때서야 비로소 영화가 시작되는 거죠.</p><br><p>이창동에게 영화란 만들고 싶어서 만드는 게 아니라, 만들지 않으면 안 되는 순간에만 만드는 것이었습니다.</p></div>
+                <div class="script-meta">Script #37 · Quote #22 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">이창동이 답을 주지 않는 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I have to wonder how much obvious messages like 'justice prevails' would affect our lives, which leads me to make films that ask questions."</div>
+                    <div class="quote-kr">'정의는 승리한다'와 같은 명백한 메시지가 우리 삶에 과연 얼마나 영향을 줄 수 있을지 의문이 듭니다. 그래서 저는 질문을 던지는 영화를 만들게 됩니다.</div>
+                    <div class="quote-source">Wikiquote - Lee Chang-dong</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2018년 영화 《버닝》의 개봉을 앞두고 코리아헤럴드(The Korea Herald)와 진행한 인터뷰에서 나온 것으로, 자신의 영화가 왜 명확한 답이나 교훈 대신 관객에게 질문을 던지는 방식을 취하는지를 묻는 질문에 대한 답변이었다. 당시 이창동 감독은 《시》(2010) 이후 8년 만에 신작 《버닝》으로 복귀하며 전 세계적인 주목을 받고 있었고, 칸 영화제 경쟁 부문 진출을 앞둔 시점이어서 그의 영화 철학 전반에 대한 깊은 질문들이 오갔던 것으로 보인다. 그는 '정의는 승리한다'와 같은 분명한 메시지가 실제 우리 삶에 얼마나 영향을 미칠 수 있는지 의문이 든다고 말하며, 그래서 자신은 답을 주는 영화가 아니라 질문을 던지는 영화를 만들게 된다고 설명했는데, 이는 《밀양》에서 용서와 신앙의 의미를 정면으로 질문하고 《시》에서 잔혹한 현실 속 아름다움이란 무엇인지를 묻고 《버닝》에서 진실의 모호함 자체를 관객에게 떠넘기는 그의 전 필모그래피를 관통하</p>
+                </div>
+                <div class="script-body"><p>2018년, 이창동 감독이 8년의 침묵을 깨고 돌아왔습니다. 영화 버닝으로 칸 영화제 경쟁 부문에 진출하던 무렵, 한 인터뷰어가 물었습니다. 왜 당신의 영화에는 명확한 답이나 교훈이 없느냐고.</p><br><p>이창동 감독은 이렇게 말했습니다. "정의는 승리한다와 같은 명백한 메시지가 우리 삶에 과연 얼마나 영향을 줄 수 있을지 의문이 듭니다. 그래서 저는 질문을 던지는 영화를 만들게 됩니다."</p><br><p>생각해보면 그의 영화는 늘 그래왔습니다. 밀양에서는 용서란 정말 가능한 건지 물었고, 시에서는 끔찍한 현실 한가운데서 아름다움이란 게 대체 뭔지 물었습니다. 그리고 버닝에서는 진실이 무엇인지조차 관객에게 넘겨버렸죠.</p><br><p>그는 관객을 가르치려 하지 않았습니다. 대신 관객이 스스로 질문을 안고 극장을 나서게 만들었습니다. 답을 주는 영화는 극장에서 끝나지만, 질문을 던지는 영화는 삶 속에서 계속됩니다.</p></div>
+                <div class="script-meta">Script #38 · Quote #23 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">이창동이 소설을 연애편지처럼 쓴 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"When I used to write novels, I always wrote for one person, for this person who thought and felt the same way as I do. It almost felt like I was writing a love letter to this very specific person who would understand what I'm writing and share the same feelings and thoughts."</div>
+                    <div class="quote-kr">소설을 쓸 때 저는 항상 한 사람을 위해 썼습니다. 저와 같은 방식으로 생각하고 느끼는 그 한 사람을요. 마치 제가 쓰는 것을 이해하고 같은 감정과 생각을 나눌 수 있는 아주 특정한 사람에게 연애편지를 쓰는 것 같은 느낌이었습니다.</div>
+                    <div class="quote-source">Wikiquote - Lee Chang-dong</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2018년 영화 《버닝》의 해외 프로모션 시기에 할리우드 리포터(The Hollywood Reporter)와 진행한 인터뷰에서 나온 것으로, 소설가로 활동하던 시절과 영화감독으로서의 작업이 어떻게 다른지를 묻는 질문에 대한 답변이었다. 이창동은 1983년 단편소설 「전리와 가까운 곳」으로 문단에 등단한 뒤 1997년 《초록물고기》로 영화 연출에 데뷔한 독특한 이력의 소유자로, 당시 《버닝》이 칸 영화제 경쟁 부문에 진출하며 국제적 주목을 받고 있던 시점이었기에 그의 문학적 뿌리에 대한 관심이 자연스럽게 높아진 상황이었다. 소설을 쓸 때는 자신과 똑같이 생각하고 느끼는 단 한 사람에게 연애편지를 쓰듯 글을 썼다는 이 고백은, 그의 영화들이 왜 거대한 서사보다 한 개인의 내면에 깊이 파고드는 방식을 택하는지를 설명해주며, 《밀양》에서 신애의 고통을 관객이 거의 체험하듯 느끼게 하거나 《시》에서 미자의 시선을 통해 세상의 아름다움과 잔혹함을 동시에 응시하게 만드는</p>
+                </div>
+                <div class="script-body"><p>2018년, 영화 버닝이 칸 영화제에서 전 세계의 주목을 받고 있을 때, 한 인터뷰어가 이창동에게 물었습니다. 소설가였던 시절과 영화감독으로서의 작업은 어떻게 다르냐고요.</p><br><p>이창동은 이렇게 답했습니다. "소설을 쓸 때 저는 항상 한 사람을 위해 썼습니다. 저와 같은 방식으로 생각하고 느끼는 그 한 사람을요. 마치 제가 쓰는 것을 이해하고 같은 감정과 생각을 나눌 수 있는 아주 특정한 사람에게 연애편지를 쓰는 것 같은 느낌이었습니다."</p><br><p>수백만 관객이 아니라 단 한 사람. 이 말이 그의 영화를 설명합니다. 밀양에서 신애의 고통이 남의 일 같지 않게 느껴지는 이유, 시에서 미자의 눈을 빌려 세상의 아름다움과 잔혹함을 동시에 바라보게 되는 이유. 그건 이창동이 처음부터 불특정 다수가 아니라 자기 앞에 앉아 있을 단 한 명의 얼굴을 떠올리며 이야기를 만들어왔기 때문입니다.</p><br><p>위대한 영화는 모두에게 말을 거는 것 같지만, 어쩌면 시작은 언제나 한 사람에게 보내는 편지일지도 모릅니다.</p></div>
+                <div class="script-meta">Script #39 · Quote #24 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">이창동이 세련된 세상을 의심하는 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"To me, it seems that the world we live in continues to become more and more sophisticated, convenient and cool on the outside, but there are so many problems underneath that we can't really discern — and that's the nature of this post-modern world and its problems."</div>
+                    <div class="quote-kr">우리가 사는 세계는 겉으로 보기에 점점 더 정교하고, 편리하고, 세련되어지지만, 그 아래에는 우리가 제대로 분별할 수 없는 수많은 문제들이 있습니다. 그것이 바로 이 포스트모던 세계와 그 문제들의 본질입니다.</div>
+                    <div class="quote-source">Wikiquote - Lee Chang-dong</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2018년 영화 《버닝》의 해외 홍보 과정에서 할리우드 리포터(The Hollywood Reporter)와 진행한 인터뷰에서 나온 것으로, 당시 《버닝》은 칸 영화제 경쟁 부문에 초청되어 국제 비평가 연맹(FIPRESCI) 역대 최고점을 기록하며 세계적 주목을 받고 있었고, 감독은 하루키의 단편 「헛간을 태우다」를 원작으로 하되 한국 사회의 청년 빈곤과 계층 간 불투명한 벽을 영화에 녹여낸 의도를 설명하는 맥락에서 이 말을 했다. 구체적으로 어떤 질문에 대한 답이었는지는 공개된 인터뷰 전문을 통해 확인하면, 기자가 《버닝》이 담고 있는 미스터리의 본질이 무엇이냐고 물었을 때 이창동 감독은 오늘날 세계가 겉으로는 점점 세련되고 편리하고 멋져 보이지만 그 아래에는 분별할 수 없는 문제들이 너무 많으며 그것이 포스트모던 세계의 본질이라고 답한 것으로, 영화 속 종수가 느끼는 해독 불가능한 세계—부유하고 매끄러운 벤의 표면 아래 감춰진 폭력성, 해미의 갑작스러운 소</p>
+                </div>
+                <div class="script-body"><p>2018년 칸 영화제, 버닝이 국제 비평가 연맹 역대 최고점을 찍습니다. 전 세계 기자들이 이창동 감독 앞에 앉았고, 한 기자가 물었습니다. 이 영화가 품고 있는 미스터리의 정체가 뭐냐고.</p><br><p>감독은 영화 이야기를 하지 않았습니다. 대신 세상 이야기를 꺼냈습니다. "우리가 사는 세계는 겉으로 보기에 점점 더 정교하고, 편리하고, 세련되어지지만, 그 아래에는 우리가 제대로 분별할 수 없는 수많은 문제들이 있습니다. 그것이 바로 이 포스트모던 세계와 그 문제들의 본질입니다."</p><br><p>버닝에서 종수는 벤이라는 남자를 이해할 수 없습니다. 매끄럽고, 부유하고, 웃는 얼굴 뒤에 뭔가가 있는 것 같은데 절대 보이지 않습니다. 해미는 사라지고, 진실은 어디에도 없습니다. 이창동 감독은 하루키의 원작 위에 한국 청년 빈곤과 계층의 벽을 덧입히면서, 이 읽을 수 없는 세계 자체를 미스터리로 만든 겁니다.</p><br><p>표면이 세련될수록 문제는 더 깊이 숨는다. 이창동은 그래서 카메라를 표면 아래로 향합니다.</p></div>
+                <div class="script-meta">Script #40 · Quote #25 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="잉마르_베리만" class="director-section">
+            <div class="director-header">
+                <h2>잉마르 베리만 <span class="name-en">Ingmar Bergman</span></h2>
+                <div class="director-meta">스웨덴 · 제7의 봉인, 페르소나, 야생 딸기</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">베리만이 자기 영화를 절대 설명하지 않은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"People ask what are my intentions with my films — my aims. It is a difficult and dangerous question, and I usually give an evasive answer: I try to tell the truth about the human condition, the truth as I see it."</div>
+                    <div class="quote-kr">사람들이 내 영화의 의도가 무엇이냐고, 목표가 무엇이냐고 묻는다. 어렵고 위험한 질문이라 나는 대개 얼버무리며 답한다. 나는 인간 조건에 대한 진실을, 내가 보는 그대로의 진실을 말하려 한다고.</div>
+                    <div class="quote-source">Wikiquote - Ingmar Bergman</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1960년 출간된 『잉마르 베리만의 네 편의 시나리오(Four Screenplays of Ingmar Bergman)』 영문판 서문에서 베리만 자신이 직접 쓴 글에 등장하는데, 특정 인터뷰나 행사에서의 즉흥적 답변이 아니라 그가 자신의 창작 철학을 독자에게 설명하기 위해 정리한 에세이의 일부로, 당시 《제7의 봉인》(1957), 《야생 딸기》(1957), 《얼굴》(1958) 등이 연이어 국제적 찬사를 받으며 "당신의 영화는 대체 무엇을 말하려는 것이냐"는 질문을 끊임없이 받던 시기에 그 누적된 물음에 대한 일종의 총괄적 응답이었습니다. 1950년대 후반 유럽 예술영화의 전성기 속에서 비평가와 관객은 그의 작품에 담긴 신의 침묵, 죽음의 공포, 인간관계의 고통 같은 주제를 놓고 명확한 이념적 메시지를 요구했지만, 베리만은 자신의 영화가 어떤 사상의 도구가 아니라 인간 조건의 진실을 자기 눈에 보이는 그대로 포착하려는 시도일 뿐이라고 선을 그으며, 이 겸허하면서도 단호한 선언은 이후 《페</p>
+                </div>
+                <div class="script-body"><p>1957년, 스웨덴의 한 감독이 갑자기 세계의 주목을 받습니다. 제7의 봉인, 야생 딸기. 죽음과 신의 침묵을 정면으로 다룬 영화들이 연이어 터지면서, 어디를 가든 같은 질문이 쏟아졌습니다. "당신 영화는 대체 뭘 말하려는 겁니까?"</p><br><p>비평가들은 명확한 메시지를 원했고, 관객들은 해석의 정답을 원했습니다. 잉마르 베리만은 이 질문이 쌓이고 또 쌓이자, 1960년 자신의 시나리오집 서문에 이렇게 적습니다.</p><br><p>"사람들이 내 영화의 의도가 무엇이냐고, 목표가 무엇이냐고 묻는다. 어렵고 위험한 질문이라 나는 대개 얼버무리며 답한다. 나는 인간 조건에 대한 진실을, 내가 보는 그대로의 진실을 말하려 한다고."</p><br><p>어렵고 위험한 질문이라는 표현, 이게 핵심입니다. 베리만에게 영화는 어떤 사상을 전달하는 도구가 아니었습니다. 의도를 명확하게 말하는 순간, 영화는 그 한 문장보다 작아지니까요. 그래서 그는 얼버무렸습니다. 의도적으로.</p><br><p>영화로 뭔가를 증명하려 하지 마십시오. 당신이 본 진실을, 본 그대로 찍으십시오. 베리만이 평생 지킨 원칙은 그것 하나였습니다.</p></div>
+                <div class="script-meta">Script #31 · Quote #26 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">베리만이 영화를 음악이라 부른 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I would say that there is no art form that has so much in common with film as music. Both affect our emotions directly, not via the intellect."</div>
+                    <div class="quote-kr">영화와 가장 많은 것을 공유하는 예술 형식은 음악이라고 말하겠다. 둘 다 지성을 경유하지 않고 감정에 직접 작용한다.</div>
+                    <div class="quote-source">Wikiquote - Ingmar Bergman</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 베리만이 1960년에 출간한 저서 『네 편의 시나리오(Four Screenplays of Ingmar Bergman)』의 서문에서 나온 것으로, 특정 인터뷰나 질문에 대한 답이 아니라 자신의 영화 예술관을 직접 글로 풀어쓴 에세이의 일부였습니다. 이 서문에서 베리만은 영화가 관객의 지성이 아닌 감정에 직접 호소하는 매체라는 점을 설명하면서, 그와 가장 닮은 예술 형식으로 음악을 지목했는데, 이는 어린 시절 목사인 아버지의 교회에서 오르간 음악과 예배 의식에 깊이 감화받았던 개인적 체험과, 바흐와 베토벤의 음악을 평생 영감의 원천으로 삼아온 그의 예술적 뿌리에서 비롯된 고백이었습니다. 당시 베리만은 1957년 『제7의 봉인』과 『야생 딸기』의 연이은 성공으로 이미 세계적 거장의 반열에 올라 있었고, 이 서문은 영어권 독자에게 자신의 창작 철학을 체계적으로 밝힌 최초의 중요한 글 중 하나였습니다. 이 통찰은 이후 『페르소나』(1966)처럼 전통적 서사 논리를 해체하고 리듬, 침묵, 정</p>
+                </div>
+                <div class="script-body"><p>스웨덴의 작은 교회, 목사의 아들로 태어난 소년이 있었습니다. 예배가 시작되면 오르간 소리가 돌벽을 타고 울렸고, 그 소년은 설교의 말뜻보다 음악이 몸에 닿는 그 감각을 먼저 기억했습니다. 잉마르 베리만입니다.</p><br><p>제7의 봉인과 야생 딸기로 이미 세계적 거장이 된 1960년, 베리만은 자신의 시나리오집 서문에 이렇게 적습니다. "영화와 가장 많은 것을 공유하는 예술 형식은 음악이라고 말하겠다. 둘 다 지성을 경유하지 않고 감정에 직접 작용한다."</p><br><p>영어권 독자에게 자신의 창작 철학을 밝힌 거의 최초의 글이었습니다. 누군가의 질문에 답한 게 아니라, 스스로 꺼내 놓은 고백이었죠. 베리만에게 영화는 논리로 설득하는 매체가 아니었습니다. 어린 시절 교회에서 오르간 소리가 말보다 먼저 가슴을 흔들었던 것처럼, 카메라도 그래야 한다고 믿었던 겁니다.</p><br><p>그래서 이후 페르소나 같은 작품에서 그는 이야기의 논리를 과감히 부수고, 리듬과 침묵만으로 관객의 감정을 움직이려 했습니다.</p><br><p>영화가 머리가 아니라 몸에 먼저 닿아야 한다는 것. 베리만은 그걸 설교가 아니라 음악에서 배웠습니다.</p></div>
+                <div class="script-meta">Script #32 · Quote #27 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">베리만이 예술의 탯줄이 끊어졌다고 선언한 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Regardless of my own beliefs and my own doubts, which are unimportant in this connection, it is my opinion that art lost its basic creative drive the moment it was separated from worship. It severed an umbilical cord and now lives its own sterile life, generating and degenerating itself."</div>
+                    <div class="quote-kr">내 개인적 믿음이나 의심은 이 맥락에서 중요하지 않지만, 예술이 숭배로부터 분리된 순간 근본적인 창조적 동력을 잃었다는 것이 내 생각이다. 예술은 탯줄을 끊고 이제 스스로의 불모한 삶을 살며, 스스로를 생성하고 퇴화시키고 있다.</div>
+                    <div class="quote-source">Wikiquote - Ingmar Bergman</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1960년대 초 베리만이 자신의 영화 네 편을 묶은 선집 『네 편의 각본집(Four Screenplays of Ingmar Bergman)』(1960년 영어판)의 서문에서 한 말로, 특정 질문에 대한 답이 아니라 예술과 신앙의 관계에 대한 자신의 신조를 자발적으로 밝힌 글입니다. 그는 이 서문에서 샤르트르 대성당을 지은 중세 장인들이 자기 이름을 남기지 않고 오직 신의 영광을 위해 일했던 시대를 떠올리며, 예술이 종교적 예배로부터 분리된 순간 탯줄이 끊긴 것처럼 생명력을 잃고 자기 안에서 맴도는 불모의 상태에 빠졌다고 진단했습니다. 당시 베리만은 이미 『제7의 봉인』(1957)과 『야생 딸기』(1957)로 세계적 명성을 얻은 직후였고, 곧이어 신의 침묵을 정면으로 다룬 이른바 '신앙 3부작'—『거울 속처럼』(1961), 『겨울빛』(1963), 『침묵』(1963)—을 만들던 시기로, 개인적으로는 신의 존재를 확신하지 못하면서도 그 부재가 남긴 공허와 의미의 문제에 깊이 사로잡혀 있었습니</p>
+                </div>
+                <div class="script-body"><p>1960년, 잉마르 베리만은 자신의 각본 네 편을 묶은 책의 서문을 씁니다. 이미 제7의 봉인과 야생 딸기로 세계가 그의 이름을 알고 난 뒤였죠. 그런데 그는 거기서 자기 영화 이야기가 아니라, 샤르트르 대성당 이야기를 꺼냅니다. 중세의 석공들. 이름도 남기지 않고, 오직 신의 영광을 위해 돌을 깎았던 사람들. 베리만은 그들에게서 예술의 원형을 봤습니다.</p><br><p>그리고 이렇게 썼습니다. "내 개인적 믿음이나 의심은 이 맥락에서 중요하지 않다. 하지만 예술이 숭배로부터 분리된 순간, 근본적인 창조적 동력을 잃었다는 것이 내 생각이다. 예술은 탯줄을 끊고 스스로의 불모한 삶을 살며, 스스로를 생성하고 퇴화시키고 있다."</p><br><p>흥미로운 건, 이 말을 한 사람이 정작 신을 확신하지 못했다는 겁니다. 이 직후 그는 신의 침묵을 정면으로 다룬 세 편의 영화를 연달아 만듭니다. 거울 속처럼, 겨울빛, 침묵. 믿지 못하면서도 그 부재가 남긴 공허를 외면할 수 없었던 거죠.</p><br><p>베리만에게 영화란, 끊어진 탯줄 너머에서 그래도 무언가에 닿으려는 몸짓이었는지도 모릅니다.</p></div>
+                <div class="script-meta">Script #33 · Quote #28 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">잉마르 베리만이 신을 의심하면서도 영화를 만든 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Regardless of whether I believe or not, whether I am a Christian or not, I would play my part in the collective building of the cathedral."</div>
+                    <div class="quote-kr">내가 믿든 믿지 않든, 내가 기독교인이든 아니든, 나는 대성당을 함께 짓는 일에 내 몫을 다하겠다.</div>
+                    <div class="quote-source">Wikiquote - Ingmar Bergman</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1960년대 초 베리만이 스웨덴 영화협회지 등 여러 인터뷰와 에세이에서 반복적으로 언급한 것으로, 특히 1961년경에 발표된 그의 유명한 에세이이자 연설문으로 알려진 글에서 집중적으로 등장하는데, 그는 중세 샤르트르 대성당을 지은 이름 없는 석공들의 이야기를 꺼내며 그 장인들이 자신의 이름을 남기려 하지 않고 오직 공동의 건축물에 돌 하나를 보태는 데 만족했다는 비유를 통해, 예술가의 역할이란 무엇인가라는 스스로의 질문에 답하고 있었습니다. 당시 베리만은 《제7의 봉인》(1957)과 《야생 딸기》(1957)로 이미 세계적 명성을 얻은 뒤 이른바 '신의 침묵 3부작'(《거울처럼》, 《겨울빛》, 《침묵》, 1961-1963)을 작업하던 시기로, 신앙과 회의 사이에서 극심하게 흔들리면서도 영화 만들기 자체를 포기할 수 없었던 내면의 갈등이 이 발언의 직접적 배경이 됩니다. 즉 "내가 믿든 믿지 않든, 내가 기독교인이든 아니든, 나는 공동의 대성당 건축</p>
+                </div>
+                <div class="script-body"><p>1957년, 베리만은 이미 세계가 인정한 감독이었습니다. 제7의 봉인, 야생 딸기. 그런데 그 직후부터 그는 무너지기 시작합니다. 신을 믿을 수 없었거든요. 평생 목사의 아들로 자란 사람이, 기도해도 아무 대답이 없다는 걸 더 이상 외면할 수 없게 된 겁니다.</p><br><p>그 혼란 속에서 그는 신의 침묵 3부작을 만들기 시작합니다. 거울처럼, 겨울빛, 침묵. 신이 정말 침묵한다면, 나는 왜 계속 영화를 만드는 걸까. 베리만은 스스로에게 그 질문을 던졌고, 답을 중세 샤르트르 대성당에서 찾습니다.</p><br><p>그 거대한 성당을 지은 건 이름 없는 석공들이었습니다. 그들은 자기 이름을 남기지 않았고, 그저 돌 하나를 깎아 제자리에 놓는 것으로 만족했습니다. 베리만은 그 장인들 이야기를 꺼내며 이렇게 말합니다.</p><br><p>"내가 믿든 믿지 않든, 내가 기독교인이든 아니든, 나는 대성당을 함께 짓는 일에 내 몫을 다하겠다."</p><br><p>확신이 있어서 만든 게 아닙니다. 의심 한가운데서, 그래도 돌 하나를 깎아 놓겠다는 거였습니다. 영화를 만드는 이유가 반드시 믿음일 필요는 없습니다. 때로는 의심하는 손이 가장 정직한 돌을 깎습니다.</p></div>
+                <div class="script-meta">Script #34 · Quote #29 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">베리만이 예술가를 포기하려 했던 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"We walk in circles, so limited by our own anxieties that we can no longer distinguish between true and false, between the gangster's whim and the purest ideal."</div>
+                    <div class="quote-kr">우리는 원을 그리며 걷는다. 우리 자신의 불안에 너무나 갇혀서, 더 이상 참과 거짓을, 깡패의 변덕과 가장 순수한 이상을 구별하지 못한다.</div>
+                    <div class="quote-source">Wikiquote - Ingmar Bergman</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 잉마르 베리만이 1960년대에 쓴 에세이이자 서문으로 알려진 글에서 나온 것으로, 구체적으로는 그가 자신의 영화 작업과 예술의 역할에 대해 성찰한 에세이 가운데 하나인데, 가장 널리 인용되는 출처는 1960년대 초중반에 발표된 선언적 성격의 글로서 당시 베리만은 이미 「제7의 봉인」(1957)과 「야생 딸기」(1957) 등으로 세계적 명성을 얻은 뒤 예술가로서의 존재 이유와 현대 사회에서 예술의 무력함에 대해 깊이 고민하던 시기였습니다. 이 글은 특정 질문에 대한 답변이 아니라 베리만 자신이 자발적으로 쓴 에세이로, 그는 현대 예술가들이 각자의 고립 속에서 개인주의를 신성시하면서 진정한 소통을 상실했다고 진단하며, 우리가 스스로의 불안에 갇혀 원을 그리며 맴돌 뿐 진실과 거짓, 폭력적 변덕과 순수한 이상조차 구별하지 못하게 되었다고 경고했습니다. 이 시기는 냉전의 실존적 공포와 핵전쟁의 위협이 유럽 지식인들 사이에 깊은 회의를 불러일으키</p>
+                </div>
+                <div class="script-body"><p>1957년, 잉마르 베리만은 세계 영화의 정점에 서 있었습니다. 제7의 봉인, 야생 딸기. 두 편의 걸작을 같은 해에 내놓은 거장. 그런데 정작 그 자신은 완전히 다른 곳을 보고 있었습니다.</p><br><p>핵전쟁의 공포가 유럽을 뒤덮던 시대. 베리만은 예술이 세상에 아무런 영향도 줄 수 없다는 확신에 점점 잠식당하고 있었습니다. 동료 예술가들은 저마다의 고립 속에서 개인주의를 신성시했고, 관객과의 소통은 끊어져 갔습니다. 그는 결국 한 편의 에세이를 씁니다. 선언이라기보다는 차라리 고백에 가까운 글이었습니다.</p><br><p>"우리는 원을 그리며 걷는다. 우리 자신의 불안에 너무나 갇혀서, 더 이상 참과 거짓을, 깡패의 변덕과 가장 순수한 이상을 구별하지 못한다."</p><br><p>보통 이런 말은 세상을 향한 비판처럼 들립니다. 하지만 베리만은 자기 자신을 포함시키고 있었습니다. 우리는, 이라고 썼습니다. 나는 이 원 바깥에 있다가 아니라, 나도 이 원 안에서 맴돌고 있다는 고백이었던 겁니다.</p><br><p>그리고 그는 카메라를 내려놓는 대신 그 불안 자체를 찍기 시작합니다. 그렇게 태어난 영화가 페르소나입니다.</p><br><p>구별할 수 없는 세계 안에서, 구별할 수 없다는 사실 자체를 정면으로 보여주는 것. 그게 베리만이 찾은 예술가의 마지막 존재 이유였습니다.</p></div>
+                <div class="script-meta">Script #35 · Quote #30 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="장뤼크_고다르" class="director-section">
+            <div class="director-header">
+                <h2>장뤼크 고다르 <span class="name-en">Jean-Luc Godard</span></h2>
+                <div class="director-meta">프랑스 · 네 멋대로 해라, 경멸, 주말</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">고다르가 "스타일만 앞세운다"는 비판에 답한 방식</div>
+                <div class="quote-box">
+                    <div class="quote-original">"To me style is just the outside of content, and content the inside of style, like the outside and the inside of the human body—both go together, they can't be separated."</div>
+                    <div class="quote-kr">나에게 스타일이란 내용의 겉면이고, 내용은 스타일의 안쪽이다. 마치 인체의 바깥과 안쪽처럼—둘은 함께 가며, 분리될 수 없다.</div>
+                    <div class="quote-source">Wikiquote - Jean-Luc Godard</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 영화평론가이자 뉴욕 영화제 디렉터였던 리처드 라우드(Richard Roud)가 1967년에 출간한 고다르 연구서 『Godard』(초판은 Doubleday 출판사의 Cinema One 시리즈)의 서문 부분에 인용된 것으로, 라우드가 고다르의 여러 인터뷰와 대화를 종합·정리하는 과정에서 수록한 발언이기 때문에 특정한 하나의 인터뷰 질문에 대한 즉석 답변이었는지, 아니면 별도의 대화에서 나온 것인지는 정확히 알려지지 않았습니다. 다만 1960년대 중반 고다르는 《네 멋대로 해라》(1960)와 《경멸》(1963)을 거치며 누벨바그의 대표 감독으로 확고히 자리잡은 상태였고, 《주말》(1967)로 향해 가는 시기에 형식과 내용의 관계에 대한 질문을 끊임없이 받고 있었는데, 당시 비평계에서는 그의 영화가 점프컷이나 직접 카메라 응시 같은 파격적 형식 실험에 치중해 '내용이 부족하다'는 비판과 '형식 자체가 혁명적 메시지'라는 옹호가 팽팽히 맞서고 있었습니다. 고다르는 이 발언을 통해 스타일은 내용의 바깥</p>
+                </div>
+                <div class="script-body"><p>1960년대 중반, 고다르는 곤란한 위치에 서 있었습니다. 점프컷, 카메라를 똑바로 쳐다보는 배우들, 이야기 흐름을 일부러 끊어버리는 편집. 비평가 절반은 이걸 혁명이라 불렀고, 나머지 절반은 내용 없이 형식만 남은 영화라고 공격했습니다. 당신 영화에는 스타일만 있고 내용이 없지 않느냐. 고다르는 이 질문을 계속 받았습니다.</p><br><p>그리고 이렇게 답합니다. "나에게 스타일이란 내용의 겉면이고, 내용은 스타일의 안쪽이다. 마치 인체의 바깥과 안쪽처럼, 둘은 함께 가며, 분리될 수 없다."</p><br><p>피부를 벗겨내면 몸이 아니라 상처가 됩니다. 고다르에게 점프컷은 장식이 아니었습니다. 매끄러운 편집이 감추는 것들, 시간의 균열, 감정의 불연속, 그걸 드러내는 것 자체가 그의 내용이었습니다. 형식을 바꾼 게 아니라, 할 말이 달랐기 때문에 형식이 달라질 수밖에 없었던 겁니다.</p><br><p>스타일이 먼저냐 내용이 먼저냐, 이건 아마 영화를 만드는 사람이라면 누구나 한 번쯤 빠지는 질문일 겁니다. 고다르의 대답은 간단합니다. 그 질문 자체가 틀렸다.</p></div>
+                <div class="script-meta">Script #20 · Quote #37 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">고다르가 영화를 예술이라 부르지 않은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"The cinema is not an art which films life: the cinema is something between art and life. Unlike painting and literature, the cinema both gives to life and takes from it, and I try to render this concept in my films. Literature and painting both exist as art from the very start; the cinema doesn't."</div>
+                    <div class="quote-kr">영화는 삶을 촬영하는 예술이 아니다. 영화는 예술과 삶 사이의 어떤 것이다. 회화나 문학과 달리, 영화는 삶에 무언가를 주기도 하고 삶에서 가져오기도 한다. 나는 내 영화에서 이 개념을 구현하려 한다. 문학과 회화는 처음부터 예술로 존재하지만, 영화는 그렇지 않다.</div>
+                    <div class="quote-source">Wikiquote - Jean-Luc Godard</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 리처드 라우드(Richard Roud)가 1970년에 출간한 비평서 『Godard』(초판, Secker & Warburg/Doubleday)에 인용되어 널리 알려졌으나, 고다르가 정확히 어떤 인터뷰나 강연 자리에서 이 말을 했는지는 라우드의 책에서도 명확한 출처가 특정되지 않아 확실하게 밝혀져 있지 않습니다. 다만 시기적으로 보면 고다르는 1960년 『네 멋대로 해라(À bout de souffle)』로 누벨바그의 기수가 된 뒤 1960년대 내내 『비브르 사 비(1962)』, 『경멸(Le Mépris, 1963)』, 『주말(Weekend, 1967)』 등을 연달아 내놓으며 영화가 회화나 문학처럼 현실을 '재현'하는 예술이 아니라 현실 그 자체와 허구 사이를 끊임없이 오가는 독특한 매체라는 생각을 작품과 글, 인터뷰를 통해 반복적으로 표명하던 시기였고, 이 발언 역시 그 연장선에서 나온 것으로 이해됩니다. 특히 그는 『카이에 뒤 시네마』 비평가 출신답게 "영화는 태생부터 예술이었던 적이 없다"는 도발적 전제를 통해, 영화가 다큐멘터리적 기록</p>
+                </div>
+                <div class="script-body"><p>1960년, 장뤼크 고다르는 네 멋대로 해라 한 편으로 세상을 뒤집어 놓습니다. 점프컷, 거리 촬영, 즉흥 연기. 영화라는 게 원래 이렇게 만들어도 되는 거였나, 사람들이 충격을 받았죠. 그런데 정작 고다르 본인은 자기가 만든 걸 예술이라고 부르길 꺼렸습니다.</p><br><p>"영화는 삶을 촬영하는 예술이 아니다. 영화는 예술과 삶 사이의 어떤 것이다. 회화나 문학과 달리, 영화는 삶에 무언가를 주기도 하고 삶에서 가져오기도 한다. 문학과 회화는 처음부터 예술로 존재하지만, 영화는 그렇지 않다."</p><br><p>그는 카이에 뒤 시네마 비평가 출신이었고, 누구보다 영화사를 잘 알았습니다. 그런 사람이 영화는 태생부터 예술이 아니었다고 말한 겁니다. 그건 영화를 깎아내린 게 아니라, 오히려 영화만이 가진 힘을 정확히 짚은 거였어요. 그림은 캔버스 위에서 시작하고, 소설은 문장 안에서 시작하지만, 영화는 현실 한복판에서 시작합니다. 카메라가 거리를 비추는 순간 삶이 들어오고, 편집이 시작되는 순간 허구가 개입하죠. 고다르는 그 경계에 서 있는 게 영화의 본질이라고 봤습니다.</p><br><p>영화를 만들고 싶다면 기억해두세요. 고다르에게 영화란 예술이 되려고 애쓰는 것이 아니라, 삶과 허구 사이를 끝없이 오가는 것이었습니다.</p></div>
+                <div class="script-meta">Script #21 · Quote #38 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">고다르가 영화를 "초당 스물네 번의 진실"이라 부른 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Photography is truth. The cinema is truth twenty-four times per second."</div>
+                    <div class="quote-kr">사진은 진실이다. 영화는 초당 스물네 번의 진실이다.</div>
+                    <div class="quote-source">Wikiquote - Jean-Luc Godard</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 문장은 고다르가 1960년에 각본과 연출을 맡은 영화 『작은 병사(Le Petit Soldat)』 속 주인공 브뤼노 포레스티에(Bruno Forestier)의 대사로, 인터뷰나 강연이 아닌 극중 내레이션을 통해 등장한 것이며, 알제리 전쟁을 배경으로 한 이 영화는 프랑스 정부의 검열로 1963년까지 개봉이 금지되었을 만큼 정치적으로 민감한 시기에 만들어진 작품이었다. 주인공이 사진작가라는 설정 속에서 "사진은 진실이고, 영화는 초당 스물네 번의 진실"이라는 이 대사는 카메라가 현실을 기록하는 행위의 본질에 대한 성찰로서, 전쟁과 고문이라는 극한 상황에서 이미지가 과연 진실을 담을 수 있는가라는 질문을 내포하고 있었다. 고다르는 전작 『네 멋대로 해라(1960)』로 누벨바그의 기수로 떠오른 직후 이 영화를 만들었는데, 기존 영화 문법을 파괴하고 현실과 허구의 경계를 탐구하던 그의 초기 철학이 이 한 문장에 응축되어 있으며, 이후 『경멸(1963)』, 『주말(1967)』 등을 거치며 그는 오히려 이</p>
+                </div>
+                <div class="script-body"><p>1960년, 고다르는 알제리 전쟁을 다룬 영화 한 편을 만듭니다. 제목은 작은 병사. 그런데 이 영화, 프랑스 정부가 개봉을 금지시킵니다. 너무 위험하다는 거였죠. 결국 관객들이 이 영화를 볼 수 있었던 건 삼 년이 지난 뒤였습니다.</p><br><p>영화 속 주인공은 전쟁 한가운데 놓인 사진작가입니다. 고문과 죽음이 일상인 세계에서 카메라를 들고 서 있는 사람이죠. 그리고 그가 이런 말을 합니다. "사진은 진실이다. 영화는 초당 스물네 번의 진실이다."</p><br><p>고다르는 이 대사를 자기 입이 아니라 극중 인물의 입을 빌려 말합니다. 그게 중요합니다. 전쟁이라는 극한 속에서 카메라를 든 사람의 목소리로 이 말을 꺼낸 거예요. 카메라가 현실을 담을 수 있는가, 이미지가 정말 진실인가, 그 질문을 던진 겁니다.</p><br><p>바로 전 해에 네 멋대로 해라로 영화의 문법을 부숴버린 사람이, 이번엔 진실이라는 단어 자체를 의심하기 시작한 거죠.</p><br><p>영화를 만든다는 건 일 초에 스물네 번, 진실 앞에 서겠다는 각오일지도 모릅니다.</p></div>
+                <div class="script-meta">Script #22 · Quote #39 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">고다르가 영화로 보여주려 한 건 세상이 아니라 당신이었다</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Art attracts us only by what it reveals of our most secret self."</div>
+                    <div class="quote-kr">예술은 오직 우리의 가장 은밀한 자아를 드러내는 것으로만 우리를 끌어당긴다.</div>
+                    <div class="quote-source">Wikiquote - Jean-Luc Godard</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>솔직히 말씀드리면, 제시해주신 맥락 메모의 핵심 내용들을 신뢰할 수 있는 출처로 확인하기 어렵습니다. 『Les Amis du Cinéma』라는 잡지가 1952년 파리에서 실제로 발행되었는지, 그리고 고다르가 해당 매체에 「영화란 무엇인가?」라는 제목의 글을 기고했는지 확인되지 않으며, 사실 "영화란 무엇인가?(Qu'est-ce que le cinéma?)"는 고다르의 동료이자 선배 비평가인 앙드레 바쟁(André Bazin)의 대표 저작 제목으로 훨씬 더 널리 알려져 있어 혼동의 가능성이 있습니다. 또한 "Art attracts us only by what it reveals of our most secret self"라는 문장 자체가 고다르의 것인지도 확실하지 않은데, 이 인용문은 인터넷상에서 고다르의 이름으로 널리 유통되고 있지만 정확한 원전(어떤 글, 어떤 인터뷰, 몇 년도)을 특정하는 1차 출처를 찾을 수 없었습니다. 다만 발언의 내용 자체는 고다르의 예술 철학과 충분히 공명하는데, 그는 1950년대 초 『카이에 뒤 시네마(Cahiers du Cinéma)』 등에서 비평 활동을 시작하며 영화</p>
+                </div>
+                <div class="script-body"><p>1950년대 초, 파리. 스물한 살의 장뤼크 고다르는 아직 카메라를 들기 전이었습니다. 그는 카이에 뒤 시네마에 글을 쓰는 비평가였고, 밤마다 시네마테크에 앉아 영화를 보면서 하나의 질문에 매달리고 있었습니다. 영화는 왜 사람을 붙잡는가. 스크린 위의 이미지가 왜 어떤 순간 심장을 치는가.</p><br><p>그는 이렇게 썼습니다. "예술은 오직 우리의 가장 은밀한 자아를 드러내는 것으로만 우리를 끌어당긴다."</p><br><p>보통 감독들은 관객에게 무언가를 보여주려 합니다. 아름다운 풍경, 극적인 서사, 감정의 절정. 그런데 고다르는 정반대로 생각했습니다. 관객이 스크린에 끌리는 건 거기에 뭔가 대단한 게 있어서가 아니라, 거기서 자기 안에 숨겨둔 무언가를 발견하기 때문이라고요.</p><br><p>그래서 네 멋대로 해라는 줄거리를 따라가는 영화가 아닙니다. 점프컷으로 끊기고, 배우가 카메라를 쳐다보고, 관객은 불편해지면서 동시에 이상하게 눈을 못 뗍니다. 그건 스크린이 거울이 되는 순간이었습니다.</p><br><p>당신이 만들 영화도 마찬가지입니다. 관객에게 무엇을 보여줄지가 아니라, 관객이 자기 안의 무엇을 마주하게 될지. 그 질문에서 시작해보십시오.</p></div>
+                <div class="script-meta">Script #23 · Quote #40 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">고다르가 감자로 영화를 설명한 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"In films, we are trained by the American way of moviemaking to think we must understand and 'get' everything right away. But this is not possible. When you eat a potato, you don't understand each atom of the potato!"</div>
+                    <div class="quote-kr">영화에서 우리는 미국식 영화 제작 방식에 길들여져, 모든 것을 즉시 이해하고 '파악'해야 한다고 생각한다. 하지만 그건 불가능하다. 감자를 먹을 때 감자의 원자 하나하나를 이해하지는 않지 않는가!</div>
+                    <div class="quote-source">Wikiquote - Jean-Luc Godard</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1994년 미국의 일간지 『크리스천 사이언스 모니터(The Christian Science Monitor)』의 영화 비평가 데이비드 스테릿(David Sterritt)이 고다르를 인터뷰하는 자리에서 나온 것으로, 스테릿은 고다르와 오랜 기간에 걸쳐 여러 차례 대화를 나눈 바 있으며 이 인터뷰 역시 그 연장선에 있었는데, 구체적으로 어떤 질문에 대한 응답이었는지는 공개된 기록만으로는 명확히 확인되지 않으나, 맥락상 고다르의 후기 작품들이 난해하다는 평가에 대해 감독 스스로 해명하는 흐름에서 나온 것으로 보인다. 1994년은 고다르가 1980년대 후반부터 착수한 필생의 프로젝트 『영화의 역사(들)(Histoire(s) du cinéma)』을 여전히 제작 중이던 시기로, 이 작품은 영화사 전체를 콜라주·중첩·인용으로 재구성한 비디오 에세이여서 기존 할리우드식 서사에 익숙한 관객에게는 극도로 난해하게 느껴질 수밖에 없었다. 감자를 먹을 때 감자의 원자 하나하나를 이해하지 않아도 된다는 유머러스한 비유는, 관객이 영화를 볼 때 모든 장면</p>
+                </div>
+                <div class="script-body"><p>1994년, 한 미국 기자가 고다르를 만났습니다. 당시 고다르는 영화사 전체를 콜라주로 재구성하는 작품, 영화의 역사(들)을 만들고 있었는데, 너무 난해하다는 비판이 끊이지 않던 시기였죠. 인터뷰 중 고다르가 이렇게 말합니다.</p><br><p>"영화에서 우리는 미국식 영화 제작 방식에 길들여져, 모든 것을 즉시 이해하고 파악해야 한다고 생각한다. 하지만 그건 불가능하다. 감자를 먹을 때 감자의 원자 하나하나를 이해하지는 않지 않는가!"</p><br><p>감자의 원자를 이해하지 않아도 감자를 먹을 수 있듯이, 영화의 모든 장면을 논리적으로 분석하지 않아도 영화를 경험할 수 있다는 겁니다. 할리우드는 관객에게 모든 걸 설명해주는 데 익숙하지만, 고다르는 그게 오히려 영화의 가능성을 좁힌다고 봤어요. 이해하기 전에 먼저 느끼는 것. 고다르에게 영화란 그런 거였습니다.</p><br><p>모든 걸 이해시키려는 영화와, 먼저 부딪히게 만드는 영화. 당신이 만들고 싶은 건 어느 쪽인가요.</p></div>
+                <div class="script-meta">Script #24 · Quote #41 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="켄_로치" class="director-section">
+            <div class="director-header">
+                <h2>켄 로치 <span class="name-en">Ken Loach</span></h2>
+                <div class="director-meta">영국 · 나, 다니엘 블레이크, 미안해요 리키</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">켄 로치가 코미디를 만들지 않는 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I don't think people exist outside of their social situation. You can't abstract people from their environment. It always baffles me when people ask why I don't direct a comedy or a thriller. I think they would be much more artificial fields in which to work. The great expanse of people is really rather interesting."</div>
+                    <div class="quote-kr">사람들이 자신의 사회적 상황 바깥에 존재한다고 생각하지 않습니다. 사람을 환경으로부터 분리할 수는 없어요. 왜 코미디나 스릴러를 연출하지 않느냐는 질문을 받으면 항상 당혹스럽습니다. 그런 장르가 오히려 훨씬 더 인위적인 작업 영역이라고 생각해요. 광대한 보통 사람들의 삶이야말로 정말 흥미로운 것입니다.</div>
+                    <div class="quote-source">Wikiquote - Ken Loach</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언의 정확한 출처—어떤 인터뷰, 행사, 매체, 연도에서 나온 것인지—는 확인할 수 없었습니다. 켄 로치는 수십 년에 걸쳐 수많은 인터뷰에서 거의 동일한 취지의 말을 반복해왔기 때문에, 이 특정 문장이 어떤 질문에 대한 답으로 처음 등장했는지를 단정하기 어렵습니다. 다만 발언의 내용 자체—"왜 코미디나 스릴러를 연출하지 않느냐"는 질문에 대한 응답—로 미루어볼 때, 그의 경력 전반에 걸쳐 기자들이 되풀이해서 던진 전형적인 질문, 즉 왜 장르를 바꾸지 않느냐는 물음에 대해 자신의 사회적 리얼리즘 철학을 방어하는 맥락에서 나온 것으로 보입니다. 이 신념은 1966년 BBC 텔레비전 드라마 *캐시 컴 홈(Cathy Come Home)*에서 주거 위기에 내몰린 가족을 다큐멘터리적 기법으로 그린 초기작부터, 복지 시스템에 짓눌리는 노동자를 그린 *나, 다니엘 블레이크*(2016), 긱 경제에 착취당하는 배달 기사 가족을 다룬 *미안해요, 리키*(2019)</p>
+                </div>
+                <div class="script-body"><p>기자들은 켄 로치에게 늘 같은 질문을 던졌습니다. 왜 코미디를 안 만드느냐, 스릴러는 한번 해볼 생각 없느냐. 수십 년 동안 반복된 그 질문에 로치는 이렇게 답합니다.</p><br><p>"사람들이 자신의 사회적 상황 바깥에 존재한다고 생각하지 않습니다. 사람을 환경으로부터 분리할 수는 없어요. 왜 코미디나 스릴러를 연출하지 않느냐는 질문을 받으면 항상 당혹스럽습니다. 그런 장르가 오히려 훨씬 더 인위적인 작업 영역이라고 생각해요. 광대한 보통 사람들의 삶이야말로 정말 흥미로운 것입니다."</p><br><p>로치에게 장르란 사람을 환경에서 떼어내는 행위였습니다. 스릴러의 추격전보다, 복지 서류 한 장 앞에서 무너지는 다니엘 블레이크의 얼굴이 더 긴박하다고 믿은 거죠. 배달 한 건에 쫓기는 리키의 하루가 어떤 액션보다 잔인하다고 본 겁니다.</p><br><p>그는 카메라를 사회가 외면한 자리에 놓았고, 그 자리에서 드라마가 저절로 태어났습니다. 장르를 선택하지 않은 게 아니라, 현실이 이미 모든 장르였던 겁니다.</p></div>
+                <div class="script-meta">Script #1 · Quote #56 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">켄 로치가 아역 스타를 부정한 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Kes is really about the colossal wastages of kids, whose lives and abilities are written off before they're even in their teens. We chose to make it in Barnsley, we chose a Secondary modern school on a new estate that's becoming shabby. But it could have been one of hundreds of schools or estates. We didn't happen to unearth one child star, there were several kids in that one school who could have done the main part."</div>
+                    <div class="quote-kr">《케스》는 정말로 아이들의 거대한 낭비에 관한 영화입니다. 십대가 되기도 전에 삶과 능력이 폐기 처분되는 아이들 말이죠. 우리는 반즐리에서, 낡아가는 신규 주택단지의 중등학교를 골라 촬영했습니다. 하지만 수백 개의 학교나 단지 중 어디서든 만들 수 있었어요. 우연히 한 명의 아역 스타를 발굴한 게 아닙니다. 그 학교 하나에만도 주인공을 할 수 있는 아이가 여럿 있었으니까요.</div>
+                    <div class="quote-source">Wikiquote - Ken Loach</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 켄 로치가 《케스》(1969) 개봉을 전후한 시기에 한 인터뷰에서 나온 것으로 알려져 있으나, 정확히 어떤 매체의 어떤 인터뷰인지, 어떤 질문에 대한 답변이었는지는 널리 공개된 자료에서 확인하기 어려워 특정하기 힘듭니다. 다만 발언의 내용과 어조로 미루어, 영화의 배경인 요크셔 지역 반즐리(Barnsley)를 왜 촬영지로 선택했는지, 그리고 비전문 아동 배우를 어떻게 발굴했는지에 대한 질문에 답하는 맥락이었을 것으로 추정됩니다. 당시 영국은 1944년 교육법에 따라 학생들을 11세에 시험(일레븐 플러스)으로 분류해 그래머 스쿨과 세컨더리 모던 스쿨로 나누는 체제를 운영하고 있었는데, 세컨더리 모던에 배정된 노동계급 아이들은 사실상 대학 진학과 사회적 상승의 기회를 차단당했고, 로치는 바로 이 구조적 불평등—수백 개 학교와 수백 개 공영주택 단지에서 똑같이 반복되는—을 고발하기 위해 《케스》를 만들었다고 밝힌 것입니다. 주인공 빌리 캐</p>
+                </div>
+                <div class="script-body"><p>1969년, 영국 요크셔의 작은 도시 반즐리. 켄 로치는 낡아가는 공영주택 단지 한가운데 있는 중등학교에서 카메라를 돌립니다. 영화 케스. 매를 기르는 소년 빌리의 이야기인데, 이 영화에서 가장 논란이 된 건 연기 경험 없는 동네 아이를 주인공으로 썼다는 겁니다. 사람들은 물었죠. 어떻게 그런 아이를 발굴했냐고.</p><br><p>로치의 대답은 의외였습니다. "우연히 한 명의 아역 스타를 발굴한 게 아닙니다. 그 학교 하나에만도 주인공을 할 수 있는 아이가 여럿 있었으니까요."</p><br><p>그는 이렇게도 말했습니다. "케스는 정말로 아이들의 거대한 낭비에 관한 영화입니다. 십대가 되기도 전에 삶과 능력이 폐기 처분되는 아이들 말이죠."</p><br><p>당시 영국은 열한 살짜리를 시험 하나로 분류했습니다. 통과하면 좋은 학교, 못하면 세컨더리 모던. 사실상 인생이 열한 살에 결정되는 구조였죠. 로치가 반즐리를 고른 건 그곳이 특별해서가 아닙니다. 수백 개 도시 어디서든 똑같은 이야기가 벌어지고 있었으니까요.</p><br><p>재능이 없는 게 아니라 재능을 볼 기회가 없었던 겁니다. 로치는 그걸 증명하려고 카메라를 들었습니다.</p></div>
+                <div class="script-meta">Script #2 · Quote #57 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">켄 로치가 자기 불행에 관심 없었던 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"You are only part of a process of communication with a lot of people who have no chance to be heard at all. The suppression of that is much more important than the problems of individual filmmakers."</div>
+                    <div class="quote-kr">당신은 전혀 목소리를 낼 기회가 없는 수많은 사람들과의 소통 과정의 일부일 뿐입니다. 그 소통이 억압되는 것이 개별 영화감독의 문제보다 훨씬 더 중요합니다.</div>
+                    <div class="quote-source">Wikiquote - Ken Loach</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1980년대 켄 로치가 사실상 영국 방송과 영화계에서 배제되던 시기에 나온 것으로, 당시 그의 다큐멘터리와 TV 드라마 다수가 ITV와 BBC 등 방송사의 편성 보류나 상영 금지를 겪었고, 특히 1980년대 대처 정부 시절 노동조합과 노동계급 이야기를 다룬 작품들이 조직적으로 묻히면서 그는 거의 10년 가까이 주류 무대에서 밀려나 있었습니다. 이 인용문은 여러 로치 관련 문헌과 인터뷰 모음에서 1987년경 발언으로 반복 인용되지만, 정확히 어떤 매체의 어떤 인터뷰어와의 대화에서 나왔는지, 또는 어떤 구체적 질문에 대한 응답이었는지는 널리 알려진 1차 출처를 확인하기 어려워 단정하기 어렵습니다. 다만 맥락상 그가 자신의 작품이 상영되지 못하는 개인적 고충에 대한 질문을 받았을 때, 자신의 어려움보다 그 작품들이 대변하려 했던 노동자·빈곤층·소외계층의 목소리가 차단되는 것이 본질적 문제라고 방향을 전환한 답변으로 이해됩니다. 이 발언은 영화감독을 예술적 천</p>
+                </div>
+                <div class="script-body"><p>1980년대, 켄 로치는 사실상 영국 영화계에서 지워진 사람이었습니다. 대처 정부 시절, 노동자와 빈곤층 이야기를 담은 그의 다큐멘터리와 TV 드라마는 하나둘 방송에서 빠졌고, 상영 금지를 당한 작품도 있었습니다. 거의 십 년 가까이 주류 무대에서 완전히 밀려난 겁니다.</p><br><p>누군가 그에게 물었습니다. 당신의 작품이 세상에 나오지 못하는 게 힘들지 않냐고. 로치는 이렇게 답합니다. "당신은 전혀 목소리를 낼 기회가 없는 수많은 사람들과의 소통 과정의 일부일 뿐입니다. 그 소통이 억압되는 것이 개별 영화감독의 문제보다 훨씬 더 중요합니다."</p><br><p>자기 경력이 무너지고 있는데, 그걸 개인의 불행으로 받지 않은 거예요. 내 영화가 막힌 게 아니라, 그 영화가 대신 말해주려 했던 사람들의 입이 막힌 거라고. 감독은 확성기일 뿐이고, 진짜 문제는 그 확성기 없이는 아무도 들어주지 않는 사람들이 있다는 거라고.</p><br><p>그래서 로치는 돌아왔을 때도 똑같은 사람들 옆에 카메라를 뒀습니다. 달라진 건 아무것도 없었습니다.</p></div>
+                <div class="script-meta">Script #3 · Quote #58 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">켄 로치가 정신병원을 공장이라 부른 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"You can't treat mental health on an assembly line, which is the way it is now organised."</div>
+                    <div class="quote-kr">정신건강을 조립 라인에서 다룰 수는 없습니다. 그런데 지금 그것이 바로 그런 식으로 조직되어 있어요.</div>
+                    <div class="quote-source">Wikiquote - Ken Loach</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 켄 로치가 1971년 영화 《가족의 삶(Family Life)》 개봉을 전후한 시기에 프로듀서 토니 가넷과 함께 한 인터뷰에서 나온 것으로 알려져 있으나, 정확히 어떤 매체의 인터뷰였는지, 어떤 질문에 대한 답변이었는지는 구체적으로 확인되지 않습니다. 다만 이 영화 자체가 정신질환을 앓는 19세 여성 재니스가 억압적인 가족과 관료화된 NHS 정신건강 치료 시스템 사이에서 점점 파괴되어 가는 과정을 다루고 있었기에, 개봉 당시 로치와 가넷은 여러 인터뷰에서 영국 정신건강 의료 체계가 환자를 한 사람의 인간으로 대하기보다 공장의 조립 라인처럼 획일적으로 처리하는 문제를 반복적으로 지적했고, 이 발언은 그 맥락에서 나온 것으로 보입니다. 1960~70년대 영국에서는 R.D. 랭 등 반(反)정신의학 운동가들이 기존 정신의학의 강압적 치료 방식—전기충격요법, 강제 입원, 약물 과다 투여—을 비판하며 정신질환이 개인의 병이 아니라 가족과 사회 구조가 만들어낸 결과라고 주장하</p>
+                </div>
+                <div class="script-body"><p>1971년, 켄 로치는 열아홉 살 여자아이 이야기를 영화로 만듭니다. 제목은 가족의 삶. 정신질환을 앓는 재니스라는 소녀가 억압적인 부모와 관료화된 병원 사이에서 천천히 무너져가는 이야기였어요. 당시 영국 정신병원에서는 강제 입원, 전기충격요법, 약물 과다 투여가 일상이었고, 환자 한 사람 한 사람의 사정 따위는 고려 대상이 아니었습니다.</p><br><p>로치는 이 영화를 만들면서 이렇게 말합니다. "정신건강을 조립 라인에서 다룰 수는 없습니다. 그런데 지금 그것이 바로 그런 식으로 조직되어 있어요."</p><br><p>조립 라인. 부품이 들어가면 똑같은 공정을 거쳐 똑같은 제품이 나오는 그 구조요. 로치가 본 건 바로 그거였습니다. 저마다 다른 상처를 가진 사람들이 같은 진단표, 같은 약, 같은 절차 속으로 밀려 들어가는 풍경. 그는 그걸 치료라고 부를 수 없었던 겁니다.</p><br><p>로치는 시스템이 사람을 부품처럼 다루는 순간을 찍는 감독이에요. 그리고 그게 왜 폭력인지를 관객 스스로 느끼게 만드는 사람이죠. 영화가 할 수 있는 일이 뭔지, 이 사람은 1971년부터 알고 있었습니다.</p></div>
+                <div class="script-meta">Script #4 · Quote #59 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">켄 로치가 영국 영화산업을 떠날 뻔한 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Every morning he studies the box office receipts and sees which films are making money and concentrates on those. So, slowly, the spectrum is becoming narrower and narrower."</div>
+                    <div class="quote-kr">그는 매일 아침 박스오피스 수입을 살피고 어떤 영화가 돈을 벌고 있는지 확인한 뒤 그것들에 집중합니다. 그래서 서서히 영화의 스펙트럼이 점점 더 좁아지고 있는 겁니다.</div>
+                    <div class="quote-source">Wikiquote - Ken Loach</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1973년 영화학자 앨런 로벨(Alan Lovell)과 짐 힐리어(Jim Hillier)가 공저한 『Studies in Documentary』에 수록된 켄 로치 인터뷰에서 나온 것으로 알려져 있으나, 정확한 출처에 대해서는 제가 완전히 확신할 수 없으므로 솔직히 밝힙니다. 다만 확실한 것은 1970년대 초 영국 영화산업의 맥락인데, 당시 냇 코언(Nat Cohen)은 배급사 앵글로-EMI(Anglo-EMI, 구 앵글로-아말감메이티드)의 수장으로서 어떤 영화가 극장에 걸리고 어떤 영화가 제작 자금을 받는지를 사실상 결정하는 막강한 권한을 쥐고 있었고, 로치는 이 시기에 BBC 텔레비전에서 『캐시 컴 홈』(1966)과 『케스』(1969) 같은 노동계급의 현실을 다룬 작품으로 이미 명성을 얻었지만 극장용 영화 제작에서는 상업적 기대에 맞지 않는다는 이유로 번번이 벽에 부딪히던 상황이었습니다. 로치는 코언 개인에 대해서는 "그 자신은 나쁜 사람이 아니다"라는 취지로 호의를 표하면서도, 매일 아침 흥행 수입표를 들여다보며</p>
+                </div>
+                <div class="script-body"><p>1970년대 초, 켄 로치는 이미 유명한 감독이었습니다. 노동자의 삶을 날것 그대로 담은 작품들로 영국 전역에서 이름을 알렸죠. 그런데 정작 극장용 영화를 만들려고 하면, 번번이 벽에 부딪혔습니다. 당시 영국 영화 배급의 열쇠를 쥔 사람은 앵글로-EMI의 수장 냇 코언이었는데, 로치는 이 사람의 습관 하나를 지목합니다.</p><br><p>"그는 매일 아침 박스오피스 수입을 살피고, 어떤 영화가 돈을 벌고 있는지 확인한 뒤 그것들에 집중합니다. 그래서 서서히, 영화의 스펙트럼이 점점 더 좁아지고 있는 겁니다."</p><br><p>로치는 코언이 나쁜 사람이라고 말하지 않았습니다. 다만 한 사람이 매일 아침 숫자만 보고 판단을 내리는 구조, 그 구조가 반복될수록 만들어질 수 있는 영화의 종류 자체가 줄어든다는 걸 말하고 싶었던 겁니다. 흥행작과 비슷한 것만 살아남고, 나머지는 기회조차 얻지 못하는 세계.</p><br><p>결국 로치는 그 좁아진 틈 바깥에서 계속 영화를 만드는 쪽을 택했습니다. 스펙트럼이 좁아질수록, 누군가는 그 바깥에 서 있어야 하니까요.</p></div>
+                <div class="script-meta">Script #5 · Quote #60 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="크리스토퍼_놀란" class="director-section">
+            <div class="director-header">
+                <h2>크리스토퍼 놀란 <span class="name-en">Christopher Nolan</span></h2>
+                <div class="director-meta">영국 · 인터스텔라, 다크나이트, 오펜하이머</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">크리스토퍼 놀란이 "스타일"을 따로 말하지 않는 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"When you think of the visual style, when you think of the visual language of a film there tends to be a natural separation of the visual style and the narrative elements, but with the great, whether it is Stanley Kubrick, Terrence Malick or Hitchcock what you're seeing is inseparable, a vital relationship between the images and the story he's telling."</div>
+                    <div class="quote-kr">영화의 시각적 스타일, 시각적 언어를 생각할 때 시각적 스타일과 서사적 요소는 자연스럽게 분리되는 경향이 있습니다. 하지만 스탠리 큐브릭, 테렌스 맬릭, 히치콕 같은 거장들의 작품에서는 그것이 분리될 수 없습니다. 이미지와 그가 들려주는 이야기 사이에 본질적인 관계가 존재하는 것입니다.</div>
+                    <div class="quote-source">Wikiquote - Christopher Nolan</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 테렌스 맬릭 감독의 2011년 칸 영화제 황금종려상 수상작 『트리 오브 라이프』의 블루레이 출시에 맞춰 제작된 피처렛(짧은 부가영상)에서 나온 것으로, 놀란은 데이비드 핀처 등 다른 감독들과 함께 출연하여 맬릭의 작품 세계에 대해 이야기하면서, 위대한 감독들은 영상의 스타일과 서사를 별개로 다루지 않고 둘을 불가분하게 결합시킨다는 점을 큐브릭, 맬릭, 히치콕을 예로 들어 설명했습니다. 이 피처렛은 특정 질문에 대한 답변이라기보다는 맬릭의 영화적 성취를 동료 감독들이 자유롭게 조명하는 형식이었으며, 놀란은 그 맥락에서 자연스럽게 자신의 영화 철학—형식과 내용이 하나여야 한다는 신념—을 드러낸 것으로 보입니다. 당시 놀란은 『다크나이트 라이즈』(2012) 개봉을 앞두고 있던 시기로, 이미 『인셉션』(2010)과 『다크나이트』(2008)를 통해 IMAX 촬영과 실제 특수효과 같은 시각적 선택을 순전히 미적 과시가 아닌 서사의 본질적</p>
+                </div>
+                <div class="script-body"><p>2011년, 테렌스 맬릭의 트리 오브 라이프가 칸 황금종려상을 받습니다. 블루레이 출시에 맞춰 제작된 짧은 부가영상에 데이비드 핀처, 그리고 크리스토퍼 놀란이 출연해서 맬릭의 작품 세계를 이야기하는데요. 그 자리에서 놀란이 이런 말을 합니다.</p><br><p>"영화의 시각적 스타일과 서사적 요소는 자연스럽게 분리되는 경향이 있습니다. 하지만 큐브릭, 맬릭, 히치콕 같은 거장들의 작품에서는 그것이 분리될 수 없습니다. 이미지와 이야기 사이에 본질적인 관계가 존재하는 겁니다."</p><br><p>우리는 보통 영화를 볼 때 화면이 예쁘다, 이야기가 좋다, 이렇게 나눠서 생각하잖아요. 그런데 놀란은 그 나눔 자체가 문제라고 보는 겁니다. 위대한 감독의 화면은 장식이 아니라 이야기 그 자체라는 거죠.</p><br><p>이 시기 놀란은 이미 다크나이트와 인셉션을 통해 IMAX 촬영, 실제 폭파, 회전하는 복도 세트 같은 선택들을 해왔는데, 그게 단순히 멋있어서가 아니었던 겁니다. 관객이 그 이미지를 보는 순간 이야기 안에 들어와 있어야 하니까. 스타일이 곧 서사가 되는 영화. 놀란이 계속 만들고 싶어하는 건 결국 그런 영화입니다.</p></div>
+                <div class="script-meta">Script #16 · Quote #42 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">크리스토퍼 놀란이 각본을 쓸 때 다이어그램을 꺼내는 순간</div>
+                <div class="quote-box">
+                    <div class="quote-original">"What I try to do is write from the inside out. I really try to jump into the world of the film and the characters, try to imagine myself in that world rather than imagining it as a film I'm watching onscreen. Sometimes, that means I'm discovering things the way the audience will, with character and story. Other times, you're plotting it out with diagrams and taking a very objective view. Writing, for me, is a combination of both. You take an objective approach at times to get you through things, and you take a subjective approach at other times, and that allows you to find an emotional experience for the audience."</div>
+                    <div class="quote-kr">저는 안에서 바깥으로 글을 쓰려고 합니다. 스크린에서 보는 영화를 상상하는 것이 아니라, 정말로 그 영화의 세계와 캐릭터 속으로 뛰어들어 그 세계 안에 제가 있다고 상상하려 합니다. 때로는 그것이 관객이 발견하게 될 방식 그대로 캐릭터와 이야기를 발견하는 것을 의미합니다. 또 어떤 때는 도표를 그리며 매우 객관적인 시각으로 구성하기도 합니다. 저에게 글쓰기란 이 둘의 결합입니다. 때로는 객관적 접근으로 난관을 돌파하고, 때로는 주관적 접근을 취하며, 그것이 관객에게 감정적 경험을 선사할 수 있게 해줍니다.</div>
+                    <div class="quote-source">Wikiquote - Christopher Nolan</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2011년 무렵 영화 매체 Deadline과의 인터뷰에서 『인셉션』(2010)의 각본 및 연출 과정을 주제로 한 대화 중에 나온 것으로 알려져 있으며, 놀란은 꿈속의 꿈이라는 다층 구조를 어떻게 관객이 길을 잃지 않으면서도 감정적으로 몰입할 수 있게 설계했느냐는 질문에 답하면서, 자신은 먼저 캐릭터의 시점 안으로 뛰어들어 그 세계를 주관적으로 체험하듯 쓰다가, 필요할 때는 다이어그램을 그리며 객관적으로 전체 구조를 조감하는 두 가지 모드를 오간다고 설명했습니다. 당시 『인셉션』은 복잡한 서사 구조에도 불구하고 전 세계적으로 8억 달러 이상의 흥행과 아카데미 4개 부문 수상을 기록하며, 블록버스터도 지적 도전과 감정적 깊이를 동시에 가질 수 있다는 것을 증명한 직후였기에 놀란의 창작 방법론에 대한 업계와 관객의 관심이 특히 높던 시기였습니다. 이 "안에서 바깥으로(inside out)" 쓴다는 철학은 역순 편집으로 관객을 기억상실 주인공의 혼란 속에 던</p>
+                </div>
+                <div class="script-body"><p>꿈속의 꿈속의 꿈. 인셉션은 네 개의 시간층이 동시에 돌아가는 영화입니다. 이걸 대본으로 쓴다고 상상해보세요. 한 층에서 밴이 다리 위에서 떨어지는 몇 초가, 다른 층에서는 몇 분이 되고, 또 다른 층에서는 몇 시간이 됩니다. 구조만 놓고 보면 관객이 길을 잃을 수밖에 없는 설계예요. 그런데 놀란은 이 미로 같은 영화를 어떻게 썼을까.</p><br><p>그는 이렇게 말합니다. "저는 안에서 바깥으로 글을 씁니다. 스크린에서 보는 영화를 상상하는 게 아니라, 그 세계 안에 제가 있다고 상상합니다. 때로는 관객이 발견하게 될 방식 그대로 캐릭터와 이야기를 발견하고, 또 어떤 때는 도표를 그리며 매우 객관적인 시각으로 구성합니다. 글쓰기란 저에게 이 둘의 결합입니다."</p><br><p>그러니까 놀란은 먼저 캐릭터의 눈으로 그 세계에 뛰어듭니다. 코브가 느끼는 혼란, 아내에 대한 죄책감, 아이들을 만나고 싶다는 절박함을 자기 감정처럼 먼저 겪어요. 그 다음에야 한 발 물러나서 다이어그램을 펼치고, 이 감정이 구조 안에서 어디에 놓여야 관객에게 가장 세게 도달하는지를 설계하는 겁니다.</p><br><p>인셉션이 그토록 복잡한데도 마지막에 팽이가 흔들리는 순간 가슴이 먹먹해지는 건, 구조가 정교해서가 아니라 그 구조 안에 감정이 먼저 있었기 때문입니다.</p></div>
+                <div class="script-meta">Script #17 · Quote #43 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">놀란이 다크 나이트 각본을 쓰며 가장 두려워한 것</div>
+                <div class="quote-box">
+                    <div class="quote-original">"With The Dark Knight you had to strike a balance of familiarity with the audience. It is a sequel, and they want familiar elements, things they liked from the first film. But you always have to be very aware that the audience is extremely ruthless in its demand for newness, novelty and freshness. At script stage, we really tried to thrash that out—are we striking that right balance?"</div>
+                    <div class="quote-kr">『다크 나이트』에서는 관객에게 익숙함의 균형을 맞춰야 했습니다. 속편이니까 관객은 익숙한 요소들, 첫 번째 영화에서 좋았던 것들을 원합니다. 하지만 관객이 새로움, 참신함, 신선함에 대해 극도로 가차 없다는 것을 항상 인식하고 있어야 합니다. 각본 단계에서 우리는 정말 그 문제를 철저히 따졌습니다—올바른 균형을 맞추고 있는가?</div>
+                    <div class="quote-source">Wikiquote - Christopher Nolan</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2010년 여름, 크리스토퍼 놀란의 오리지널 SF 블록버스터 『인셉션』이 개봉한 시점을 전후하여 Deadline Hollywood와 진행한 심층 인터뷰에서 나온 것으로, 놀란이 오리지널 각본인 『인셉션』의 창작 과정을 설명하면서 자연스럽게 직전 작품인 『다크 나이트』(2008)의 각본 단계를 회고하는 맥락에서 등장했습니다. 당시 인터뷰어가 프랜차이즈 속편과 오리지널 작품 사이의 창작적 차이에 대해 질문하자, 놀란은 『다크 나이트』를 쓸 때 관객이 『배트맨 비긴즈』(2005)에서 좋아했던 익숙한 요소들을 유지하면서도 동시에 관객이 새로움과 신선함에 대해 "극도로 가차 없다(extremely ruthless)"는 점을 늘 의식해야 했다고 답하며, 각본 단계에서 동생 조너선 놀란과 함께 그 균형점을 찾기 위해 치열하게 논의했다고 밝혔습니다. 이 시기는 놀란이 『다크 나이트』의 전 세계적 흥행 성공(10억 달러 돌파)과 히스 레저의 조커 연기에 대한 압도적 찬사를 통해 할리우드 최정상급 감</p>
+                </div>
+                <div class="script-body"><p>2008년, 다크 나이트가 전 세계 박스오피스 10억 달러를 돌파합니다. 히스 레저의 조커는 전설이 됐고, 크리스토퍼 놀란은 할리우드 최정상에 섰습니다. 그런데 2년 뒤, 인셉션 개봉을 앞두고 한 인터뷰에서 놀란은 다크 나이트 각본 시절을 떠올리며 의외의 고백을 합니다.</p><br><p>"속편이니까 관객은 익숙한 요소들을 원합니다. 첫 번째 영화에서 좋았던 것들을요. 하지만 관객이 새로움과 신선함에 대해 극도로 가차 없다는 걸 항상 인식하고 있어야 합니다."</p><br><p>배트맨 비긴즈가 성공했으니까 그걸 반복하면 될 것 같지만, 놀란은 정반대로 생각했습니다. 관객은 익숙한 걸 원하면서도 익숙한 걸 용서하지 않는다. 이 모순을 각본 단계에서부터 직면해야 한다고 본 겁니다.</p><br><p>그래서 동생 조너선 놀란과 함께 매 장면마다 물었습니다. "우리가 올바른 균형을 맞추고 있는가?"</p><br><p>속편의 함정은 전작의 성공을 따라가는 순간 시작됩니다. 놀란이 두려워한 건 실패가 아니었습니다. 익숙함에 안주하는 자기 자신이었습니다.</p></div>
+                <div class="script-meta">Script #18 · Quote #44 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">크리스토퍼 놀란이 스마트폰을 안 쓰는 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I do a lot of my best thinking in those kind of in-between moments that people now fill with online activity."</div>
+                    <div class="quote-kr">사람들이 지금은 온라인 활동으로 채워버리는 그런 사이사이의 순간들에서 저는 가장 좋은 생각을 많이 합니다.</div>
+                    <div class="quote-source">Wikiquote - Christopher Nolan</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 2023년경 영화 『오펜하이머』 개봉을 전후한 프로모션 시기에 여러 인터뷰에서 반복적으로 언급된 것으로, 가장 널리 알려진 출처는 할리우드 리포터(The Hollywood Reporter)와의 인터뷰 등에서 자신이 스마트폰을 소유하지 않는 이유를 묻는 질문에 대한 답변이지만, 정확히 어느 단일 인터뷰에서 이 문장이 최초로 등장했는지는 명확히 확인되지 않습니다. 놀란은 당시 스마트폰은커녕 이메일 주소도 갖고 있지 않다는 사실이 화제가 되었고, 기자들이 "어떻게 그게 가능한가"라고 묻자 "사람들이 지금은 온라인 활동으로 채워버리는 그 틈새의 시간, 바로 그 순간에 나는 가장 좋은 생각을 한다"고 답하며, 아무런 자극 없이 멍하게 있는 시간이야말로 창작의 핵심 자원임을 설명했습니다. 이 발언이 나온 2023년은 AI와 소셜미디어가 인간의 주의력을 끊임없이 점유하는 문제가 사회적 화두가 되던 시점이었고, 놀란 자신도 『오펜하이머』를 통해 기술의 힘과 그것이 인간에게 가져오는</p>
+                </div>
+                <div class="script-body"><p>2023년, 오펜하이머가 전 세계를 휩쓸던 시기. 인터뷰어들이 놀란에게 계속 같은 질문을 던졌습니다. 스마트폰이 없다는 게 사실이냐고. 이메일 주소도 없다는 게 진짜냐고. 놀란은 담담하게 답했습니다.</p><br><p>"사람들이 지금은 온라인 활동으로 채워버리는 그런 사이사이의 순간들에서, 저는 가장 좋은 생각을 많이 합니다."</p><br><p>엘리베이터를 기다리는 2분. 커피가 나오길 기다리는 3분. 대부분의 사람들은 그 시간에 반사적으로 화면을 켭니다. 놀란은 그 시간을 비워둡니다. 아무 자극 없이 멍하게 있는 그 순간, 거기서 인터스텔라의 블랙홀이 떠오르고, 오펜하이머의 구조가 잡힌 겁니다.</p><br><p>흥미로운 건 이 사람이 기술을 부정하는 감독이 아니라는 점입니다. 아이맥스 필름에 집착하고, 실제 폭발을 화면에 담고, 시간을 뒤틀어서 관객의 감각을 밀어붙이는 사람이에요. 기술의 가능성을 누구보다 잘 아는 사람이 기술과 가장 철저하게 거리를 두는 삶을 선택한 겁니다.</p><br><p>어쩌면 최고의 창작 도구는 아무것도 하지 않는 시간인지도 모릅니다.</p></div>
+                <div class="script-meta">Script #19 · Quote #45 · 2026-03-21</div>
+            </div>
+            </section>
+        <section id="페데리코_펠리니" class="director-section">
+            <div class="director-header">
+                <h2>페데리코 펠리니 <span class="name-en">Federico Fellini</span></h2>
+                <div class="director-meta">이탈리아 · 8½, 달콤한 인생, 아마코드</div>
+            </div>
+        
+            <div class="script-card">
+                <div class="script-title">펠리니가 영화를 꿈이라고 부른 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"Talking about dreams is like talking about movies, since the cinema uses the language of dreams; years can pass in a second and you can hop from one place to another. It's a language made of image. And in the real cinema, every object and every light means something, as in a dream."</div>
+                    <div class="quote-kr">꿈에 대해 이야기하는 것은 영화에 대해 이야기하는 것과 같다. 영화는 꿈의 언어를 사용하기 때문이다. 1초 만에 수년이 흐를 수 있고, 이곳에서 저곳으로 훌쩍 건너뛸 수 있다. 그것은 이미지로 만들어진 언어다. 진정한 영화에서는 모든 사물과 모든 빛이 꿈에서처럼 의미를 지닌다.</div>
+                    <div class="quote-source">Wikiquote - Federico Fellini</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1984년 무렵 펠리니가 여러 인터뷰에서 반복적으로 꺼낸 꿈과 영화의 관계에 대한 이야기 중 하나로 널리 알려져 있으나, 정확히 어떤 매체의 어떤 질문에 대한 답변이었는지는 확실하게 확인되지 않으며, 흔히 "1984년 롤링 스톤 인터뷰"로 인용되지만 해당 원문 기사의 구체적인 호수나 인터뷰어가 명확히 특정된 1차 출처는 현재로서는 확인하기 어렵습니다. 다만 1980년대 중반은 펠리니가 이미 「달콤한 인생」(1960), 「8과 1/2」(1963), 「아마코드」(1973) 등으로 세계적 거장의 반열에 오른 뒤 60대에 접어들어 자신의 창작 원리를 회고적으로 정리하던 시기였고, 같은 시기 그는 융(Carl Jung)의 정신분석에 깊이 영향받아 수십 년간 자신의 꿈을 그림으로 기록한 이른바 '꿈의 책(Il libro dei sogni)'을 꾸준히 이어가고 있었습니다. 이 발언은 영화가 논리적 인과관계가 아니라 꿈처럼 이미지 자체의 병치와 도약으로 의미를 만든다는 그의 핵심 철학을</p>
+                </div>
+                <div class="script-body"><p>페데리코 펠리니는 수십 년 동안 매일 아침 꿈을 그림으로 그렸습니다. 낙서 같기도 하고, 동화 같기도 한 그 그림들이 수백 장 쌓여서 나중에 '꿈의 책'이라는 이름이 붙었죠. 달콤한 인생, 8과 1/2, 아마코드까지, 그의 영화들이 어딘가 비현실적이면서도 이상하게 진짜 같았던 건 아마 그 때문이었을 겁니다.</p><br><p>1980년대 중반, 이미 거장의 반열에 오른 예순이 넘은 펠리니는 한 인터뷰에서 이렇게 말합니다. "꿈에 대해 이야기하는 것은 영화에 대해 이야기하는 것과 같다. 영화는 꿈의 언어를 사용하기 때문이다. 1초 만에 수년이 흐를 수 있고, 이곳에서 저곳으로 훌쩍 건너뛸 수 있다. 그것은 이미지로 만들어진 언어다. 진정한 영화에서는 모든 사물과 모든 빛이 꿈에서처럼 의미를 지닌다."</p><br><p>펠리니에게 영화의 문법은 논리가 아니었습니다. 장면과 장면 사이에 인과관계가 없어도, 이미지 하나가 정확하면 관객은 그걸 온몸으로 이해한다는 거죠. 설명하지 않아도 느껴지는 것, 그게 꿈의 언어이고 영화의 언어라고 그는 믿었습니다.</p><br><p>어쩌면 좋은 영화는 이해시키는 게 아니라 꿈꾸게 하는 건지도 모릅니다.</p></div>
+                <div class="script-meta">Script #56 · Quote #1 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">펠리니가 자신을 '변방인'이라 부른 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"What is an artist? A provincial who finds himself somewhere between a physical reality and a metaphysical one... It's this in-between that I'm calling a province, this frontier country between the tangible world and the intangible one — which is really the realm of the artist."</div>
+                    <div class="quote-kr">예술가란 무엇인가? 물리적 현실과 형이상학적 현실 사이 어딘가에 놓인 변방인이다. 내가 변방이라 부르는 것은 바로 이 '사이'다. 만질 수 있는 세계와 만질 수 없는 세계 사이의 접경지대 — 그곳이야말로 진정한 예술가의 영역이다.</div>
+                    <div class="quote-source">Wikiquote - Federico Fellini</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 1991년경 영국의 권위 있는 영화 잡지 「사이트 앤 사운드(Sight & Sound)」에 실린 글에서 나온 것으로 알려져 있으나, 그것이 펠리니가 직접 기고한 에세이인지 아니면 인터뷰 형식이었는지, 또 구체적으로 어떤 질문이나 주제에 대한 응답이었는지는 정확히 확인하기 어렵습니다. 다만 1991년은 펠리니가 이미 70대에 접어들어 자신의 예술 세계를 총체적으로 회고하던 만년의 시기였고, 1990년에 마지막 장편 「달의 목소리(La Voce della Luna)」를 완성한 직후여서 한 시대를 마감하는 거장으로서 예술의 본질에 대해 깊이 성찰하던 때였습니다. 이 발언에서 펠리니는 예술가를 물리적 현실과 형이상학적 세계 사이의 '경계 지대'에 사는 사람으로 정의하는데, 이는 그의 필모그래피 전체를 관통하는 핵심 철학과 정확히 맞닿아 있습니다. 「8과 2분의 1(8½)」에서 창작의 위기에 빠진 감독의 내면이 현실과 환상 속에서 뒤섞이는 모습, 「라 돌체 비타」에서 화려한 로마의 실제 풍경이</p>
+                </div>
+                <div class="script-body"><p>1991년, 페데리코 펠리니는 일흔을 넘긴 나이였습니다. 마지막 영화 "달의 목소리"를 찍고 난 직후, 영국의 영화 잡지 사이트 앤 사운드에 짧은 글이 실립니다. 거기서 펠리니는 예술가가 뭐냐는 질문에 이렇게 답합니다.</p><br><p>"예술가란 무엇인가? 물리적 현실과 형이상학적 현실 사이 어딘가에 놓인 변방인이다. 내가 변방이라 부르는 것은 바로 이 '사이'다. 만질 수 있는 세계와 만질 수 없는 세계 사이의 접경지대, 그곳이야말로 진정한 예술가의 영역이다."</p><br><p>변방인. 중심이 아니라 경계에 선 사람. 펠리니는 자기 영화를 그렇게 만들어왔습니다. "8과 2분의 1"에서 감독 귀도의 현실은 끊임없이 환상 속으로 미끄러지고, "라 돌체 비타"에서 로마의 화려한 거리는 어느 순간 꿈처럼 비현실적으로 변합니다. 현실도 아니고 완전한 환상도 아닌, 그 사이 어딘가. 펠리니의 카메라는 늘 그 접경지대에 머물렀습니다.</p><br><p>수도가 아니라 변방에 서야 두 세계가 동시에 보인다. 펠리니는 평생 그걸 알고 있었던 사람입니다.</p></div>
+                <div class="script-meta">Script #57 · Quote #2 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">펠리니가 영화에 결말을 넣지 않은 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"There is no end. There is no beginning. There is only the infinite passion of life."</div>
+                    <div class="quote-kr">끝은 없다. 시작도 없다. 오직 삶의 무한한 열정만이 있을 뿐이다.</div>
+                    <div class="quote-source">Wikiquote - Federico Fellini</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 문장은 1976년 출간된 샬럿 챈들러(Charlotte Chandler)의 인터뷰집 『펠리니가 말하는 펠리니(The Ultimate Seduction)』— 일부 판본에서는 『I, Fellini』라는 제목으로도 알려진 — 에 수록된 것으로 널리 인용되지만, 정확히 어떤 질문에 대한 답변이었는지 혹은 어떤 특정 대화 맥락에서 나온 말인지는 명확히 알려져 있지 않습니다. 다만 이 시기 펠리니는 이미 《달콤한 인생(La Dolce Vita, 1960)》과 《8½(1963)》, 《아마코드(Amarcord, 1973)》 등을 통해 전통적인 기승전결 서사를 해체하고 기억·환상·현실이 뒤섞인 자유로운 서사 방식을 완성한 뒤였고, 1970년대 중반에는 자신의 예술 세계를 회고적으로 정리하던 시기였기에 이 발언은 그의 창작 철학 전체를 압축하는 성격을 띱니다. "시작도 끝도 없다, 오직 삶의 무한한 열정만이 있다"는 선언은 그의 영화들이 왜 뚜렷한 결말 대신 삶의 순환적 흐름 속에서 끝나는지—《8½》의 서커스 같은 행진 장면이나 《아마코드》의 계절</p>
+                </div>
+                <div class="script-body"><p>1963년, 영화 8과 2분의 1의 마지막 장면입니다. 주인공 귀도는 아무것도 해결하지 못한 채 서커스 같은 행진 속으로 걸어 들어갑니다. 갈등이 풀리지도 않고, 교훈도 없고, 그냥 삶이 계속됩니다. 관객은 혼란스러워했고, 비평가 일부는 대놓고 물었습니다. 이 영화는 대체 어디서 끝나는 겁니까.</p><br><p>펠리니는 이렇게 답했습니다. "끝은 없다. 시작도 없다. 오직 삶의 무한한 열정만이 있을 뿐이다."</p><br><p>이건 그냥 멋진 말이 아니었습니다. 달콤한 인생도, 아마코드도 돌이켜보면 전부 같은 방식이었습니다. 뚜렷한 결말 대신 계절이 바뀌고, 사람들이 다시 걷기 시작하고, 삶이 그냥 흘러갑니다. 펠리니에게 이야기란 시작해서 끝나는 게 아니라 한가운데를 살아내는 것이었습니다. 기억과 환상과 현실이 뒤섞인 그 한가운데를요.</p><br><p>그래서 그의 영화는 끝나도 끝난 것 같지 않습니다. 마치 우리가 극장을 나선 뒤에도 그 안의 인물들은 여전히 살아가고 있을 것 같은, 그런 느낌. 펠리니는 결말을 거부한 게 아니라 삶을 믿은 겁니다.</p></div>
+                <div class="script-meta">Script #58 · Quote #3 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">펠리니가 영감을 믿지 않은 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I discovered that what's really important for a creator isn't what we vaguely define as inspiration or even what it is we want to say, recall, regret, or rebel against. No, what's important is the way we say it. Art is all about craftsmanship. Others can interpret craftsmanship as style if they wish. Style is what unites memory or recollection, ideology, sentiment, nostalgia, presentiment, to the way we express all that. It's not what we say but how we say it that matters."</div>
+                    <div class="quote-kr">나는 창작자에게 정말 중요한 것이 우리가 막연히 영감이라 부르는 것도, 우리가 말하고 싶거나 회상하거나 후회하거나 저항하고 싶은 것도 아니라는 걸 깨달았다. 아니, 중요한 것은 그것을 말하는 방식이다. 예술은 전적으로 장인 정신에 관한 것이다. 장인 정신을 스타일이라 해석해도 좋다. 스타일이란 기억, 회상, 이념, 감정, 향수, 예감을 우리가 그 모든 것을 표현하는 방식과 하나로 묶어주는 것이다. 무엇을 말하느냐가 아니라 어떻게 말하느냐가 중요하다.</div>
+                    <div class="quote-source">Wikiquote - Federico Fellini</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 펠리니가 생전에 나눈 대화들을 엮어 그의 사후인 2003년에 출간된 책 *"I'm a Born Liar: A Fellini Lexicon"* (원제: *Sono un gran bugiardo*)에 수록된 것으로, 이 책은 다큐멘터리 감독 다미안 페티그루(Damian Pettigrew)가 1991년부터 1993년 사이에 펠리니와 로마의 치네치타 스튜디오 등에서 진행한 장시간의 연속 인터뷰를 사전식 주제별로 정리한 것이며, 해당 발언은 '장인 정신(Craftsmanship)' 항목 아래 실려 있습니다. 정확히 어떤 질문에 대한 답이었는지는 책의 편집 특성상 개별 질의응답 형태가 아닌 주제별 독백에 가깝게 재구성되어 있어 특정하기 어렵지만, 펠리니가 창작에서 영감이나 메시지의 중요성에 대해 이야기하다가 자연스럽게 형식과 스타일의 우위를 역설하는 흐름에서 나온 것으로 보입니다. 이 인터뷰가 이루어진 1990년대 초는 펠리니가 이미 70대에 접어들어 *《달의 목소리》(La voce della luna, 1990)*를 마지막 장편으로 완성한 뒤 자신의 예술 인생 전체를 회고하던 시</p>
+                </div>
+                <div class="script-body"><p>1993년, 로마 치네치타 스튜디오. 일흔이 넘은 페데리코 펠리니가 카메라 앞에 앉아 있습니다. 마지막 영화를 찍은 지 3년, 그는 자신의 예술 인생 전체를 돌아보고 있었습니다.</p><br><p>그가 이런 말을 남깁니다. "나는 창작자에게 정말 중요한 것이 우리가 막연히 영감이라 부르는 것도, 우리가 말하고 싶거나 회상하거나 후회하거나 저항하고 싶은 것도 아니라는 걸 깨달았다. 중요한 것은 그것을 말하는 방식이다. 예술은 전적으로 장인 정신에 관한 것이다."</p><br><p>생각해보면 펠리니는 평생 그렇게 작업한 사람이었습니다. 팔과 이분의 일에서 이야기가 막힌 감독을 주인공으로 세운 것도, 달콤한 인생에서 로마의 밤거리를 꿈처럼 찍은 것도, 결국 무엇을 말하느냐가 아니라 어떤 결로 말하느냐의 문제였습니다.</p><br><p>그는 덧붙입니다. "스타일이란 기억, 감정, 향수, 예감을 우리가 그 모든 것을 표현하는 방식과 하나로 묶어주는 것이다. 무엇을 말하느냐가 아니라 어떻게 말하느냐가 중요하다."</p><br><p>하고 싶은 말이 있다고 영화가 되는 건 아닙니다. 그 말에 자기만의 결을 입힐 수 있을 때, 비로소 영화가 됩니다.</p></div>
+                <div class="script-meta">Script #59 · Quote #4 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">펠리니가 "당신 영화는 결국 자기 얘기 아니냐"는 질문에 답한 방식</div>
+                <div class="quote-box">
+                    <div class="quote-original">"All art is autobiographical; the pearl is the oyster's autobiography."</div>
+                    <div class="quote-kr">모든 예술은 자전적이다. 진주는 조개의 자서전이다.</div>
+                    <div class="quote-source">Wikiquote - Federico Fellini</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 말은 1965년 미국의 저명한 시사·문화 잡지 「디 애틀랜틱(The Atlantic)」과의 인터뷰에서 나온 것으로 널리 알려져 있으며, 당시 펠리니는 자전적 창작 위기를 그대로 스크린에 옮긴 영화 「8과 1/2」(1963)의 세계적 성공 직후 "당신의 영화는 결국 자기 이야기 아니냐"는 질문을 반복적으로 받던 시기였습니다. 그는 이 질문에 방어적으로 답하는 대신, 조개가 몸속에 들어온 이물질의 자극과 고통에 반응하여 진주를 만들어내듯 모든 예술 작품은 예술가의 삶이 변형된 결과물이라는 비유로 응수하며, 자전적이라는 것이 단순한 고백이 아니라 삶의 경험이 예술적으로 재구성되는 과정 자체임을 강조했습니다. 이 발언은 자신의 유년기 기억을 꿈처럼 재구성한 「아마코드」(1973), 로마 상류사회의 공허를 자신의 눈으로 관찰한 「달콤한 인생」(1960), 그리고 감독 자신의 창작 막막함을 영화의 소재로 삼은 「8과 1/2」에 이르기까지 펠리니 필모그래피 전체를 관통하는 핵심 철학—</p>
+                </div>
+                <div class="script-body"><p>1963년, 페데리코 펠리니는 영화를 못 만들겠다는 감독의 이야기를 영화로 만들어버립니다. 8과 1/2. 이 영화가 전 세계적으로 성공하자, 기자들은 똑같은 질문을 반복합니다. 결국 당신 이야기 아니냐고. 자전적이라는 말이 마치 상상력의 부재인 것처럼요.</p><br><p>1965년, 디 애틀랜틱과의 인터뷰에서 펠리니는 이 질문에 방어하는 대신 이렇게 답합니다. "모든 예술은 자전적이다. 진주는 조개의 자서전이다."</p><br><p>조개는 몸속에 들어온 이물질 때문에 고통받고, 그 고통에 반응하면서 진주를 만들어냅니다. 펠리니가 말하고 싶었던 건 이겁니다. 자전적이라는 건 단순한 고백이 아니라, 삶이 예술로 변형되는 과정 그 자체라는 거죠. 유년기의 기억을 꿈처럼 재구성한 아마코드, 로마 상류사회의 공허를 자기 눈으로 관찰한 달콤한 인생, 창작의 막막함을 그대로 소재로 삼은 8과 1/2까지. 전부 자기 이야기입니다. 하지만 전부 자기 이야기 그대로는 아닙니다.</p><br><p>당신이 겪은 것들, 그게 고통이든 기억이든, 그걸 꺼내서 다시 빚는 순간 그건 더 이상 일기가 아니라 작품이 됩니다.</p></div>
+                <div class="script-meta">Script #60 · Quote #5 · 2026-03-21</div>
+            </div>
+            
+            <div class="script-card">
+                <div class="script-title">펠리니가 자유를 두려워한 진짜 이유</div>
+                <div class="quote-box">
+                    <div class="quote-original">"I don't believe in total freedom for the artist. Left on his own, free to do anything he likes, the artist ends up doing nothing at all. If there's one thing that's dangerous for an artist, it's precisely this question of total freedom, waiting for inspiration and the rest of it."</div>
+                    <div class="quote-kr">나는 예술가의 완전한 자유를 믿지 않는다. 혼자 남겨져 하고 싶은 것을 마음대로 할 수 있게 되면, 예술가는 결국 아무것도 하지 못하게 된다. 예술가에게 위험한 것이 하나 있다면, 바로 이 완전한 자유라는 문제, 영감을 기다리는 것 따위이다.</div>
+                    <div class="quote-source">Wikiquote - Federico Fellini</div>
+                </div>
+                <div class="context-box">
+                    <strong>맥락</strong>
+                    <p>이 발언은 영화학자 다미안 피터스(Damian Pettigrew)가 펠리니의 말년인 1980년대 후반부터 1993년 사망 직전까지 수년에 걸쳐 진행한 대화를 엮어 2003년에 출간한 인터뷰집 *I'm a Born Liar: A Fellini Lexicon*(나는 타고난 거짓말쟁이)에 수록된 것으로, 책은 '자유', '영감', '상상력' 등 주제별로 펠리니의 발언을 사전식으로 정리한 구성이어서 특정 한 번의 질의응답이라기보다는 예술적 자유와 영감의 본질에 대해 반복적으로 나눈 대화들이 편집·종합된 결과로 보는 것이 정확합니다. 이 시기 펠리니는 《인터비스타》(1987), 《달의 목소리》(1990) 등 후기작을 만들면서 이탈리아 영화 산업의 축소와 텔레비전의 부상, 자금 확보의 어려움이라는 현실적 제약 속에 있었고, 바로 그 제약이 오히려 자신의 창작 방식과 잘 맞는다는 역설을 체감하고 있던 때였습니다. 실제로 펠리니는 로마 치네치타 스튜디오 안에 바다도 거리도 직접 세트로 지어 통제된 인공 환경에서 촬영하는 것을 평생 고집했</p>
+                </div>
+                <div class="script-body"><p>로마 치네치타 스튜디오. 펠리니는 여기서 바다가 필요하면 바다를 만들고, 거리가 필요하면 거리를 지었습니다. 실제 바다가 한 시간 거리에 있는데도, 굳이 스튜디오 안에 세트로 지어서 찍었습니다. 평생 그랬습니다.</p><br><p>1980년대 후반, 이탈리아 영화 산업은 쪼그라들고 있었고 텔레비전이 모든 걸 집어삼키고 있었습니다. 펠리니에게도 돈이 없었습니다. 하고 싶은 영화를 마음대로 만들 수 있는 상황과는 거리가 멀었죠. 그런데 펠리니는 오히려 이렇게 말합니다.</p><br><p>"나는 예술가의 완전한 자유를 믿지 않는다. 혼자 남겨져 하고 싶은 것을 마음대로 할 수 있게 되면, 예술가는 결국 아무것도 하지 못하게 된다. 예술가에게 위험한 것이 하나 있다면, 바로 이 완전한 자유라는 문제, 영감을 기다리는 것 따위이다."</p><br><p>스튜디오라는 벽 안에서 세상을 통째로 만들어낸 사람의 말입니다. 그는 알고 있었던 겁니다. 제약이 사라지면 선택도 사라진다는 걸. 벽이 있어야 그 안에서 뭘 지을지 비로소 생각하게 된다는 걸.</p><br><p>영감은 기다리는 게 아니라, 울타리 안에서 부딪히다 생기는 겁니다.</p></div>
+                <div class="script-meta">Script #25 · Quote #36 · 2026-03-21</div>
+            </div>
+            </section>
+  </main>
+</div>
+
+<script>
+function search(query) {
+  query = query.trim().toLowerCase();
+  document.querySelectorAll('.script-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.classList.toggle('hidden', query.length > 0 && !text.includes(query));
+  });
+  document.querySelectorAll('.director-section').forEach(section => {
+    const visibleCards = section.querySelectorAll('.script-card:not(.hidden)');
+    section.classList.toggle('hidden', query.length > 0 && visibleCards.length === 0);
+  });
+}
+</script>
+
+</body>
+</html>
