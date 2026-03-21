@@ -9,6 +9,8 @@ import sys
 import sqlite3
 import requests
 import anthropic
+from dotenv import load_dotenv
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env'), override=True)
 
 DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'db', 'quotes.db')
 SOURCES_DIR = os.path.join(os.path.dirname(__file__), '..', 'sources')
@@ -53,6 +55,28 @@ DIRECTORS = [
     ("아리 애스터",   "Ari Aster",             "미국",    "헤레디터리, 미드소마, 보 이즈 어프레이드",             "현대",   "Ari Aster"),
     ("션 베이커",     "Sean Baker",            "미국",    "플로리다 프로젝트, 탠저린, 아노라",                   "현대",   "Sean Baker"),
     ("쥐스틴 트리에", "Justine Triet",          "프랑스",  "추락의 해부, 시빌",                                "현대",   "Justine Triet"),
+
+    # 추가 감독
+    ("스티븐 스필버그",  "Steven Spielberg",      "미국",    "쉰들러 리스트, E.T., 조스, 라이언 일병 구하기",       "현대",   "Steven Spielberg"),
+    ("프란시스 포드 코폴라","Francis Ford Coppola","미국",   "대부, 지옥의 묵시록, 럼블 피시",                     "레전드", "Francis Ford Coppola"),
+    ("드니 빌뇌브",     "Denis Villeneuve",       "캐나다",  "듄, 블레이드 러너 2049, 컨택트, 어거스트 오사쥬 카운티","현대",  "Denis Villeneuve"),
+    ("제임스 카메론",   "James Cameron",          "캐나다",  "타이타닉, 아바타, 터미네이터 2",                     "현대",   "James Cameron"),
+    ("마틴 스코세이지", "Martin Scorsese",        "미국",    "택시 드라이버, 좋은 친구들, 아이리시맨",              "현대",   "Martin Scorsese"),
+    ("퀜틴 타란티노",   "Quentin Tarantino",      "미국",    "펄프 픽션, 킬 빌, 장고: 분노의 추적자",              "현대",   "Quentin Tarantino"),
+    ("데이비드 린치",   "David Lynch",            "미국",    "멀홀랜드 드라이브, 블루 벨벳, 이레이저헤드",          "현대",   "David Lynch"),
+    ("오슨 웰스",       "Orson Welles",           "미국",    "시민 케인, 악의 손길, 맥베스",                       "레전드", "Orson Welles"),
+    ("빌리 와일더",     "Billy Wilder",           "미국",    "선셋 대로, 아파트 열쇠를 빌려드립니다, 뜨거운 것이 좋아","레전드","Billy Wilder"),
+    ("프랑수아 트뤼포", "François Truffaut",      "프랑스",  "400번의 구타, 쥴 앤 짐, 야성의 아이",               "레전드", "François Truffaut"),
+    ("알폰소 쿠아론",   "Alfonso Cuarón",         "멕시코",  "로마, 그래비티, 칠드런 오브 맨",                     "현대",   "Alfonso Cuarón"),
+    ("기예르모 델 토로","Guillermo del Toro",      "멕시코",  "판의 미로, 셰이프 오브 워터, 크림슨 피크",            "현대",   "Guillermo del Toro"),
+    ("짐 자무시",       "Jim Jarmusch",           "미국",    "패터슨, 오직 사랑하는 이들만이 살아남는다, 데드 맨",   "현대",   "Jim Jarmusch"),
+    ("코엔 형제",       "Joel Coen",              "미국",    "노인을 위한 나라는 없다, 파고, 블러드 심플",           "현대",   "Joel Coen"),
+    ("데이비드 핀처",   "David Fincher",          "미국",    "세븐, 파이트 클럽, 소셜 네트워크",                   "현대",   "David Fincher"),
+    ("미켈란젤로 안토니오니","Michelangelo Antonioni","이탈리아","정사, 밤, 일식, 붉은 사막",                    "레전드", "Michelangelo Antonioni"),
+    ("베르나르도 베르톨루치","Bernardo Bertolucci", "이탈리아","마지막 황제, 마지막 탱고 인 파리, 몽상가들",         "레전드", "Bernardo Bertolucci"),
+    ("로베르 브레송",   "Robert Bresson",         "프랑스",  "소매치기, 무쉐트, 발타자르는 어디로 가는가",          "레전드", "Robert Bresson"),
+    ("류승완",          "Ryoo Seung-wan",         "한국",    "베테랑, 모가디슈, 아수라, 부당거래",                  "현대",   "Ryoo Seung-wan"),
+    ("최동훈",          "Choi Dong-hoon",         "한국",    "도둑들, 암살, 외계+인",                              "현대",   "Choi Dong-hoon"),
 ]
 
 
